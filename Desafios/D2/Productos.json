@@ -1,11 +1,20 @@
 [
 	{
-		"id": "ryssogu",
+		"id": 3552072,
 		"title": "producto prueba",
 		"description": "Este es un producto prueba",
 		"price": 200,
 		"thumbnail": "Sin imagen",
 		"code": "abc123",
+		"stock": 25
+	},
+	{
+		"id": 5831698,
+		"title": "producto de prueba para borrar",
+		"description": "Este es un producto prueba para borrar",
+		"price": 299,
+		"thumbnail": "Sin imagen",
+		"code": "bcd456",
 		"stock": 25
 	}
 ]
