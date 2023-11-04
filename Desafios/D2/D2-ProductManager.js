@@ -93,7 +93,7 @@ class ProductManager {
     }
   }
 
-  updateProduct(id, newProduct) {
+  async updateProduct(id, newProduct) {
     try {
       const productIndex = this.products.findIndex(product => product.id === id);
       if (productIndex !== -1) {
@@ -107,7 +107,7 @@ class ProductManager {
             }
           }
           this.products[productIndex] = product;
-          this.saveProductsToFile(this.products);
+          await this.saveProductsToFile(this.products);
           return product;
         } else {
           throw new Error('The data provided for update was not an object.');
@@ -121,14 +121,14 @@ class ProductManager {
   }
 
 
-  deleteProduct(productId) {
+  async deleteProduct(productId) {
     try {
       const products = this.getProducts();
       const index = products.findIndex(product => product.id === productId);
 
       if (index !== -1) {
         products.splice(index, 1);
-        this.saveProductsToFile(products);
+        await this.saveProductsToFile(products);
         return true;
       } else {
         throw new Error('Product not found');
