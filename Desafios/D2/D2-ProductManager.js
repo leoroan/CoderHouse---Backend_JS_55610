@@ -28,19 +28,21 @@ class ProductManager {
     }
   }
 
-  async addProduct(title, description, price, thumbnail, code, stock) {
+  async addProduct(productData) {
+    const { title, description, price, thumbnail, code, stock } = productData;
+    if (!title || !description || !price || !thumbnail || !code || stock === undefined) {
+      throw new Error("All fields are required. Please complete everyone.");
+    }
     if (this.isProductCodeDuplicate(code)) {
       throw new Error('Product code already exists');
     }
-
     const id = this.generateUniqueID();
     const newProduct = new Product(id, title, description, price, thumbnail, code, stock);
-
+    this.products.push(newProduct);
     try {
-      this.products.push(newProduct);
       await this.saveProductsToFile(this.products);
     } catch (error) {
-      throw new Error('Error writing file');
+      throw new Error('Error writing file' + error);
     }
   }
 
@@ -49,7 +51,9 @@ class ProductManager {
   }
 
   generateUniqueID() {
-    return Number(Math.random().toString().substring(2, 9));
+    // return Number(Math.random().toString().substring(2, 9));
+    const maxId = this.products.reduce((max, product) => (product.id > max ? product.id : max), 0);
+    return maxId + 1;
   }
 
   async saveProductsToFile(data) {
