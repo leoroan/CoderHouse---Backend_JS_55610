@@ -1,4 +1,6 @@
 ```javascript
+//COMENTED README WITH USEFULL ANOTATIONS LIKE A CHEAT-SHEAT
+
 // Import the 'express' module and create an Express application
 const express = require('express');
 const app = express();
