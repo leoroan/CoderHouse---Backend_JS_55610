@@ -1,7 +1,7 @@
 {
   "name": "d3",
   "version": "1.0.0",
-  "description": "",
+  "description": "- **Paso 1:** `npm init -y`\r   - Express no es nativo de Node.js, por lo tanto, necesitaremos contar con un `package.json` para gestionar las dependencias a instalar. Una vez que tenemos `package.json` en nuestra carpeta, podemos continuar instalando dependencias.",
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js",

@@ -6,14 +6,14 @@ const maxLimit = productos.length;
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   res.send(`
     <h1>Saludos, desde el 3er desafío!</h1>
     <a href="/productos"><button>Ver Productos</button></a>
   `);
 });
 
-app.get("/usuario", (req, res) => {
+app.get("/usuario", async (req, res) => {
   res.json({
     nombre: "Cosme",
     apellido: "Fulanito",
@@ -22,11 +22,12 @@ app.get("/usuario", (req, res) => {
   });
 });
 
-app.get("/productos", (req, res) => {
+app.get("/productos", async (req, res) => {
   let { limit } = req.query;
   const btn = `<a href="/"><button>go Back!</button></a>`;
 
   const htmlForm = `
+    <h1>Products</h1>
     <form method="get">
       <label for="limit">Amount of products to show:</label>
       <input type="number" name="limit" id="limit" min="1" max="${maxLimit}" value="${limit || 1}">
@@ -37,11 +38,25 @@ app.get("/productos", (req, res) => {
   if (limit) {
     limit = parseInt(limit);
     const limitedProducts = productos.slice(0, limit);
-    const productList = limitedProducts.map(product => `<li>${product.title} - ${product.description}</li>`).join('');
-    res.send(`${htmlForm}<br><ul>${productList}</ul>${btn}`);
+    const productList = limitedProducts.map(product => `<li>${product.title} -ID: ${product.id}</li>`).join('');
+    res.send(`${htmlForm}<ul>${productList}</ul><br>${btn}`);
   } else {
-    const productList = productos.map(product => `<li>${product.title}</li>`).join('');
-    res.send(`${htmlForm}<br><ul>${productList}</ul>${btn}`);
+    const productList = productos.map(product => `<li>${product.title} -ID:  ${product.id}</li>`).join('');
+    res.send(`${htmlForm}<ul>${productList}</ul><br>${btn}`);
+  }
+});
+
+app.get("/productos/:pid", (req, res) => {
+  const btn = `<a href="/products"><button>go Back to products!</button></a>`;
+  let producto = req.params.pid;
+  let productoEncontrado = productos.find(product => product.id == producto);
+  if (productoEncontrado) {
+    res.send(`<h1>Producto: </h1> 
+        Title: ` + productoEncontrado.title + `<br>
+        Price: ` + productoEncontrado.price + `<br>
+        Description:` + productoEncontrado.description + ` <br><br> ${btn}`);
+  } else {
+    res.send(`<h1>Producto no encontrado: </h1><br>${btn}`);
   }
 });
 
