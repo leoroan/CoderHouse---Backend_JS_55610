@@ -1,5 +1,8 @@
 ```javascript
 //COMENTED README WITH USEFULL ANOTATIONS LIKE A CHEAT-SHEAT
+// BONUS
+The main difference between `req.params` and `req.query` is that with `req.query`, you can include as many queries as you wish, as they are not embedded in the route but are separate elements. So, if you don't know the number of things to be queried in your route, it's best to use queries. On the other hand, if you only need a specific and limited number of parameters, you should opt for params.
+In the end, there is no one better than the other; they serve different purposes, and you can even use both in the same request.
 
 // Import the 'express' module and create an Express application
 const express = require('express');
@@ -41,28 +44,18 @@ app.get("/productos", (req, res) => {
   const btn = `<a href="/"><button>Go Back!</button></a>`;
 
   const htmlForm = `
-    <form method="get">
-      <label for="limit">Amount of products to show:</label>
-      <input type="number" name="limit" id="limit" min="1" max="${maxLimit}" value="${limit || 1}">
-      <button type="submit">Update</button>
-    </form>
+    ..THIS MAKE AN HTML FORM..
   `;
 
-  if (limit) {
-    limit = parseInt(limit);
-    const limitedProducts = productos.slice(0, limit);
-    const productList = limitedProducts.map(product => `<li>${product.title} - ${product.description}</li>`).join('');
-    res.send(`${htmlForm}<br><ul>${productList}</ul>${btn}`);
+  if (limit) {.
+    ..SHOW PRODUCTS, LIMITED...
   } else {
+    // FOR EACH PROD, MAP IT TO GIVE A BETTER LOOK (NOT A RAW-JASON)
     const productList = productos.map(product => `<li>${product.title}</li>`).join('');
-    res.send(`${htmlForm}<br><ul>${productList}</ul>${btn}`);
+    ..SHOW ALL...
   }
 });
 
 // Start the server on the specified port
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 
-## BONUS
-The main difference between `req.params` and `req.query` is that with `req.query`, you can include as many queries as you wish, as they are not embedded in the route but are separate elements. So, if you don't know the number of things to be queried in your route, it's best to use queries. On the other hand, if you only need a specific and limited number of parameters, you should opt for params.
-
-In the end, there is no one better than the other; they serve different purposes, and you can even use both in the same request.
