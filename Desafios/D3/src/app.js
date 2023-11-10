@@ -46,8 +46,8 @@ app.get("/productos", async (req, res) => {
   }
 });
 
-app.get("/productos/:pid", (req, res) => {
-  const btn = `<a href="/products"><button>go Back to products!</button></a>`;
+app.get("/productos/:pid", async(req, res) => {
+  const btn = `<a href="/productos"><button>go Back to products!</button></a>`;
   let producto = req.params.pid;
   let productoEncontrado = productos.find(product => product.id == producto);
   if (productoEncontrado) {
@@ -56,8 +56,23 @@ app.get("/productos/:pid", (req, res) => {
         Price: ` + productoEncontrado.price + `<br>
         Description:` + productoEncontrado.description + ` <br><br> ${btn}`);
   } else {
-    res.send(`<h1>Producto no encontrado: </h1><br>${btn}`);
+    // res.send(`<h1>Producto no encontrado! </h1><br>${btn}`);
+    res.status(500).json({ error: 'Error getting the product' });
   }
 });
 
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+
+console.log('|||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+console.log(`                          TEST`);
+console.log('TEST1: npm i << done');
+console.log(`TEST2: Check "Productos.js" >> products total: ${maxLimit}`);
+console.log(`TEST3: Check if server on port 8080 >> using port: ${PORT}`);
+console.log(`TEST4: http://localhost:8080/productos`);
+console.log(`TEST5: http://localhost:8080/productos?limit=5`);
+console.log(`TEST6: http://localhost:8080/productos/9876543`);
+console.log(`TEST7: http://localhost:8080/productos/34123123`);
+console.log(`                      END OF TEST`);
+console.log('|||||||||||||||||||||||||||||||||||||||||||||||||||||||');
+
+

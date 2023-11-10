@@ -1,7 +1,7 @@
 {
   "name": "src",
   "version": "1.0.0",
-  "description": "",
+  "description": "```javascript\r //COMENTED README WITH USEFULL ANOTATIONS LIKE A CHEAT-SHEAT\r // BONUS\r The main difference between `req.params` and `req.query` is that with `req.query`, you can include as many queries as you wish, as they are not embedded in the route but are separate elements. So, if you don't know the number of things to be queried in your route, it's best to use queries. On the other hand, if you only need a specific and limited number of parameters, you should opt for params.\r In the end, there is no one better than the other; they serve different purposes, and you can even use both in the same request.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
