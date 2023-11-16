@@ -1,4 +1,3 @@
-// const fs = require("fs");
 import Product from './Product.js';
 import fs from 'fs';
 
