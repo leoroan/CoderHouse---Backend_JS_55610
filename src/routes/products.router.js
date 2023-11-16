@@ -1,25 +1,28 @@
 import { Router } from "express";
+import { getProductByIdMiddleware } from '../../middlewares/productManagerMiddleware.js';
 import ProductManager from "../../models/ProductManager.js";
 
 const router = Router();
-
 const productManager = new ProductManager("./models/data/", "productos.json");
 const products = productManager.getProducts();
 
-// Get the products
 router.get("/", (req, res) => {
-  res.json({
-    products,
-  });
+  let { limit } = req.query;
+
+  if (limit) {
+    limit = parseInt(limit);
+    const limitedProducts = products.slice(0, limit);
+    res.json({ limitedProducts });
+  } else {
+    res.json({ products });
+  }
 });
 
-// Get the selected product
-// middleware time
-// router.get("/:pid", (req, res) => {
-//   res.json({
-//     products,
-//   });
-// });
+
+router.get("/:pid", getProductByIdMiddleware , (req, res) => {
+  const { product } = req;
+  res.json({ product });
+});
 
 //Post a new product
 // middleware too
