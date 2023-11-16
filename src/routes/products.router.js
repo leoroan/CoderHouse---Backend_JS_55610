@@ -1,46 +1,37 @@
 import { Router } from "express";
 import { getProductByIdMiddleware } from '../../middlewares/productManagerMiddleware.js';
-import ProductManager from "../../models/ProductManager.js";
+import { getLimitMiddleware } from '../../middlewares/productManagerMiddleware.js';
 
 const router = Router();
-const productManager = new ProductManager("./models/data/", "productos.json");
-const products = productManager.getProducts();
 
-router.get("/", (req, res) => {
-  let { limit } = req.query;
-
-  if (limit) {
-    limit = parseInt(limit);
-    const limitedProducts = products.slice(0, limit);
-    res.json({ limitedProducts });
-  } else {
-    res.json({ products });
-  }
+//Get all products
+router.get("/", getLimitMiddleware, (req, res) => {
+  const { products } = req;
+  res.json({ products });
 });
 
-
-router.get("/:pid", getProductByIdMiddleware , (req, res) => {
+//Get a product by id
+router.get("/:pid", getProductByIdMiddleware, (req, res) => {
   const { product } = req;
   res.json({ product });
 });
 
-//Post a new product
-// middleware too
-// router.post("/", (req, res) => {
-//   const { name, age } = req.body;
+//Post a product
+router.post("/", (req, res) => {
+  const { name, age } = req.body;
 
-//   pets.push({
-//     name,
-//     age,
-//   });
+  pets.push({
+    name,
+    age,
+  });
 
-//   res.json({
-//     pet: {
-//       name,
-//       age,
-//     },
-//   });
-// });
+  res.json({
+    pet: {
+      name,
+      age,
+    },
+  });
+});
 
 //Put a product
 // middleware?
