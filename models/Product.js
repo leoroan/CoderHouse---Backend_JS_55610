@@ -1,7 +1,7 @@
 
 
 class Product {
-  constructor(id, title, description, price, thumbnail, code, stock, status,) {
+  constructor(id, title, description, price, thumbnail, code, stock, status, category) {
     this.id = id;
     this.title = title;
     this.description = description;
@@ -13,6 +13,5 @@ class Product {
     this.category = category;
   }
 }
-
 
 export default Product;
