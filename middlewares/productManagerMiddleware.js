@@ -31,7 +31,19 @@ const getLimitMiddleware = (req, res, next) => {
   }
 }
 
+const postProductMiddleware = (req, res, next) => {
+  let { title, description, price, code, stock, category } = req.body;
+  let product = { title, description, price, code, stock, category };
+  try {
+    productManager.addProduct(product);
+    next();
+  } catch (error) {
+    res.status(500).json({ error: 'Error: ' + error.message });
+  }
+}
+
 export {
   getProductByIdMiddleware,
-  getLimitMiddleware
+  getLimitMiddleware,
+  postProductMiddleware
 }

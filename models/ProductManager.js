@@ -15,8 +15,8 @@ class ProductManager {
 
   async addProduct(productData) {
     if (typeof productData === 'object') {
-      const { title, description, price, thumbnail, code, stock } = productData;
-      if (!title || !description || !price || !thumbnail || !code || stock === undefined) {
+      const { title, description, price, thumbnail, code, stock, category } = productData;
+      if (!title || !description || !price || !code || !stock || !category ) {
         throw new Error("All fields are required. Please complete everyone.");
       }
       if (this.isProductCodeDuplicate(code)) {

@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { getProductByIdMiddleware } from '../../middlewares/productManagerMiddleware.js';
-import { getLimitMiddleware } from '../../middlewares/productManagerMiddleware.js';
+import { getProductByIdMiddleware, postProductMiddleware, getLimitMiddleware } from '../../middlewares/productManagerMiddleware.js';
 
 const router = Router();
 
@@ -17,20 +16,8 @@ router.get("/:pid", getProductByIdMiddleware, (req, res) => {
 });
 
 //Post a product
-router.post("/", (req, res) => {
-  const { name, age } = req.body;
-
-  pets.push({
-    name,
-    age,
-  });
-
-  res.json({
-    pet: {
-      name,
-      age,
-    },
-  });
+router.post("/", postProductMiddleware, (req, res) => {
+  res.json(req.body);
 });
 
 //Put a product
