@@ -11,11 +11,12 @@ router.get("/", (req, res) => {
   });
 });
 
-// router.post("/", (req, res) => {
-//   cart.push(req.body);
-//   res.json({
-//     cart,
-//   });
-// });
+// Add to the cart
+router.post("/", (req, res) => {
+  cart.push(req.body);
+  res.json({
+    cart,
+  });
+});
 
 export default router;
