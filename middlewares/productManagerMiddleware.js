@@ -3,17 +3,23 @@ import ProductManager from "../models/ProductManager.js";
 const productManager = new ProductManager("./models/data/", "productos.json");
 const products = productManager.getProducts();
 
-const getProductByIdMiddleware = (req, res, next) => {
+const handleErrors = (res, error) => {
+  res.status(500).json({ error: 'Error: ' + error.message });
+};
+
+// Get product by id
+const getProductByIdMiddleware = async (req, res, next) => {
   try {
     const productId = parseInt(req.params.pid);
-    const foundProduct = productManager.getProductById(productId);
+    const foundProduct = await productManager.getProductById(productId);
     req.product = foundProduct;
     next();
   } catch (error) {
-    res.status(500).json({ error: 'Error: ' + error.message });
+    handleErrors(res, error);
   }
 };
 
+// Get products limited
 const getLimitMiddleware = (req, res, next) => {
   let { limit } = req.query;
   try {
@@ -27,41 +33,44 @@ const getLimitMiddleware = (req, res, next) => {
       next();
     }
   } catch (error) {
-    res.status(500).json({ error: 'Error: ' + error.message });
+    handleErrors(res, error);
   }
 };
 
-const postProductMiddleware = (req, res, next) => {
+// Add product
+const postProductMiddleware = async (req, res, next) => {
   let { title, description, price, code, thumbnail, stock, category } = req.body;
   let product = { title, description, price, code, thumbnail, stock, category };
   try {
-    productManager.addProduct(product);
+    await productManager.addProduct(product);
     next();
   } catch (error) {
-    res.status(500).json({ error: 'Error: ' + error.message });
+    handleErrors(res, error);
   }
 };
 
-const putProductMiddleware = (req, res, next) => {
+// Update product
+const putProductMiddleware = async (req, res, next) => {
   try {
     const productId = parseInt(req.params.pid);
-    const { title, description, price, code, thumbnail, stock, category } = req.query;
-    const product = { title, description, price, code, thumbnail, stock, category };
-    productManager.updateProduct(productId, { ...product });
+    const product = req.body; // use req.body instead of req.query
+    await productManager.updateProduct(productId, { ...product });
     next();
   } catch (error) {
-    res.status(500).json({ error: 'Error: ' + error.message });
+    handleErrors(res, error);
   }
 };
 
-const deleteProductMiddleware = (req, res, next) => {
+// Delete product
+const deleteProductMiddleware = async (req, res, next) => {
   try {
     const productId = parseInt(req.params.pid);
-    productManager.deleteProduct(productId);
+    await productManager.deleteProduct(productId);
+    next();
   } catch (error) {
-    res.status(500).json({ error: 'Error: ' + error.message });
+    handleErrors(res, error);
   }
-}
+};
 
 export {
   getProductByIdMiddleware,
@@ -69,4 +78,4 @@ export {
   postProductMiddleware,
   putProductMiddleware,
   deleteProductMiddleware
-}
+};
