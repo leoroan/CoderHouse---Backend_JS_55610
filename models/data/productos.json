@@ -1,12 +1,13 @@
 [
 	{
 		"id": 3552072,
-		"title": "producto prueba",
-		"description": "Este es un producto prueba",
-		"price": 200,
-		"thumbnail": "Sin imagen",
-		"code": "abc123",
-		"stock": 25
+		"title": "ASDASD",
+		"description": "Descr",
+		"price": "123",
+		"thumbnail": "imajkljkge.jpg",
+		"code": "abc123-12",
+		"stock": "504",
+		"category": "Electronics"
 	},
 	{
 		"id": 5831698,
@@ -19,12 +20,14 @@
 	},
 	{
 		"id": 5831699,
-		"title": "product form testing",
-		"description": "this product may work",
-		"price": 99.99,
-		"code": "async489",
-		"stock": 25,
-		"status": true
+		"title": "SAAAAD",
+		"status": true,
+		"price": "9",
+		"description": "Descr",
+		"code": "abc123-12",
+		"thumbnail": "imajkljkge.jpg",
+		"stock": "504",
+		"category": "Electronics"
 	},
 	{
 		"id": 5831700,

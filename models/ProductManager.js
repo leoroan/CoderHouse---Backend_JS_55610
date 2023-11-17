@@ -92,18 +92,15 @@ class ProductManager {
     try {
       const productIndex = this.products.findIndex(product => product.id === id);
       if (productIndex !== -1) {
-        const product = this.products[productIndex];
-        if (typeof newProduct === 'object') {
+        const product = { ...this.products[productIndex] };
+        if (typeof newProduct === 'object' && Object.keys(newProduct).length > 0) {
           for (const key in newProduct) {
-            if (key !== 'id') {
-              if (product.hasOwnProperty(key) && newProduct[key] !== null) {
-                product[key] = newProduct[key];
-              }
+            if (key !== 'id' && newProduct[key] !== undefined) {
+              product[key] = newProduct[key];
             }
           }
           this.products[productIndex] = product;
           await this.saveProductsToFile(this.products);
-          return product;
         } else {
           throw new Error('The data provided for update was not an object.');
         }

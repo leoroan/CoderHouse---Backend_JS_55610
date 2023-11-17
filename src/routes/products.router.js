@@ -22,28 +22,7 @@ router.post("/", postProductMiddleware, (req, res) => {
 
 //Update a product
 router.put("/:pid", putProductMiddleware, (req, res) => {
-  //   const { pid } = req.params;
-  //   const { name, price } = req.body;
-
-  //   const productIndex = products.findIndex((product) => product.id === pid);
-
-  //   if (productIndex === -1) {
-  //     return res.status(404).json({
-  //       message: "Product not found",
-  //     });
-  //   }
-
-  //   products[productIndex] = {
-  //     ...products[productIndex],
-  //     name,
-  //     price,
-  //   };
-
-  //   res.json({
-  //     product: products[productIndex],
-  //   });
-
+  res.send("updated");
 });
-
 
 export default router;

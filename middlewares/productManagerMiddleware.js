@@ -45,9 +45,9 @@ const postProductMiddleware = (req, res, next) => {
 const putProductMiddleware = (req, res, next) => {
   try {
     const productId = parseInt(req.params.pid);
-    const { title = null, description = null, price = null, code = null, thumbnail = null, stock = null, category = null } = req.query;
-    let product = { title, description, price, code, thumbnail, stock, category };
-    productManager.updateProduct(productId, product);
+    const { title, description, price, code, thumbnail, stock, category } = req.query;
+    const product = { title, description, price, code, thumbnail, stock, category };
+    productManager.updateProduct(productId, { ...product });
     next();
   } catch (error) {
     res.status(500).json({ error: 'Error: ' + error.message });
