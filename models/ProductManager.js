@@ -2,40 +2,52 @@ import Product from './Product.js';
 import fs from 'fs';
 
 class ProductManager {
-  constructor(rute, file) {
-    this.fileName = `${rute}${file}`;
+  constructor(route, file) {
+    this.fileName = `${route}${file}`;
+    this.initialize();
+  }
+
+  initialize() {
     if (fs.existsSync(this.fileName)) {
       try {
-        this.products = JSON.parse(fs.readFileSync(this.fileName, "utf-8"));
-      } catch {
+        const data = fs.readFileSync(this.fileName, 'utf-8');
+        this.products = JSON.parse(data) || [];
+      } catch (error) {
+        console.error('Error reading product file:', error);
         this.products = [];
       }
+    } else {
+      this.products = [];
     }
   }
 
   async addProduct(productData) {
     try {
-      if (typeof productData === 'object') {
-        const { title, description, price, thumbnail, code, stock, category } = productData;
-        if (!title || !description || !price || !code || !stock || !category) {
-          throw new Error("All fields are required. Please complete everyone.");
-        }
-        if (this.isProductCodeDuplicate(code)) {
-          throw new Error('Product code already exists');
-        }
-        const id = this.generateUniqueID();
-        const newProduct = new Product(id, title, description, price, thumbnail, code, stock);
-        this.products.push(newProduct);
-        try {
-          await this.saveProductsToFile(this.products);
-        } catch (error) {
-          throw new Error('Failed to save products to file');
-        }
-      } else {
-        throw new Error('Product data must be an object');
+      this.validateProductData(productData);
+      const { title, description, price, thumbnail, code, stock, category } = productData;
+      if (this.isProductCodeDuplicate(code)) {
+        throw new Error('Product code already exists');
       }
+      const id = this.generateUniqueID();
+      const newProduct = new Product(id, title, description, price, thumbnail, code, stock, category);
+      this.products.push(newProduct);
+      await this.saveProductsToFile(this.products);
     } catch (error) {
-      throw new Error('An unexpected error occurred while creating product');
+      console.error('Error adding product:', error);
+      throw new Error('Failed to add product');
+    }
+  }
+
+  validateProductData(productData) {
+    if (typeof productData !== 'object') {
+      throw new Error('Product data must be an object');
+    }
+
+    const requiredFields = ['title', 'description', 'price', 'code', 'stock', 'category'];
+    for (const field of requiredFields) {
+      if (!productData[field]) {
+        throw new Error(`Field '${field}' is required. Please complete everyone.`);
+      }
     }
   }
 
@@ -52,24 +64,16 @@ class ProductManager {
     try {
       await fs.promises.writeFile(
         this.fileName,
-        JSON.stringify(data, null, "\t")
+        JSON.stringify(data, null, '\t')
       );
     } catch (error) {
-      throw new Error("something gone wrong saving", error);
+      console.error('Error saving products to file:', error);
+      throw new Error('Failed to save products to file');
     }
   }
 
   getProducts() {
-    if (fs.existsSync(this.fileName)) {
-      try {
-        let prods = fs.readFileSync(this.fileName, "utf-8");
-        this.prods = JSON.parse(prods);
-        return this.prods;
-      } catch {
-        throw new Error("something gone wrong retrieving data, or empty file");
-      }
-    }
-    else return this.products;
+    return this.products;
   }
 
   getProductById(productId) {
@@ -77,20 +81,20 @@ class ProductManager {
       if (typeof productId !== 'number' || isNaN(productId)) {
         throw new Error('Product ID must be a valid number');
       }
-      const prods = this.getProducts();
-      const product = prods.find(product => product.id === productId);
+      const product = this.products.find((product) => product.id === productId);
       if (!product) {
         throw new Error('Product not found');
       }
       return product;
     } catch (error) {
-      throw new Error('Error in getProductById: ' + error.message);
+      console.error('Error in getProductById:', error);
+      throw new Error('Failed to get product by ID');
     }
   }
 
   async updateProduct(id, newProduct) {
     try {
-      const productIndex = this.products.findIndex(product => product.id === id);
+      const productIndex = this.products.findIndex((product) => product.id === id);
       if (productIndex !== -1 && !this.isProductCodeDuplicate(newProduct.code)) {
         const product = { ...this.products[productIndex] };
         if (typeof newProduct === 'object' && Object.keys(newProduct).length > 0) {
@@ -108,24 +112,24 @@ class ProductManager {
         throw new Error('Product not found or duplicated codes');
       }
     } catch (error) {
-      throw new Error('Error updating product: ' + error.message);
+      console.error('Error updating product:', error);
+      throw new Error('Failed to update product');
     }
   }
 
   async deleteProduct(productId) {
     try {
-      const products = this.getProducts();
-      const index = products.findIndex(product => product.id === productId);
-
+      const index = this.products.findIndex((product) => product.id === productId);
       if (index !== -1) {
-        const updatedProducts = products.filter(product => product.id !== productId);
+        const updatedProducts = this.products.filter((product) => product.id !== productId);
         await this.saveProductsToFile(updatedProducts);
         return true;
       } else {
         throw new Error('Product not found');
       }
     } catch (error) {
-      throw new Error('Error deleting product: doesnt exist');
+      console.error('Error deleting product:', error);
+      throw new Error('Failed to delete product');
     }
   }
 }
