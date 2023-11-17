@@ -1,33 +1,42 @@
 import { Router } from "express";
-import { getProductByIdMiddleware, postProductMiddleware, getLimitMiddleware, putProductMiddleware, deleteProductMiddleware } from '../../middlewares/productManagerMiddleware.js';
+import {
+  getProductByIdMiddleware,
+  postProductMiddleware,
+  getLimitMiddleware,
+  putProductMiddleware,
+  deleteProductMiddleware
+} from '../../middlewares/productManagerMiddleware.js';
 
 const router = Router();
 
-//Get all products
+// Get all products
 router.get("/", getLimitMiddleware, (req, res) => {
   const { products } = req;
-  res.json({ products });
+  res.status(200).json({ products });
 });
 
-//Get a product by id
+// Get a product by id
 router.get("/:pid", getProductByIdMiddleware, (req, res) => {
   const { product } = req;
-  res.json({ product });
+  res.status(200).json({ product });
 });
 
-//Post a product
+// Post a product
 router.post("/", postProductMiddleware, (req, res) => {
-  res.json(req.body);
+  // Assuming postProductMiddleware adds the product to the database
+  res.status(201).json({ message: "Product created successfully", product: req.body });
 });
 
-//Update a product
+// Update a product
 router.put("/:pid", putProductMiddleware, (req, res) => {
-  res.send("updated");
+  // Assuming putProductMiddleware updates the product in the database
+  res.status(200).json({ message: "Product updated successfully" });
 });
 
-//Delete a product
+// Delete a product
 router.delete("/:pid", deleteProductMiddleware, (req, res) => {
-  res.json("deleted");
+  // Assuming deleteProductMiddleware deletes the product from the database
+  res.status(200).json({ message: "Product deleted successfully" });
 });
 
 export default router;
