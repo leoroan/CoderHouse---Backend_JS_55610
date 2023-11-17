@@ -2,6 +2,11 @@ import CartManager from "../models/CartManager.js";
 
 const cartManager = new CartManager("./models/data/", "cart.json");
 
+const handleErrors = (res, error) => {
+  res.status(500).json({ error: 'Error: ' + error.message });
+};
+
+// Get cart by id
 const getCartByIdMiddleware = (req, res, next) => {
   try {
     const cartId = parseInt(req.params.cid);
@@ -9,27 +14,29 @@ const getCartByIdMiddleware = (req, res, next) => {
     req.cart = foundCart;
     next();
   } catch (error) {
-    res.status(500).json({ error: 'Error: ' + error.message });
+    handleErrors(res, error);
   }
 };
 
-const postCartMiddleware = (req, res, next) => {
+// Create cart
+const postCartMiddleware = async (req, res, next) => {
   try {
-    cartManager.addCart();
+    await cartManager.addCart();
     next();
   } catch (error) {
-    res.status(500).json({ error: 'Error: ' + error.message });
+    handleErrors(res, error);
   }
 };
 
-const addProductToCartMiddleware = async (req, res, next) => {
+// Add product to cart
+const addProductToCartMiddleware = (req, res, next) => {
   const { cart, product } = req;
   cartManager.updateCart(cart, product);
   next();
-}
+};
 
 export {
   getCartByIdMiddleware,
   postCartMiddleware,
   addProductToCartMiddleware
-}
+};
