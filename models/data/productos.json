@@ -16,5 +16,52 @@
 		"thumbnail": "Sin imagen",
 		"code": "bcd456",
 		"stock": 25
+	},
+	{
+		"id": 5831699,
+		"title": "product form testing",
+		"description": "this product may work",
+		"price": 99.99,
+		"code": "async489",
+		"stock": 25,
+		"status": true
+	},
+	{
+		"id": 5831700,
+		"title": "Testing Widget",
+		"description": "A versatile widget for testing purposes",
+		"price": 49.99,
+		"code": "testWidget123",
+		"stock": 50,
+		"status": true
+	},
+	{
+		"id": 5831701,
+		"title": "Smart Home Thermostat",
+		"description": "Control the climate of your home with this smart thermostat",
+		"price": 149.99,
+		"thumbnail": "thermostat_image.jpg",
+		"code": "smartThermostat456",
+		"stock": 30,
+		"status": true
+	},
+	{
+		"id": 5831702,
+		"title": "Wireless Noise-Canceling Headphones",
+		"description": "Immerse yourself in high-quality sound with these wireless headphones",
+		"price": 199.99,
+		"code": "wirelessAudio789",
+		"stock": 15,
+		"status": true
+	},
+	{
+		"id": 5831703,
+		"title": "Fitness Tracker Watch",
+		"description": "Stay active and monitor your fitness with this advanced tracker watch",
+		"price": 79.99,
+		"thumbnail": "fitness_watch_image.jpg",
+		"code": "fitTracker101",
+		"stock": 25,
+		"status": true
 	}
 ]
