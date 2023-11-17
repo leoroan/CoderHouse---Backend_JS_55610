@@ -1,3 +1,4 @@
+import Cart from './Cart.js';
 import fs from 'fs';
 
 class CartManager {
@@ -15,7 +16,7 @@ class CartManager {
   async addCart() {
     try {
       const id = this.generateUniqueID();
-      const newCart = new this.cart(id);
+      const newCart = new Cart(id);
       this.cart.push(newCart);
       try {
         await this.saveCartsToFile(this.cart);
@@ -28,7 +29,7 @@ class CartManager {
   }
 
   generateUniqueID() {
-    const maxId = this.cart.reduce((max, product) => (product.id > max ? product.id : max), 0);
+    const maxId = this.cart.reduce((max, cart) => (cart.id > max ? cart.id : max), 0);
     return maxId + 1;
   }
 
@@ -43,7 +44,7 @@ class CartManager {
     }
   }
 
-  getCartById() {
+  getCarts() {
     if (fs.existsSync(this.fileName)) {
       try {
         let carts = fs.readFileSync(this.fileName, "utf-8");
@@ -53,9 +54,37 @@ class CartManager {
         throw new Error("something gone wrong retrieving data, or empty file");
       }
     }
-    else return this.cart;
+    else return this.products;
   }
-}
 
+  getCartById(cartId) {
+    try {
+      if (typeof cartId !== 'number' || isNaN(cartId)) {
+        throw new Error('cartID must be a valid number');
+      }
+      const carts = this.getCarts();
+      const cart = carts.find(cart => cart.id === cartId);
+      if (!cart) {
+        throw new Error('Cart not found');
+      }
+      return cart;
+    } catch (error) {
+      throw new Error('Error in getCartById: ' + error.message);
+    }
+  }
+
+  async updateCart(cart, product) {
+    const existingItem = cart.items.find(item => item.id === product.id);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.items.push({ id: product.id, quantity: 1 });
+    };
+    const cartIndex = this.cart.findIndex(c => c.id === cart.id);
+    this.cart[cartIndex] = cart;
+    await this.saveCartsToFile(this.cart);
+  }
+
+}
 
 export default CartManager;
