@@ -5,7 +5,7 @@ const router = Router();
 const cart = [];
 
 // Get the cart
-router.get("/", (req, res) => {
+router.get("/cid", (req, res) => {
   res.json({
     cart,
   });
