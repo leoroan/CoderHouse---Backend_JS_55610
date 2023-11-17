@@ -23,19 +23,16 @@ router.get("/:pid", getProductByIdMiddleware, (req, res) => {
 
 // Post a product
 router.post("/", postProductMiddleware, (req, res) => {
-  // Assuming postProductMiddleware adds the product to the database
   res.status(201).json({ message: "Product created successfully", product: req.body });
 });
 
 // Update a product
 router.put("/:pid", putProductMiddleware, (req, res) => {
-  // Assuming putProductMiddleware updates the product in the database
   res.status(200).json({ message: "Product updated successfully" });
 });
 
 // Delete a product
 router.delete("/:pid", deleteProductMiddleware, (req, res) => {
-  // Assuming deleteProductMiddleware deletes the product from the database
   res.status(200).json({ message: "Product deleted successfully" });
 });
 
