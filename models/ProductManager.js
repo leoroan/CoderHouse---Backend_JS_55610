@@ -14,24 +14,28 @@ class ProductManager {
   }
 
   async addProduct(productData) {
-    if (typeof productData === 'object') {
-      const { title, description, price, thumbnail, code, stock, category } = productData;
-      if (!title || !description || !price || !code || !stock || !category ) {
-        throw new Error("All fields are required. Please complete everyone.");
+    try {
+      if (typeof productData === 'object') {
+        const { title, description, price, thumbnail, code, stock, category } = productData;
+        if (!title || !description || !price || !code || !stock || !category) {
+          throw new Error("All fields are required. Please complete everyone.");
+        }
+        if (this.isProductCodeDuplicate(code)) {
+          throw new Error('Product code already exists');
+        }
+        const id = this.generateUniqueID();
+        const newProduct = new Product(id, title, description, price, thumbnail, code, stock);
+        this.products.push(newProduct);
+        try {
+          await this.saveProductsToFile(this.products);
+        } catch (error) {
+          throw new Error('Failed to save products to file');
+        }
+      } else {
+        throw new Error('Product data must be an object');
       }
-      if (this.isProductCodeDuplicate(code)) {
-        throw new Error('Product code already exists');
-      }
-      const id = this.generateUniqueID();
-      const newProduct = new Product(id, title, description, price, thumbnail, code, stock);
-      this.products.push(newProduct);
-      try {
-        await this.saveProductsToFile(this.products);
-      } catch (error) {
-        throw new Error('Error writing file' + error);
-      }
-    } else {
-      throw new Error('Product data must be an object');
+    } catch (error) {
+      throw new Error('An unexpected error occurred while creating product');
     }
   }
 
