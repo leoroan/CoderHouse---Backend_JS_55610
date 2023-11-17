@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProductByIdMiddleware, postProductMiddleware, getLimitMiddleware } from '../../middlewares/productManagerMiddleware.js';
+import { getProductByIdMiddleware, postProductMiddleware, getLimitMiddleware, putProductMiddleware } from '../../middlewares/productManagerMiddleware.js';
 
 const router = Router();
 
@@ -20,31 +20,30 @@ router.post("/", postProductMiddleware, (req, res) => {
   res.json(req.body);
 });
 
-//Put a product
-// middleware?
-// router.put("/:pid", (req, res) => {
-//   const { pid } = req.params;
-//   const { name, price } = req.body;
+//Update a product
+router.put("/:pid", putProductMiddleware, (req, res) => {
+  //   const { pid } = req.params;
+  //   const { name, price } = req.body;
 
-//   const productIndex = products.findIndex((product) => product.id === pid);
+  //   const productIndex = products.findIndex((product) => product.id === pid);
 
-//   if (productIndex === -1) {
-//     return res.status(404).json({
-//       message: "Product not found",
-//     });
-//   }
+  //   if (productIndex === -1) {
+  //     return res.status(404).json({
+  //       message: "Product not found",
+  //     });
+  //   }
 
-//   products[productIndex] = {
-//     ...products[productIndex],
-//     name,
-//     price,
-//   };
+  //   products[productIndex] = {
+  //     ...products[productIndex],
+  //     name,
+  //     price,
+  //   };
 
-//   res.json({
-//     product: products[productIndex],
-//   });
+  //   res.json({
+  //     product: products[productIndex],
+  //   });
 
-// });
+});
 
 
 export default router;
