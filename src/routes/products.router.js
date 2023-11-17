@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProductByIdMiddleware, postProductMiddleware, getLimitMiddleware, putProductMiddleware } from '../../middlewares/productManagerMiddleware.js';
+import { getProductByIdMiddleware, postProductMiddleware, getLimitMiddleware, putProductMiddleware, deleteProductMiddleware } from '../../middlewares/productManagerMiddleware.js';
 
 const router = Router();
 
@@ -23,6 +23,11 @@ router.post("/", postProductMiddleware, (req, res) => {
 //Update a product
 router.put("/:pid", putProductMiddleware, (req, res) => {
   res.send("updated");
+});
+
+//Delete a product
+router.delete("/:pid", deleteProductMiddleware, (req, res) => {
+  res.json("deleted");
 });
 
 export default router;

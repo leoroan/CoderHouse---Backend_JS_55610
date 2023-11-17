@@ -1,15 +1,5 @@
 [
 	{
-		"id": 3552072,
-		"title": "ASDASD",
-		"description": "Descr",
-		"price": "123",
-		"thumbnail": "imajkljkge.jpg",
-		"code": "abc123-12",
-		"stock": "504",
-		"category": "Electronics"
-	},
-	{
 		"id": 5831698,
 		"title": "producto de prueba para borrar",
 		"description": "Este es un producto prueba para borrar",

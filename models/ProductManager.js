@@ -91,7 +91,7 @@ class ProductManager {
   async updateProduct(id, newProduct) {
     try {
       const productIndex = this.products.findIndex(product => product.id === id);
-      if (productIndex !== -1) {
+      if (productIndex !== -1 && !this.isProductCodeDuplicate(newProduct.code)) {
         const product = { ...this.products[productIndex] };
         if (typeof newProduct === 'object' && Object.keys(newProduct).length > 0) {
           for (const key in newProduct) {
@@ -105,13 +105,12 @@ class ProductManager {
           throw new Error('The data provided for update was not an object.');
         }
       } else {
-        throw new Error('Product not found');
+        throw new Error('Product not found or duplicated codes');
       }
     } catch (error) {
       throw new Error('Error updating product: ' + error.message);
     }
   }
-
 
   async deleteProduct(productId) {
     try {
@@ -119,14 +118,14 @@ class ProductManager {
       const index = products.findIndex(product => product.id === productId);
 
       if (index !== -1) {
-        products.splice(index, 1);
-        await this.saveProductsToFile(products);
+        const updatedProducts = products.filter(product => product.id !== productId);
+        await this.saveProductsToFile(updatedProducts);
         return true;
       } else {
         throw new Error('Product not found');
       }
     } catch (error) {
-      throw new Error('Error deleting product: ' + error.message);
+      throw new Error('Error deleting product: doesnt exist');
     }
   }
 }

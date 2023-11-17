@@ -54,9 +54,19 @@ const putProductMiddleware = (req, res, next) => {
   }
 };
 
+const deleteProductMiddleware = (req, res, next) => {
+  try {
+    const productId = parseInt(req.params.pid);
+    productManager.deleteProduct(productId);
+  } catch (error) {
+    res.status(500).json({ error: 'Error: ' + error.message });
+  }
+}
+
 export {
   getProductByIdMiddleware,
   getLimitMiddleware,
   postProductMiddleware,
-  putProductMiddleware
+  putProductMiddleware,
+  deleteProductMiddleware
 }
