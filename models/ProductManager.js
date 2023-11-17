@@ -96,7 +96,7 @@ class ProductManager {
         if (typeof newProduct === 'object') {
           for (const key in newProduct) {
             if (key !== 'id') {
-              if (product.hasOwnProperty(key)) {
+              if (product.hasOwnProperty(key) && newProduct[key] !== null) {
                 product[key] = newProduct[key];
               }
             }

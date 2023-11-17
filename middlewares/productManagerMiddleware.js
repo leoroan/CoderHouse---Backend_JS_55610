@@ -29,7 +29,7 @@ const getLimitMiddleware = (req, res, next) => {
   } catch (error) {
     res.status(500).json({ error: 'Error: ' + error.message });
   }
-}
+};
 
 const postProductMiddleware = (req, res, next) => {
   let { title, description, price, code, thumbnail, stock, category } = req.body;
@@ -40,10 +40,23 @@ const postProductMiddleware = (req, res, next) => {
   } catch (error) {
     res.status(500).json({ error: 'Error: ' + error.message });
   }
-}
+};
+
+const putProductMiddleware = (req, res, next) => {
+  try {
+    const productId = parseInt(req.params.pid);
+    const { title = null, description = null, price = null, code = null, thumbnail = null, stock = null, category = null } = req.query;
+    let product = { title, description, price, code, thumbnail, stock, category };
+    productManager.updateProduct(productId, product);
+    next();
+  } catch (error) {
+    res.status(500).json({ error: 'Error: ' + error.message });
+  }
+};
 
 export {
   getProductByIdMiddleware,
   getLimitMiddleware,
-  postProductMiddleware
+  postProductMiddleware,
+  putProductMiddleware
 }
