@@ -10,13 +10,13 @@
 	},
 	{
 		"id": 5831699,
-		"title": "SAAAAD",
+		"title": "The BRAND new product ",
 		"status": true,
-		"price": "9",
-		"description": "Descr",
-		"code": "abc123-12",
-		"thumbnail": "imajkljkge.jpg",
-		"stock": "504",
+		"price": "2.0",
+		"description": "Descripcion de un super producto",
+		"code": "azerty233",
+		"thumbnail": "photoBan.jpg",
+		"stock": "1",
 		"category": "Electronics"
 	},
 	{
@@ -26,7 +26,8 @@
 		"price": 49.99,
 		"code": "testWidget123",
 		"stock": 50,
-		"status": true
+		"status": true,
+		"thumbnail": "thisOneDoesntHaveAphontoTillNow.jpg"
 	},
 	{
 		"id": 5831701,
@@ -55,6 +56,15 @@
 		"thumbnail": "fitness_watch_image.jpg",
 		"code": "fitTracker101",
 		"stock": 25,
+		"status": true
+	},
+	{
+		"id": 5831704,
+		"title": "un producto para probar",
+		"description": "a lot of intesresting things to say about this",
+		"price": 123.99,
+		"code": "qwerty12a",
+		"stock": 100,
 		"status": true
 	}
 ]
