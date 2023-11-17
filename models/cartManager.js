@@ -43,7 +43,7 @@ class CartManager {
     }
   }
 
-  getCarts() {
+  getCartById() {
     if (fs.existsSync(this.fileName)) {
       try {
         let carts = fs.readFileSync(this.fileName, "utf-8");
