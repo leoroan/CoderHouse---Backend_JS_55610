@@ -85,4 +85,4 @@ No es necesario realizar ninguna implementación visual, todo el flujo se puede 
     ```
 
 - **Paso 2:** Ejecutar las pruebas utilizando el comando de Mocha:
-  - `npx mocha --require esm` // El flag --require esm se utiliza para habilitar el soporte de módulos ECMAScript (ESM) en Mocha.
+  - `npx mocha` // El flag --require esm se utiliza para habilitar el soporte de módulos ECMAScript (ESM) en Mocha.
