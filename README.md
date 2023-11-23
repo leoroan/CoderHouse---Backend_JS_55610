@@ -72,3 +72,17 @@ No es necesario realizar ninguna implementación visual, todo el flujo se puede 
     ```javascript
     import { uuid } from 'uuidv4';
     ```
+
+## TESTs
+
+- **Paso 1:** Instalar Mocha y Chai como dependencias de desarrollo:
+  - `npm install --save-dev mocha chai`
+
+  - Crear un archivo de prueba de Mocha (por ejemplo, test.js) utilizando afirmaciones de Chai
+    ```javascript
+    import chai from 'chai';
+    const { assert } = chai;
+    ```
+
+- **Paso 2:** Ejecutar las pruebas utilizando el comando de Mocha:
+  - `npx mocha --require esm` // El flag --require esm se utiliza para habilitar el soporte de módulos ECMAScript (ESM) en Mocha.
