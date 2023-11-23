@@ -1,6 +1,6 @@
 import Product from './Product.js';
 import fs from 'fs';
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 class ProductManager {
   constructor(route, file) {
     this.fileName = `${route}${file}`;
@@ -109,7 +109,7 @@ class ProductManager {
   generateUniqueID() {
     //   const maxId = this.products.reduce((max, product) => (product.id > max ? product.id : max), 0);
     //   return maxId + 1;
-    return uuid();
+    return v4();
   }
 
   /**
