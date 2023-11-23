@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "mocha",
+    "setup": "npm init -y && npm install express && npm install -g nodemon && npm i uuidv4 && npm install --save-dev mocha chai",
     "dev": "nodemon src/server.js"
   },
   "keywords": [],
@@ -18,5 +19,8 @@
   "devDependencies": {
     "chai": "^4.3.10",
     "mocha": "^10.2.0"
+  },
+  "directories": {
+    "test": "test"
   }
 }

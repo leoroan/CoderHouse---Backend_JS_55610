@@ -41,6 +41,12 @@ No incluir node_modules
 
 ## REQS
 
+```diff
+- **VIP EDIT:**
+- **PRE-STEP:** 
+  - He creado el comando `npm run setup` que instalará todas las dependencias de una sola vez.
+```
+
 - **Paso 1:** `npm init -y`
   - Express no es nativo de Node.js, por lo tanto, necesitaremos contar con un `package.json` para gestionar las dependencias a instalar. Una vez que tenemos `package.json` en nuestra carpeta, podemos continuar instalando dependencias.
 
