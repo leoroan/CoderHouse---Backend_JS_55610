@@ -60,3 +60,15 @@ No es necesario realizar ninguna implementación visual, todo el flujo se puede 
 - **Paso 4:** `npm install -g nodemon`
   - Nodemon nos permitirá reiniciar automáticamente el servidor en cuanto detecta que hay cambios en el código. 
     De esta manera, podemos concentrarnos en el código, sin tener que realizar el reinicio manual cada vez que queremos ver algo. 
+  - Recordar agregar la anotacion en el archivo package.json:
+    ```javascript
+    "scripts": {
+      "dev": "nodemon src/server.js"
+    }
+    ```
+
+- **Paso 5:** `npm i uuidv4`
+  - Hacemos uso de la libreria "uuid" importandola de la siguiente manera:
+    ```javascript
+    import { uuid } from 'uuidv4';
+    ```
