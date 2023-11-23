@@ -1,0 +1,22 @@
+{
+  "name": "coderhouse---backend_js_55610",
+  "version": "1.0.0",
+  "description": "Repo con los tps y trabajo final del curso de Back-End de \"Coder House\" 2023",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0"
+  }
+}
