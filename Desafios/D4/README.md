@@ -86,4 +86,4 @@ No incluir node_modules
     ```
 
 - **Paso 2:** Ejecutar las pruebas utilizando el comando de Mocha:
-  - `npx mocha` // El flag --require esm se utiliza para habilitar el soporte de módulos ECMAScript (ESM) en Mocha.
+  - `npx mocha`
