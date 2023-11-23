@@ -47,9 +47,9 @@ No es necesario realizar ninguna implementación visual, todo el flujo se puede 
   - Procedemos a instalar de manera local Express.js. Al ejecutar este comando, notaremos cómo se genera una carpeta `node_modules`, que es donde se encuentra almacenado Express.js. A partir de este punto, ya contamos con la estructura elemental instalada, el resto es más "flexible".
 
 - **Paso 3:** Estructurar el proyecto
-  - Se recomienda tener una carpeta `src`, donde vivirá todo nuestro código, dentro del cual crearemos un archivo con el nombre `app.js`.
+  - Se recomienda tener una carpeta `src`, donde vivirá todo nuestro código, dentro del cual crearemos un archivo con el nombre `server.js`.
 
-  - Finalmente, el archivo `app.js` ya puede importar la dependencia instalada de Express.js, ya sea por CommonJS:
+  - Finalmente, el archivo `server.js` ya puede importar la dependencia instalada de Express.js, ya sea por CommonJS:
     ```javascript
     const express = require('express');
     ```
