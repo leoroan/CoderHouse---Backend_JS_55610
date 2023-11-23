@@ -41,10 +41,10 @@ No incluir node_modules
 
 ## REQS
 
+### **VIP EDIT:**
 ```diff
-- **VIP EDIT:**
 - **PRE-STEP:** 
-  - He creado el comando `npm run setup` que instalará todas las dependencias de una sola vez.
+  - He creado en "package.json" el script >> `npm run setup` que instalará todas las dependencias (a continuacion) de una sola vez...
 ```
 
 - **Paso 1:** `npm init -y`
