@@ -1,6 +1,7 @@
 import express from 'express';
 import productsRouter from "./routes/products.router.js";
 import cartRouter from "./routes/cart.router.js";
+import homeRouter from "./routes/home.router.js";
 
 //D4 imports
 import handlebars from "express-handlebars";
@@ -15,8 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Configuramos el engine
-app.engine(
-  "hbs",
+app.engine("hbs",
   handlebars.engine({
     extname: "hbs",
     defaultLayout: "main",
@@ -31,10 +31,7 @@ app.set("views", `${__dirname}/views`);
 app.use(express.static(`${__dirname}/public`));
 
 // Ruta main
-app.get("/", (req, res) => {
-  res.status(200);
-});
-
+app.use("/", homeRouter);
 // Routes
 app.use("/api/products", productsRouter);
 app.use("/api/cart", cartRouter);
