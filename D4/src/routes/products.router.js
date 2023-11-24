@@ -12,7 +12,15 @@ const router = Router();
 // Get all products
 router.get("/", getLimitMiddleware, (req, res) => {
   const { products } = req;
-  res.status(200).json({ products });
+  res.render("products", {
+    fileFavicon: "favicon.ico",
+    fileCss: "styles.css",
+    fileJs: "scripts.js",
+    title: "Let´s go shopping",
+    name: undefined,
+    products: products,
+  });
+  res.status(200);
 });
 
 // Get a product by id
