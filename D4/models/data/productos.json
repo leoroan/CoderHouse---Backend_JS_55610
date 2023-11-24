@@ -4,7 +4,7 @@
 		"title": "producto de prueba para borrar",
 		"description": "Este es un producto prueba para borrar",
 		"price": 299,
-		"thumbnail": "Sin imagen",
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
 		"code": "bcd456",
 		"stock": 25
 	},
@@ -15,7 +15,7 @@
 		"price": "2.0",
 		"description": "Descripcion de un super producto",
 		"code": "azerty233",
-		"thumbnail": "photoBan.jpg",
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
 		"stock": "1",
 		"category": "Electronics"
 	},
@@ -27,7 +27,7 @@
 		"code": "testWidget123",
 		"stock": 50,
 		"status": true,
-		"thumbnail": "thisOneDoesntHaveAphontoTillNow.jpg"
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
 	},
 	{
 		"id": 5831701,
