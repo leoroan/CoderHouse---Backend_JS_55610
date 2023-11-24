@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "mocha",
-    "setup": "npm init -y && npm install express && npm install -g nodemon && npm i uuidv4 && npm install --save-dev mocha chai && npm install express express-handlebars",
+    "setup": "npm init -y && npm install express && npm install -g nodemon && npm install uuidv4 && npm install --save-dev mocha chai && npm install express express-handlebars",
     "dev": "nodemon src/server.js"
   },
   "keywords": [],
