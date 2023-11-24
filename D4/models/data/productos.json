@@ -1,80 +1,152 @@
 [
 	{
-		"id": 5831698,
-		"title": "producto de prueba para borrar",
-		"description": "Este es un producto prueba para borrar",
-		"price": 299,
+		"id": 1001,
+		"title": "Laptop Ultrabook XYZ",
+		"description": "Potente laptop con procesador i7 y 16GB de RAM",
+		"price": 1299.99,
 		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
-		"code": "bcd456",
-		"stock": 25
-	},
-	{
-		"id": 5831699,
-		"title": "The BRAND new product ",
-		"status": true,
-		"price": "2.0",
-		"description": "Descripcion de un super producto",
-		"code": "azerty233",
-		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
-		"stock": "1",
-		"category": "Electronics"
-	},
-	{
-		"id": 5831700,
-		"title": "Testing Widget",
-		"description": "A versatile widget for testing purposes",
-		"price": 49.99,
-		"code": "testWidget123",
+		"code": "LTPT001",
 		"stock": 50,
-		"status": true,
-		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+		"oldPrice": 1499.99
 	},
 	{
-		"id": 5831701,
-		"title": "Smart Home Thermostat",
-		"description": "Control the climate of your home with this smart thermostat",
-		"price": 149.99,
-		"thumbnail": "thermostat_image.jpg",
-		"code": "smartThermostat456",
-		"stock": 30,
-		"status": true
+		"id": 1002,
+		"title": "Smartphone Galaxy Z",
+		"description": "Teléfono inteligente con pantalla plegable y cámara de alta resolución",
+		"price": 899.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "PHN002",
+		"stock": 40,
+		"oldPrice": 999.99
 	},
 	{
-		"id": 5831702,
-		"title": "Wireless Noise-Canceling Headphones",
-		"description": "Immerse yourself in high-quality sound with these wireless headphones",
-		"price": 199.99,
-		"code": "wirelessAudio789",
-		"stock": 15,
-		"status": true
+		"id": 1003,
+		"title": "TV LED 4K Spectrum",
+		"description": "Televisor de 55 pulgadas con tecnología de imagen 4K",
+		"price": 699.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "TV004",
+		"stock": 35,
+		"oldPrice": 799.99
 	},
 	{
-		"id": 5831703,
-		"title": "Fitness Tracker Watch",
-		"description": "Stay active and monitor your fitness with this advanced tracker watch",
-		"price": 79.99,
-		"thumbnail": "fitness_watch_image.jpg",
-		"code": "fitTracker101",
+		"id": 1004,
+		"title": "Cámara DSLR ProCapture",
+		"description": "Cámara profesional con sensor de 24MP y capacidad de grabación en 4K",
+		"price": 1299.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "CAM005",
 		"stock": 25,
-		"status": true
+		"oldPrice": 1499.99
 	},
 	{
-		"id": 5831704,
-		"title": "un producto para probar",
-		"description": "a lot of intesresting things to say about this",
-		"price": 123.99,
-		"code": "qwerty12a",
-		"stock": 100,
-		"status": true
+		"id": 1005,
+		"title": "Auriculares Inalámbricos Pulse",
+		"description": "Auriculares Bluetooth con cancelación de ruido y batería de larga duración",
+		"price": 129.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "HDP006",
+		"stock": 60,
+		"oldPrice": 149.99
 	},
 	{
-		"id": "7698de6f-2967-4822-8828-e578c415743e",
-		"title": "Coca Cola",
-		"description": "a lot of intesresting things to say about this",
-		"price": 123.99,
-		"code": "supremeCode123",
-		"stock": 100,
-		"status": true,
-		"category": "toys"
+		"id": 1006,
+		"title": "Tablet Nexus Pro",
+		"description": "Tableta con pantalla de 10 pulgadas y procesador de alto rendimiento",
+		"price": 299.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "TAB007",
+		"stock": 20,
+		"oldPrice": 349.99
+	},
+	{
+		"id": 1007,
+		"title": "Refrigerador FrostFree 400L",
+		"description": "Refrigerador moderno con tecnología sin escarcha y capacidad de 400 litros",
+		"price": 799.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "REF008",
+		"stock": 15,
+		"oldPrice": 899.99
+	},
+	{
+		"id": 1008,
+		"title": "Silla de Oficina Ergonómica",
+		"description": "Silla ajustable con soporte lumbar y reposabrazos ajustables",
+		"price": 149.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "CHA009",
+		"stock": 30,
+		"oldPrice": 179.99
+	},
+	{
+		"id": 1009,
+		"title": "Robot Aspirador SmartClean",
+		"description": "Aspiradora robótica con mapeo inteligente y control por aplicación",
+		"price": 199.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "ROB010",
+		"stock": 25,
+		"oldPrice": 229.99
+	},
+	{
+		"id": 1010,
+		"title": "Impresora Todo-en-Uno PrintMaster",
+		"description": "Impresora multifunción con capacidad de impresión a doble cara y escáner de alta resolución",
+		"price": 179.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "PRN011",
+		"stock": 40,
+		"oldPrice": 199.99
+	},
+	{
+		"id": 1011,
+		"title": "Bicicleta de Montaña TrailBlazer",
+		"description": "Bicicleta todoterreno con cuadro de aluminio y suspensión delantera",
+		"price": 499.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "BIC012",
+		"stock": 20,
+		"oldPrice": 599.99
+	},
+	{
+		"id": 1012,
+		"title": "Set de Ollas y Sartenes Chef's Choice",
+		"description": "Juego de utensilios de cocina antiadherentes con mango ergonómico",
+		"price": 89.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "COO013",
+		"stock": 35,
+		"oldPrice": 99.99
+	},
+	{
+		"id": 1013,
+		"title": "Altavoces Bluetooth Harmony Sound",
+		"description": "Altavoces inalámbricos con sonido envolvente y conexión Bluetooth 5.0",
+		"price": 79.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "SPK014",
+		"stock": 50,
+		"oldPrice": 89.99
+	},
+	{
+		"id": 1014,
+		"title": "Mochila Resistente al Agua AdventurePro",
+		"description": "Mochila duradera con compartimento para laptop y resistente al agua",
+		"price": 49.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "BAG015",
+		"stock": 30,
+		"oldPrice": 59.99
+	},
+	{
+		"id": 1015,
+		"title": "Reloj Inteligente TechTime",
+		"description": "Smartwatch con monitor de frecuencia cardíaca y GPS integrado",
+		"price": 159.99,
+		"thumbnail": "https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
+		"code": "WAT016",
+		"stock": 15,
+		"oldPrice": 179.99
 	}
 ]
