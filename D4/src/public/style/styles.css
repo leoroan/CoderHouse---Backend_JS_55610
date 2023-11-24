@@ -10824,3 +10824,26 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+/* Home made ones */
+
+.pulsate-fwd {
+	animation: pulsate-fwd 0.5s ease-in-out infinite both;
+}
+
+/**
+ * ----------------------------------------
+ * animation pulsate-fwd
+ * ----------------------------------------
+ */
+ @keyframes pulsate-fwd {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
