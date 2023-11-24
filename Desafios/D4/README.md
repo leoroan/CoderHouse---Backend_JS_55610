@@ -80,6 +80,47 @@ No incluir node_modules
     import { uuid } from 'uuidv4';
     ```
 
+- **Paso 6:** `npm install express express-handlebars`
+    ```javascript
+    import handlebars from "express-handlebars";
+    ```
+    ```javascript
+
+    // Configuracion del engine en "server.js"
+    app.engine(
+      "hbs",
+      handlebars.engine({
+        // index.hbs
+        extname: "hbs",
+        // Plantilla principal
+        defaultLayout: "main",
+      })
+    );
+    
+    // Seteo del motor
+    app.set("view engine", "hbs");
+    app.set("views", `${__dirname}/views`);
+    ```
+    **COMENTADO**
+    ```javascript
+    app.engine("hbs", handlebars.engine({ ... })):
+    ```
+    - Aquí, se está configurando el motor de plantillas Handlebars con Express. El argumento "hbs" se refiere al nombre del motor, y handlebars.engine({ ... }) parece ser una configuración específica para el motor Handlebars. Algunas de las configuraciones que se están pasando incluyen el tipo de extensión (extname: "hbs") y la plantilla predeterminada (defaultLayout: "main").
+
+    ```javascript
+    app.set("view engine", "hbs"):
+    ```
+    - Esta línea establece el motor de vista de Express como Handlebars. Esto significa que cuando renderices vistas en Express, el sistema utilizará Handlebars como motor para procesar las plantillas.
+
+    ```javascript
+    app.set("views", ${__dirname}/views):
+    ```
+    - Aquí se establece el directorio de vistas para la aplicación. En este caso, se está utilizando el directorio views que está ubicado en el mismo directorio que este código (__dirname). Esto es donde la aplicación buscará las plantillas de Handlebars para renderizar.
+
+
+
+
+
 ## TESTs
 
 - **Paso 1:** Instalar Mocha y Chai como dependencias de desarrollo:
