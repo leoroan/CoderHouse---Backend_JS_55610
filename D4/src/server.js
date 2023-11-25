@@ -6,10 +6,15 @@ import homeRouter from "./routes/home.router.js";
 //D4 imports
 import handlebars from "express-handlebars";
 import __dirname from "./util.js";
-
+import http from 'http';
+import { Server } from "socket.io";
 
 const PORT = 8080;
 const app = express();
+const server = http.createServer(app);
+
+//conf. para los sockets
+const io = new Server(server);
 
 // Middlewares
 app.use(express.json());
@@ -32,8 +37,14 @@ app.use(express.static(`${__dirname}/public`));
 
 // Ruta main
 app.use("/", homeRouter);
+
 // Routes
 app.use("/api/products", productsRouter);
 app.use("/api/cart", cartRouter);
 
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+//sockets
+io.on("connection", (socket) => {
+  console.log("New client connected");
+});
+
+server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

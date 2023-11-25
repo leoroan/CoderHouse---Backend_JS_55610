@@ -123,6 +123,8 @@ No incluir node_modules
     ```javascript
     import { Server } from "socket.io";
     ```
+  - también necesitamos un paquete HTTP para que funcione Socket.io: `npm install -s http`
+
 
 
 ## TESTs
