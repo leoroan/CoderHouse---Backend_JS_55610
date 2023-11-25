@@ -9,11 +9,12 @@ import __dirname from "./util.js";
 import http from 'http';
 import { Server } from "socket.io";
 
+//express conf.
 const PORT = 8080;
 const app = express();
-const server = http.createServer(app);
 
 //conf. para los sockets
+const server = http.createServer(app);
 const io = new Server(server);
 
 // Middlewares
@@ -47,4 +48,5 @@ io.on("connection", (socket) => {
   console.log("New client connected");
 });
 
+//now listening from "server"(server = http.createServer(app))
 server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
