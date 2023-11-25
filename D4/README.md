@@ -119,12 +119,22 @@ No incluir node_modules
 
 - **Paso 7:** `npm install socket.io`
   - Para trabajar con websockets, tanto para cliente como para servidor.
-
-    ```javascript
-    import { Server } from "socket.io";
-    ```
   - también necesitamos un paquete HTTP para que funcione Socket.io: `npm install -s http`
+  ```javascript
+    import { Server } from "socket.io";
+    import http from 'http';
+    ```
+    ```javascript
+    //sockets test connection server-side
+    io.on("connection", (socket) => {
+    console.log("New client connected");
+    }); 
 
+    // socket client-side
+    const socket = io();
+    ```
+
+   
 
 
 ## TESTs
