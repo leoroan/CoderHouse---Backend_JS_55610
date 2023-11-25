@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "mocha",
-    "setup": "npm init -y && npm install express && npm install -g nodemon && npm install uuidv4 && npm install --save-dev mocha chai && npm install express express-handlebars && npm install socket.io",
+    "setup": "npm init -y && npm install express && npm install -g nodemon && npm install uuidv4 && npm install --save-dev mocha chai && npm install express express-handlebars && npm install socket.io && npm install -s http",
     "dev": "nodemon src/server.js"
   },
   "keywords": [],
@@ -15,6 +15,7 @@
   "dependencies": {
     "express": "^4.18.2",
     "express-handlebars": "^7.1.2",
+    "http": "^0.0.1-security",
     "socket.io": "^4.7.2",
     "uuidv4": "^6.2.13"
   },
