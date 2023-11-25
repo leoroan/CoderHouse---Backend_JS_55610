@@ -46,7 +46,12 @@ app.use("/api/cart", cartRouter);
 //sockets
 io.on("connection", (socket) => {
   console.log("New client connected");
+
+  socket.on("message", (data) => {
+    console.log(data);
+  });
 });
+
 
 //now listening from "server"(server = http.createServer(app))
 server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
