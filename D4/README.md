@@ -117,8 +117,12 @@ No incluir node_modules
     ```
     - Aquí se establece el directorio de vistas para la aplicación. En este caso, se está utilizando el directorio views que está ubicado en el mismo directorio que este código (__dirname). Esto es donde la aplicación buscará las plantillas de Handlebars para renderizar.
 
+- **Paso 7:** `npm install socket.io`
+  - Para trabajar con websockets, tanto para cliente como para servidor.
 
-
+    ```javascript
+    import { Server } from "socket.io";
+    ```
 
 
 ## TESTs
