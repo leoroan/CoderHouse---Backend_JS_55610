@@ -6,7 +6,7 @@ import homeRouter from "./routes/home.router.js";
 //D4 imports
 import handlebars from "express-handlebars";
 import __dirname from "./util.js";
-import http from 'http';
+// import http from 'http';
 import { Server } from "socket.io";
 
 //express conf.
@@ -14,8 +14,9 @@ const PORT = 8080;
 const app = express();
 
 //conf. para los sockets
-const server = http.createServer(app);
-const io = new Server(server);
+// const server = http.createServer(app);
+const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+const io = new Server(httpServer);
 
 // Middlewares
 app.use(express.json());
@@ -54,4 +55,4 @@ io.on("connection", (socket) => {
 
 
 //now listening from "server"(server = http.createServer(app))
-server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+// server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
