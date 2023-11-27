@@ -4,7 +4,7 @@ import { getLimitMiddleware } from "../../middlewares/productManagerMiddleware.j
 const router = Router();
 
 router.get("/", (req, res, next) => {
-  req.query.limit = 3;
+  req.query.limit = 5;
   next();
   
 }, getLimitMiddleware, (req, res) => {
