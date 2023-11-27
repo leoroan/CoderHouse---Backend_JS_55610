@@ -13,7 +13,7 @@ router.get("/", (req, res, next) => {
   res.render("home", {
     fileFavicon: "favicon.ico",
     fileCss: "styles.css",
-    fileJs: "scripts.js",
+    fileJs: "home.scripts.js",
     title: "Home Shop",
     name: undefined,
     products: products,

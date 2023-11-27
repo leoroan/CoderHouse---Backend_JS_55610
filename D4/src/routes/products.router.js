@@ -15,7 +15,7 @@ router.get("/", getLimitMiddleware, (req, res) => {
   res.render("products", {
     fileFavicon: "favicon.ico",
     fileCss: "styles.css",
-    fileJs: "scripts.js",
+    fileJs: "products.scripts.js",
     title: "Let´s go shopping",
     name: undefined,
     products: products,
