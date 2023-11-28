@@ -12,13 +12,13 @@ const router = Router();
 // Get all products
 router.get("/", getLimitMiddleware, (req, res) => {
   const { products } = req;
-  res.render("products", {
+  res.render("realTimeProducts", {
     fileFavicon: "favicon.ico",
     fileCss: "styles.css",
-    fileJs: "products.scripts.js",
+    fileJs: "realTimeProducts.scripts.js",
     title: "Let´s go shopping",
     name: undefined,
-    products: products,
+    // products: products,
   });
   res.status(200);
 });
