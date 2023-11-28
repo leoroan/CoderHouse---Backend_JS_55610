@@ -1,6 +1,6 @@
 console.log("hello there!");
 
-const socket = io();
+// const socket = io();
 
-socket.emit('message', "home conecction")
+// socket.emit('message', "home conecction")
 
