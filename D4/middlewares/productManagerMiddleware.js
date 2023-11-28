@@ -7,6 +7,17 @@ const handleErrors = (res, error) => {
   res.status(500).json({ error: 'Error: ' + error.message });
 };
 
+//get all products
+const getAllProductsMiddleware  = async (req, res, next) => {
+  try {
+    const products = await productManager.getProducts();
+    req.products = products;
+    next();
+  } catch (error) {
+    handleErrors(res, error);
+  }
+};
+
 // Get product by id
 const getProductByIdMiddleware = async (req, res, next) => {
   try {
@@ -77,5 +88,6 @@ export {
   getLimitMiddleware,
   postProductMiddleware,
   putProductMiddleware,
-  deleteProductMiddleware
+  deleteProductMiddleware,
+  getAllProductsMiddleware
 };
