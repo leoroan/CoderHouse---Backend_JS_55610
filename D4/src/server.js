@@ -62,7 +62,6 @@ io.on("connection", (socket) => {
   socket.emit("product_list", products);
 
   socket.on("new_product", (data) => {
-    console.log(data);
     pm.addProduct(data);
     
     socket.emit("product_list", products);
