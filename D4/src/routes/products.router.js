@@ -18,6 +18,7 @@ router.get("/", getLimitMiddleware, (req, res) => {
     fileJs: "realTimeProducts.scripts.js",
     title: "Let´s go shopping",
     name: undefined,
+    add: true,
     // products: products,
   });
   res.status(200);

@@ -17,6 +17,7 @@ router.get("/", (req, res, next) => {
     title: "Home Shop",
     name: undefined,
     products: products,
+    add:false
   });
 });
 
