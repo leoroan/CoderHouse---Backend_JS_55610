@@ -148,5 +148,16 @@
 		"code": "WAT016",
 		"stock": 15,
 		"oldPrice": 179.99
+	},
+	{
+		"id": "f5c6c8d0-9fc6-47ac-9f92-959cc2e75543",
+		"title": "ChromeCast-er",
+		"description": "A great media device",
+		"price": "25.99",
+		"thumbnail": "https://img.freepik.com/foto-gratis/vista-superior-concepto-musica-hermosa_23-2148605822.jpg?w=1380&t=st=1701219234~exp=1701219834~hmac=9ce9962ad7b5491aad8017415f1425d6953c7eedb9ef6ba4fd8b15d6a52e99b1",
+		"code": "chrome1233",
+		"stock": "21",
+		"status": true,
+		"category": "electronic"
 	}
 ]

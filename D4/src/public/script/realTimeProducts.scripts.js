@@ -31,6 +31,7 @@ socket.on('product_list', (data) => {
       <div class="col mb-5">
         <div class="card border-dark mb-3" style="max-width: 18rem;">
           <div class="card-header"></div>
+          <img class="card-img-top" src=${prod.thumbnail} alt=${prod.title} />
           <div class="card-body">
             <h5 class="card-title">${prod.title}</h5>
             <p class="card-text">${prod.description}</p>
