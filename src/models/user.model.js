@@ -12,6 +12,10 @@ const userSchema = new Schema({
     type: String,
     enum: ["Frontend", "Backend", "JavaScript"],
   },
+  updated: {
+    type: Date,
+    default: Date.now
+  },
 });
 
 const userModel = model("User", userSchema);
