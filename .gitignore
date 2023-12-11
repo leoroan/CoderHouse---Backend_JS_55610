@@ -1,4 +1,5 @@
 # VSCode
+src/env.js
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
