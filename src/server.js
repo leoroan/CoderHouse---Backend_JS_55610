@@ -26,7 +26,7 @@ app.engine(
 // Mongoose connection
 mongoose
   .connect(
-    `mongodb+srv://leoroan:${password}@cluster0.pu728w1.mongodb.net/${db_name}?retryWrites=true&w=majority`
+    `mongodb+srv://test:${password}@cluster0.pu728w1.mongodb.net/${db_name}?retryWrites=true&w=majority`
   )
   .then(() => {
     console.log("DB Connected");
