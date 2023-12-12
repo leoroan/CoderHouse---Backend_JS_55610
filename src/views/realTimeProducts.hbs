@@ -1,0 +1,108 @@
+<section class="py-3 mb-2 h-100">
+
+  <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-bg-light border-dark border-3">
+        <div class="modal-header">
+          <h5 class="modal-title"> Add new product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form class="row g-3 needs-validation was-validated" novalidate="">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" class="form-control border-dark" id="title" placeholder="Enter product title" required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please choose a title.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control border-dark" id="description" rows="3" placeholder="Enter product description"
+                required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="number" class="form-control border-dark" id="price" placeholder="Enter product price" required>
+            </div>
+
+            <div class="form-group">
+              <label for="thumbnail">Thumbnail URL</label>
+              <input type="text" class="form-control border-dark" id="thumbnail" placeholder="Enter thumbnail URL"
+                value="http://www." required>
+            </div>
+
+            <div class="form-group">
+              <label for="code">Product Code</label>
+              <input type="text" class="form-control border-dark" id="code" placeholder="Enter product code, like ABC-123" required>
+            </div>
+
+            <div class="form-group">
+              <label for="stock">Stock</label>
+              <input type="number" class="form-control border-dark" id="stock" placeholder="Enter product stock" required>
+            </div>
+
+            <div class="form-group">
+              <label for="category">Category</label>
+              <input type="text" class="form-control border-dark" id="category" placeholder="Enter category" required>
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button id="saveNewProduct" type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container px-2 px-lg-5 mt-1">
+    <div>
+      <p class="text-center fs-5 fw-bolder lead text-black-50 mb-3 fst-italic"> Our products </p>
+      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+        id="mainCardProductContainer">
+        {{!-- a card --}}
+        {{#each products}}
+        <div class="col mb-5">
+          <div class="card h-100">
+            <!-- Sale badge-->
+            {{#if isSale}}
+            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+            {{/if}}
+            <!-- Product image-->
+            <img class="card-img-top" src={{this.thumbnail}} alt={{this.title}} />
+            <!-- Product details-->
+            <div class="card-body p-4">
+              <div class="text-center">
+                <!-- Product name-->
+                <h5 class="fw-bolder">{{this.title}}</h5>
+                <!-- Product reviews-->
+                <div class="d-flex justify-content-center small text-warning mb-2">
+                  <div class="bi-star-fill">{{this.description}}</div>
+                </div>
+                <!-- Product price-->
+                <span class="text-muted text-decoration-line-through">${{this.oldPrice}}</span>
+                ${{this.price}}
+              </div>
+            </div>
+            <!-- Product actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</section>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/script/{{fileJs}}"></script>
