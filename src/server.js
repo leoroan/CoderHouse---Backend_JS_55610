@@ -56,7 +56,8 @@ app.use("/api/products", productsRouter);
 // Mongoose connection
 mongoose
   .connect(
-    `mongodb+srv://test:${PASSWORD}@cluster0.pu728w1.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+    // `mongodb+srv://test:${PASSWORD}@cluster0.pu728w1.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+    `mongodb+srv://test:test@cluster0.pu728w1.mongodb.net/testdb?retryWrites=true&w=majority`
   )
   .then(() => {
     console.log("DB Connected");

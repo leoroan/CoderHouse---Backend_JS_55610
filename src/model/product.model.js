@@ -19,23 +19,20 @@ const productSchema = new Schema({
   },
   thumbnail: {
     type: String,
-    required: true,
   },
   code: {
     type: String,
     required: true,
+    unique: true,
   },
   stock: {
     type: Number,
-    required: true,
   },
   status: {
     type: Boolean,
-    default: true,
   },
   category: {
     type: String,
-    required: true,
   },
   updated: {
     type: Date,
