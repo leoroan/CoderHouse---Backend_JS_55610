@@ -1,14 +1,13 @@
 import express from 'express';
-import productsRouter from "./routes/products.router.js";
-import cartRouter from "./routes/cart.router.js";
-import homeRouter from "./routes/home.router.js";
-import aboutRouter from "./routes/about.router.js";
 import { PASSWORD, PORT, DB_NAME } from "./env.js";
+import productsRouter from "./routes/products.router.js";
+import viewsRouter from "./routes/views.router.js";
 import mongoose from "mongoose";
 
 //D4 imports
 import handlebars from "express-handlebars";
 import __dirname from "./util.js";
+
 // import http from 'http';
 import { Server } from "socket.io";
 
@@ -19,7 +18,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//conf. para los sockets
 // const server = http.createServer(app);
 const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 const io = new Server(httpServer);
@@ -40,35 +38,20 @@ app.set("views", `${__dirname}/views`);
 app.use(express.static(`${__dirname}/public`));
 
 // Ruta main
-app.use("/", homeRouter);
+app.use("/", viewsRouter);
 
 // Routes
 app.use("/api/products", productsRouter);
-app.use("/api/cart", cartRouter);
-app.use("/aboutMe", aboutRouter);
-
-// Leo la lista de productos
-import ProductManager from './dao/ProductManager.js';
-const pm = new ProductManager("./dao/data/", "productos.json");
 
 //sockets
-io.on("connection", (socket) => {
-  console.log("New client connected");
+// io.on("connection", (socket) => {
+//   console.log("New client connected");
 
-  socket.on("message", (data) => {
-    console.log(data);
-  });
+//   socket.on("message", (data) => {
+//     console.log(data);
+//   });
 
-  const products = pm.getProducts();
-  socket.emit("product_list", products);
-
-  socket.on("new_product", (data) => {
-    pm.addProduct(data);
-    
-    socket.emit("product_list", products);
-  });
-
-});
+// });
 
 // Mongoose connection
 mongoose
