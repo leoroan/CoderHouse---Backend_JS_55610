@@ -1,4 +1,4 @@
-import { productModel } from "../../model/product.model";
+import { productModel } from "../../model/product.model.js";
 
 class ProductDAO {
   // Insert a new product
@@ -47,4 +47,4 @@ class ProductDAO {
   }
 }
 
-module.exports = ProductDAO;
+export default ProductDAO;

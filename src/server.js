@@ -50,25 +50,18 @@ app.use("/api/products", productsRouter);
 //   socket.on("message", (data) => {
 //     console.log(data);
 //   });
-
 // });
 
 // Mongoose connection
 mongoose
   .connect(
     // `mongodb+srv://test:${PASSWORD}@cluster0.pu728w1.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
-    `mongodb+srv://test:test@cluster0.pu728w1.mongodb.net/testdb?retryWrites=true&w=majority`
+    `mongodb+srv://test:test@cluster0.pu728w1.mongodb.net/ecommerce?retryWrites=true&w=majority`
   )
   .then(() => {
     console.log("DB Connected");
   })
   .catch((err) => {
-    console.log("Hubo un error");
+    console.log("There were an error trying to connect db...");
     console.log(err);
   });
-
-
-
-
-//now listening from "server"(server = http.createServer(app))
-// server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

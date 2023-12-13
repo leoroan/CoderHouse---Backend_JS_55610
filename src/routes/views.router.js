@@ -8,6 +8,8 @@ router.get("/", (req, res, next) => {
     fileCss: "styles.css",
     fileJs: "main.scripts.js",
     title: "Home Shop",
+    name: undefined,
+    // products: products,
   });
 });
 
