@@ -43,6 +43,6 @@ const productSchema = new Schema({
   }
 });
 
-const productModel = model("User", productSchema);
+const productModel = model("Product", productSchema);
 
 export { productModel };
