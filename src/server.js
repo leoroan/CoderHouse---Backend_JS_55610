@@ -48,8 +48,8 @@ app.use("/api/cart", cartRouter);
 app.use("/aboutMe", aboutRouter);
 
 // Leo la lista de productos
-import ProductManager from '../models/ProductManager.js';
-const pm = new ProductManager("./models/data/", "productos.json");
+import ProductManager from './dao/ProductManager.js';
+const pm = new ProductManager("./dao/data/", "productos.json");
 
 //sockets
 io.on("connection", (socket) => {

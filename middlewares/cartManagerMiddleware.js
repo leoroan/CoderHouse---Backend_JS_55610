@@ -1,5 +1,5 @@
 
-import CartManager from "../models/CartManager.js";
+import CartManager from "../src/dao/cartManager.js";
 
 const cartManager = new CartManager("./models/data/", "cart.json");
 

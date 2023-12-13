@@ -1,6 +1,7 @@
 import Product from './Product.js';
 import fs from 'fs';
 import { v4 } from 'uuid';
+
 class ProductManager {
   constructor(route, file) {
     this.fileName = `${route}${file}`;

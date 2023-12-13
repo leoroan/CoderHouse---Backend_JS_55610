@@ -1,6 +1,6 @@
-import ProductManager from "../models/ProductManager.js";
+import ProductManager from "../src/dao/ProductManager.js";
 
-const productManager = new ProductManager("./models/data/", "productos.json");
+const productManager = new ProductManager("../src/dao/data/", "productos.json");
 const products = productManager.getProducts();
 
 const handleErrors = (res, error) => {

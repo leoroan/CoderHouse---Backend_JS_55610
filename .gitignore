@@ -1,5 +1,4 @@
 # VSCode
-src/env.js
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -172,3 +171,5 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+src/env.js
