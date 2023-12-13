@@ -3,6 +3,8 @@ import productsRouter from "./routes/products.router.js";
 import cartRouter from "./routes/cart.router.js";
 import homeRouter from "./routes/home.router.js";
 import aboutRouter from "./routes/about.router.js";
+import { PASSWORD, PORT, DB_NAME } from "./env.js";
+import mongoose from "mongoose";
 
 //D4 imports
 import handlebars from "express-handlebars";
@@ -11,17 +13,16 @@ import __dirname from "./util.js";
 import { Server } from "socket.io";
 
 //express conf.
-const PORT = 8080;
 const app = express();
+
+// Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //conf. para los sockets
 // const server = http.createServer(app);
 const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 const io = new Server(httpServer);
-
-// Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 // Configuramos el engine
 app.engine("hbs",
@@ -31,11 +32,11 @@ app.engine("hbs",
   })
 );
 
-// Seteamos nuestro motor
+// Seteamos nuestro motor de handlebar
 app.set("view engine", "hbs");
 app.set("views", `${__dirname}/views`);
 
-// Public
+// Public - carpeta con estáticos
 app.use(express.static(`${__dirname}/public`));
 
 // Ruta main
@@ -68,6 +69,19 @@ io.on("connection", (socket) => {
   });
 
 });
+
+// Mongoose connection
+mongoose
+  .connect(
+    `mongodb+srv://test:${PASSWORD}@cluster0.pu728w1.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
+  )
+  .then(() => {
+    console.log("DB Connected");
+  })
+  .catch((err) => {
+    console.log("Hubo un error");
+    console.log(err);
+  });
 
 
 
