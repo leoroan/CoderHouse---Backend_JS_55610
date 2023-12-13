@@ -1,15 +1,15 @@
 import { Schema, model } from "mongoose";
 
 const messageSchema = new Schema({
-  sender: {
+  userSender: {
     type: String,
     required: true,
   },
-  receiver: {
+  userReceiver: {
     type: String,
     required: true,
   },
-  content: {
+  message: {
     type: String,
     required: true,
   },
