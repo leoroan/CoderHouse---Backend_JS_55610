@@ -11,8 +11,11 @@ class ProductDAO {
   }
 
   // Retrieve all products
-  async getAllProducts() {
+  async getAllProducts(limit) {
     try {
+      if (limit) {
+        return await productModel.find().limit(limit);
+      }
       return await productModel.find();
     } catch (error) {
       throw error;
