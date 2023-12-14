@@ -66,6 +66,92 @@
     </div>
   </div>
 
+  <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-bg-light border-dark border-3">
+        <div class="modal-header">
+          <h5 class="modal-title"> Edit product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form class="row g-3 needs-validation was-validated" novalidate="">
+            <div class="form-group">
+
+              <label for="editmodal_title">Title</label>
+              <input type="text" class="form-control border-dark" id="editmodal_title" placeholder="Enter product title"
+                required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please choose a title.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control border-dark" id="editmodal_description" rows="3"
+                placeholder="Enter product description" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="number" class="form-control border-dark" id="editmodal_price"
+                placeholder="Enter product price" required>
+            </div>
+
+            <div class="form-group">
+              <label for="oldPrice">Old Price</label>
+              <input type="number" class="form-control border-dark" id="editmodal_oldPrice"
+                placeholder="Enter old product price">
+            </div>
+
+            <div class="form-group">
+              <label for="thumbnail">Thumbnail URL</label>
+              <input type="text" class="form-control border-dark" id="editmodal_thumbnail"
+                placeholder="Enter thumbnail URL" value="http://www." required>
+            </div>
+
+            <div class="form-group">
+              <label for="code">Product Code</label>
+              <input type="text" class="form-control border-dark" id="editmodal_code"
+                placeholder="Enter product code, like ABC-123" required>
+            </div>
+
+            <div class="form-group">
+              <label for="stock">Stock</label>
+              <input type="number" class="form-control border-dark" id="editmodal_stock"
+                placeholder="Enter product stock" required>
+            </div>
+
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select class="form-control border-dark" id="editmodal_status" required>
+                <option value="true" selected>Active</option>
+                <option value="false">Inactive</option>
+              </select>
+              <div class="invalid-feedback">
+                Please choose an status
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="category">Category</label>
+              <input type="text" class="form-control border-dark" id="editmodal_category" placeholder="Enter category">
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button id="saveEditedProduct" type="submit" class="btn btn-primary" onclick="saveEditedProduct">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container px-2 px-lg-5 mt-1">
     <div>
       <label for="limitSelect"> Products to display </label>
@@ -109,8 +195,14 @@
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
               <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
               {{#if ../admin}}
-              <div class="text-center"><a class="btn btn-outline-danger mt-2" data-product-id="{{this._id}}"
-                  onclick="showDeleteAlert(this)"> erase </a></div>
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="text-center"><a class="btn btn-outline-danger mt-2 btn-sm mx-2"
+                    data-product-id="{{this._id}}" onclick="showDeleteAlert(this)"> Delete ❌</a></div>
+
+                <div class="text-center"><a class="btn btn-outline-success mt-2 btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#editProductModal" onclick="editModal('{{this._id}}')"> Edit 🖊 </a></div>
+
+              </div>
               {{/if}}
             </div>
           </div>
