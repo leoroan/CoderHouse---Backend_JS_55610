@@ -27,6 +27,10 @@ app.engine("hbs",
   handlebars.engine({
     extname: "hbs",
     defaultLayout: "main",
+    runtimeOptions: {
+      allowProtoPropertiesByDefault: true,
+      allowProtoMethodsByDefault: true
+    }
   })
 );
 

@@ -2,7 +2,6 @@ import { Router } from "express";
 import ProductDAO from "../daos/dbManager/product.dao.js";
 
 const router = Router();
-
 const productDao = new ProductDAO();
 
 // Get all products

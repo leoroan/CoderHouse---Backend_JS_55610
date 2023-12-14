@@ -23,13 +23,14 @@
 
             <div class="form-group">
               <label for="description">Description</label>
-              <textarea class="form-control border-dark" id="description" rows="3" placeholder="Enter product description"
-                required></textarea>
+              <textarea class="form-control border-dark" id="description" rows="3"
+                placeholder="Enter product description" required></textarea>
             </div>
 
             <div class="form-group">
               <label for="price">Price</label>
-              <input type="number" class="form-control border-dark" id="price" placeholder="Enter product price" required>
+              <input type="number" class="form-control border-dark" id="price" placeholder="Enter product price"
+                required>
             </div>
 
             <div class="form-group">
@@ -40,12 +41,14 @@
 
             <div class="form-group">
               <label for="code">Product Code</label>
-              <input type="text" class="form-control border-dark" id="code" placeholder="Enter product code, like ABC-123" required>
+              <input type="text" class="form-control border-dark" id="code"
+                placeholder="Enter product code, like ABC-123" required>
             </div>
 
             <div class="form-group">
               <label for="stock">Stock</label>
-              <input type="number" class="form-control border-dark" id="stock" placeholder="Enter product stock" required>
+              <input type="number" class="form-control border-dark" id="stock" placeholder="Enter product stock"
+                required>
             </div>
 
             <div class="form-group">
@@ -63,9 +66,18 @@
     </div>
   </div>
 
-
   <div class="container px-2 px-lg-5 mt-1">
     <div>
+      <label for="limitSelect"> Products to display </label>
+      <select id="limitSelect" name="limitSelect">
+        <option value="def" selected>choose</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <!-- Add more options as needed -->
+      </select>
+
       <p class="text-center fs-5 fw-bolder lead text-black-50 mb-3 fst-italic"> Our products </p>
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
         id="mainCardProductContainer">
@@ -74,7 +86,7 @@
         <div class="col mb-5">
           <div class="card h-100">
             <!-- Sale badge-->
-            {{#if isSale}}
+            {{#if admin}}
             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
             {{/if}}
             <!-- Product image-->
@@ -96,6 +108,10 @@
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
               <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+              {{#if ../admin}}
+              <div class="text-center"><a class="btn btn-outline-danger mt-2" data-product-id="{{this._id}}"
+                  onclick="showDeleteAlert(this)"> erase </a></div>
+              {{/if}}
             </div>
           </div>
         </div>
@@ -103,6 +119,7 @@
       </div>
     </div>
   </div>
-</section>
+</section>S
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="/script/{{fileJs}}"></script>
