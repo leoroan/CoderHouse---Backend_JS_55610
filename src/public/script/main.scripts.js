@@ -17,7 +17,6 @@ function showDeleteAlert(button) {
   }
 }
 
-
 async function editModal(productId) {
   try {
     const productData = await getProductById(productId);
@@ -27,7 +26,65 @@ async function editModal(productId) {
   }
 }
 
-function saveEditedProduct(productId) {
+async function saveNewProduct() {
+  let title = document.getElementById('newmodal_title').value;
+  let description = document.getElementById('newmodal_description').value;
+  let price = document.getElementById('newmodal_price').value;
+  let oldPrice = document.getElementById('newmodal_oldPrice').value;
+  let thumbnail = document.getElementById('newmodal_thumbnail').value;
+  let code = document.getElementById('newmodal_code').value;
+  let stock = document.getElementById('newmodal_stock').value;
+  let status = document.getElementById('newmodal_status').value;
+  let category = document.getElementById('newmodal_category').value;
+
+  if (
+    title.trim() !== "" &&
+    description.trim() !== "" &&
+    price.trim() !== "" &&
+    oldPrice.trim() !== "" &&
+    thumbnail.trim() !== "" &&
+    code.trim() !== "" &&
+    stock.trim() !== "" &&
+    status.trim() !== "" &&
+    category.trim() !== ""
+  ) {
+    const product = {
+      title,
+      description,
+      price,
+      oldPrice,
+      thumbnail,
+      code,
+      stock,
+      status,
+      category
+    };
+
+    try {
+      const response = await fetch(`api/products/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      location.reload();
+
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  } else {
+    console.error('Validation error: All fields must be filled');
+  }
+}
+
+
+async function saveEditedProduct(productId) {
   const title = document.getElementById('editmodal_title').value;
   const description = document.getElementById('editmodal_description').value;
   const price = document.getElementById('editmodal_price').value;
@@ -85,8 +142,8 @@ function updateEditModal(productData) {
   document.getElementById('editmodal_stock').value = productData.stock;
   document.getElementById('editmodal_status').value = productData.status;
   document.getElementById('editmodal_category').value = productData.category;
-  var saveButton = document.getElementById("saveEditedProduct");
 
+  var saveButton = document.getElementById("saveEditedProduct");
   saveButton.onclick = function () { saveEditedProduct(productData._id) }
 
 }

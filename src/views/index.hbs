@@ -4,15 +4,17 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content text-bg-light border-dark border-3">
         <div class="modal-header">
-          <h5 class="modal-title"> Add new product</h5>
+          <h5 class="modal-title"> Create new product</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
 
           <form class="row g-3 needs-validation was-validated" novalidate="">
             <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" class="form-control border-dark" id="title" placeholder="Enter product title" required>
+
+              <label for="newmodal_title">Title</label>
+              <input type="text" class="form-control border-dark" id="newmodal_title" placeholder="Enter product title"
+                required>
               <div class="valid-feedback">
                 Looks good!
               </div>
@@ -22,45 +24,62 @@
             </div>
 
             <div class="form-group">
-              <label for="description">Description</label>
-              <textarea class="form-control border-dark" id="description" rows="3"
+              <label for="newmodal_description">Description</label>
+              <textarea class="form-control border-dark" id="newmodal_description" rows="3"
                 placeholder="Enter product description" required></textarea>
             </div>
 
             <div class="form-group">
-              <label for="price">Price</label>
-              <input type="number" class="form-control border-dark" id="price" placeholder="Enter product price"
-                required>
+              <label for="newmodal_price">Price</label>
+              <input type="number" class="form-control border-dark" id="newmodal_price"
+                placeholder="Enter product price" required>
             </div>
 
             <div class="form-group">
-              <label for="thumbnail">Thumbnail URL</label>
-              <input type="text" class="form-control border-dark" id="thumbnail" placeholder="Enter thumbnail URL"
-                value="http://www." required>
+              <label for="newmodal_oldPrice">Old Price</label>
+              <input type="number" class="form-control border-dark" id="newmodal_oldPrice"
+                placeholder="Enter old product price">
             </div>
 
             <div class="form-group">
-              <label for="code">Product Code</label>
-              <input type="text" class="form-control border-dark" id="code"
+              <label for="newmodal_thumbnail">Thumbnail URL</label>
+              <input type="text" class="form-control border-dark" id="newmodal_thumbnail"
+                placeholder="Enter thumbnail URL" value="http://www." required>
+            </div>
+
+            <div class="form-group">
+              <label for="newmodal_code">Product Code</label>
+              <input type="text" class="form-control border-dark" id="newmodal_code"
                 placeholder="Enter product code, like ABC-123" required>
             </div>
 
             <div class="form-group">
-              <label for="stock">Stock</label>
-              <input type="number" class="form-control border-dark" id="stock" placeholder="Enter product stock"
-                required>
+              <label for="newmodal_stock">Stock</label>
+              <input type="number" class="form-control border-dark" id="newmodal_stock"
+                placeholder="Enter product stock" required>
             </div>
 
             <div class="form-group">
-              <label for="category">Category</label>
-              <input type="text" class="form-control border-dark" id="category" placeholder="Enter category" required>
+              <label for="newmodal_status">Status</label>
+              <select class="form-control border-dark" id="newmodal_status" required>
+                <option value="true" selected>Active</option>
+                <option value="false">Inactive</option>
+              </select>
+              <div class="invalid-feedback">
+                Please choose an status
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="newmodal_category">Category</label>
+              <input type="text" class="form-control border-dark" id="newmodal_category" placeholder="Enter category">
             </div>
           </form>
 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button id="saveNewProduct" type="submit" class="btn btn-primary">Save</button>
+          <button id="saveNewProduct" type="submit" class="btn btn-primary" onclick="saveNewProduct()">Save</button>
         </div>
       </div>
     </div>
@@ -170,7 +189,7 @@
         {{!-- a card --}}
         {{#each products}}
         <div class="col mb-5">
-          <div class="card h-100">
+          <div class="card h-100 border border-black shadow ">
             <!-- Sale badge-->
             {{#if admin}}
             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
@@ -178,12 +197,12 @@
             <!-- Product image-->
             <img class="card-img-top" src={{this.thumbnail}} alt={{this.title}} />
             <!-- Product details-->
-            <div class="card-body p-4">
+            <div class="card-body p-4 ">
               <div class="text-center">
                 <!-- Product name-->
                 <h5 class="fw-bolder">{{this.title}}</h5>
                 <!-- Product reviews-->
-                <div class="d-flex justify-content-center small text-warning mb-2">
+                <div class="d-flex justify-content-center small text-warning mb-2 fw-medium cardDescription">
                   <div class="bi-star-fill">{{this.description}}</div>
                 </div>
                 <!-- Product price-->
@@ -193,7 +212,7 @@
             </div>
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
+              <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart 🛒</a></div>
               {{#if ../admin}}
               <div class="d-flex flex-row mb-3 justify-content-center">
                 <div class="text-center"><a class="btn btn-outline-danger mt-2 btn-sm mx-2"

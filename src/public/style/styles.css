@@ -7131,9 +7131,13 @@ textarea.form-control-lg {
   transform: translateY(-50%) !important;
 }
 
-.border {
-  border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+.cardDescription {
+  text-shadow: 1px 1px 2px black !important;
 }
+
+/* .border {
+  border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+} */
 
 .border-0 {
   border: 0 !important;
