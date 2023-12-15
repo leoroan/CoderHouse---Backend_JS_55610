@@ -24,6 +24,14 @@ const cartSchema = new Schema({
     required: true,
     default: 0,
   },
+  totalProducts: {
+    type: Number,
+    default: 0,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
