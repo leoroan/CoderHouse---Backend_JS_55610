@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // const server = http.createServer(app);
-const httpServer = app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+const httpServer = app.listen(8080, () => console.log(`Server listening on port ${8080}`));
 const io = new Server(httpServer);
 
 // Configuramos el engine
