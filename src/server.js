@@ -1,6 +1,8 @@
 import express from 'express';
 import { PASSWORD, PORT, DB_NAME } from "./env.js";
 import productsRouter from "./routes/products.router.js";
+import cartRouter from "./routes/cart.router.js";
+import userRouter from "./routes/user.router.js";
 import viewsRouter from "./routes/views.router.js";
 import mongoose from "mongoose";
 
@@ -46,6 +48,8 @@ app.use("/", viewsRouter);
 
 // Routes
 app.use("/api/products", productsRouter);
+app.use("/api/carts", cartRouter);
+app.use("/api/users", userRouter);
 
 //sockets
 // io.on("connection", (socket) => {
