@@ -5,6 +5,12 @@ class UserDao {
 
   static async createUser(user) {
     try {
+      const existingUser = await userModel.findOne({ email: user.email });
+      if (existingUser) {
+        throw new Error('Email already exists');
+      }
+
+      // If not, create the user
       return await userModel.create(user);
     } catch (error) {
       throw error;
