@@ -6,7 +6,7 @@ const router = Router();
 router.get("/", async (req, res, next) => {
   const { limit } = req.query;
   const productDao = new ProductDAO();
-  const products = await productDao.getAllProducts(limit);
+  const products = await productDao.getAllProducts({limit});
   
   res.render("index", {
     fileFavicon: "favicon.ico",
