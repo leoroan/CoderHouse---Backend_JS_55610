@@ -1,5 +1,5 @@
 import express from 'express';
-import { PASSWORD, PORT, DB_NAME } from "./env.js";
+// import { PASSWORD, PORT, DB_NAME } from "./env.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import usersRouter from "./routes/users.router.js";
