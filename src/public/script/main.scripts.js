@@ -7,6 +7,21 @@ limitSelect.addEventListener("change", function () {
   window.location.href = `/?limit=${selectedLimit}`;
 });
 
+var categorySelect = document.getElementById("categorySelect");
+
+categorySelect.addEventListener("change", function () {
+  var selectedCategory = categorySelect.value;
+  window.location.href = `/?category=${selectedCategory}`;
+});
+
+var sortSelect = document.getElementById("sortSelect");
+
+sortSelect.addEventListener("change", function () {
+  var selectedSort = sortSelect.value;
+  window.location.href = `/?sort=${selectedSort}`;
+});
+
+
 function showDeleteAlert(button) {
   var productId = button.getAttribute('data-product-id');
 
@@ -20,6 +35,7 @@ function showDeleteAlert(button) {
 async function editModal(productId) {
   try {
     const productData = await getProductById(productId);
+    console.log(productData);
     updateEditModal(productData);
   } catch (error) {
     console.error('Error editing product:', error);
