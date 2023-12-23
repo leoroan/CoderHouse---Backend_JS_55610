@@ -173,21 +173,91 @@
 
   <div class="container px-2 px-lg-5 mt-1">
     <div>
-      <label for="limitSelect"> Products to display </label>
-      <select id="limitSelect" name="limitSelect">
-        <option value="def" selected>choose</option>
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="20">20</option>
-        <option value="50">50</option>
-        <!-- Add more options as needed -->
-      </select>
+
+      <div class="d-flex">
+
+        <div class="flex-grow-1 ">
+          <label for="sortSelect"> Order price by  </label>
+          <select id="sortSelect" name="sortSelect">
+            <option value="def" selected>choose</option>
+            <option value="asc">ASC</option>
+            <option value="desc">DESC</option>
+
+            <!-- Add more options as needed -->
+          </select>
+        </div>
+
+        <div class="flex-grow-1 ">
+          <label for="limitSelect"> Products to display </label>
+          <select id="limitSelect" name="limitSelect">
+            <option value="def" selected>choose</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <!-- Add more options as needed -->
+          </select>
+        </div>
+
+        <div class="flex-grow-1 ">
+          <label for="categorySelect"> category to filter </label>
+          <select id="categorySelect" name="categorySelect">
+            <option value="def" selected>choose</option>
+            <option value="kitchen">kitchen</option>
+            <option value="wereables">wereables</option>
+            <option value="healthcare">healthcare</option>
+            <option value="technology">technology</option>
+            <option value="bikes">bikes</option>
+            <option value="all">all</option>
+            <!-- Add more options as needed -->
+          </select>
+        </div>
+
+        <div>
+          <ul class="pagination justify-content-center">
+
+            {{#if products.hasPrevPage}}
+            <li class="page-item">
+              <a class="page-link" href="/?page={{products.prevPage}}&limit={{products.limit}}">Previous</a>
+            </li>
+
+            {{/if}}
+
+
+            {{#if products.hasPrevPage}}
+            <li class="page-item">
+              <a class="page-link" href="/?page={{products.prevPage}}&limit={{products.limit}}"> {{ products.prevPage}} </a>
+            </li>
+            {{/if}}
+
+            <li class="page-item disabled">
+              <a class="page-link" href="#"> {{ products.page}} </a>
+            </li>
+
+            {{#if products.hasNextPage}}
+            <li class="page-item">
+              <a class="page-link" href="/?page={{products.nextPage}}&limit={{products.limit}}"> {{ products.nextPage}} </a>
+            </li>
+            {{/if}}
+
+
+
+
+            {{#if products.hasNextPage}}
+            <li class="page-item">
+              <a class="page-link" href="/?page={{products.nextPage}}&limit={{products.limit}}">Next</a>
+            </li>
+            {{/if}}
+          </ul>
+        </div>
+
+      </div>
 
       <p class="text-center fs-5 fw-bolder lead text-black-50 mb-3 fst-italic"> Our products </p>
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
         id="mainCardProductContainer">
         {{!-- a card --}}
-        {{#each products}}
+        {{#each products.docs}}
         <div class="col mb-5">
           <div class="card h-100 border border-black shadow ">
             <!-- Sale badge-->
