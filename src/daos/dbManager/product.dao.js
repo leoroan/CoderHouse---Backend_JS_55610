@@ -11,17 +11,17 @@ class ProductDAO {
   }
 
   // Retrieve all products
-  async getAllProducts({ limit = 10, page = 1, sort = "ASC", category = "all" }) {
+  async getAllProducts({ limit = 10, page = 1, sort = "asc", category = "all" }) {
 
     const filter = {
       status: true,
       category: category
     };
 
-    const sorted = sort === "ASC" ? 1 : -1;
+    const sorted = sort === "asc" ? 1 : -1;
 
     try {
-      return await productModel.paginate(filter, { limit: limit, page: page, sort: { price: -1 } });
+      return await productModel.paginate(filter, { limit: limit, page: page, sort: { price: sorted } });
     } catch (error) {
       throw error;
     }
