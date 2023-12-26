@@ -209,6 +209,54 @@ function deleteProduct(productId) {
     });
 }
 
+function addToCart(productId) {
+  const url = `api/carts/657dc8655bdbc8576ca985e7/product/${productId}/1`;
+
+  fetch(url, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      alert('Product added to cart');
+    })
+    .catch(error => {
+      alert('Error adding product to cart. Please try again.');
+    });
+}
+
+function deleteFromCart(productId) {
+  console.log(productId);
+  const url = `/api/carts/657dc8655bdbc8576ca985e7/product/${productId}`;
+
+  fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      alert('Product deleted from cart');
+      location.reload();
+    })
+    .catch(error => {
+      alert('Error deleting product from cart. Please try again.');
+    });
+
+}
 
 // const socket = io();
 
