@@ -21,7 +21,13 @@ class ProductDAO {
     const sorted = sort === "asc" ? 1 : -1;
 
     try {
-      return await productModel.paginate(filter, { limit: limit, page: page, sort: { price: sorted } });
+      const result = await productModel.paginate(filter, { limit: limit, page: page, sort: { price: sorted } });
+  
+      if (page > result.totalPages) {
+        throw new Error("Requested page exceeds total pages");
+      }
+  
+      return result;
     } catch (error) {
       throw error;
     }
