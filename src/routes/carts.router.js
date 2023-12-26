@@ -68,6 +68,19 @@ router.delete('/:cid/product/:pid', async (req, res) => {
   }
 });
 
+// Eiminar todo el carrito
+router.delete('/:cid/', async (req, res) => {
+  const cartID = req.params.cid;
+
+  try {
+    const updatedCart = await cartDao.deleteCart(cartID);
+
+    res.status(200).json(updatedCart);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Crear un nuevo carrito
 router.post('/:uid', async (req, res) => {
   const userID = req.params.uid;
