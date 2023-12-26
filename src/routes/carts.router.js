@@ -25,7 +25,16 @@ router.get('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Carro no encontrado' });
     }
 
-    res.status(200).json(cart);
+    // res.status(200).json(cart);
+    res.render("cart", {
+      fileFavicon: "favicon.ico",
+      fileCss: "styles.css",
+      fileJs: "main.scripts.js",
+      title: " Shop Cart",
+      name: "admin",
+      admin: true,
+      cart: cart,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
