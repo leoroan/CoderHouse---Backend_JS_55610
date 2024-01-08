@@ -1,12 +1,12 @@
 import express from 'express';
-// import { PASSWORD, PORT, DB_NAME } from "./env.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import usersRouter from "./routes/users.router.js";
 import viewsRouter from "./routes/views.router.js";
 import mongoose from "mongoose";
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 
-//D4 imports
 import handlebars from "express-handlebars";
 import __dirname from "./util.js";
 
@@ -21,8 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // const server = http.createServer(app);
-const httpServer = app.listen(8080, () => console.log(`Server listening on port ${8080}`));
-const io = new Server(httpServer);
+app.listen(8080, () => console.log(`Server listening on port ${8080}`));
 
 // Configuramos el engine
 app.engine("hbs",
@@ -43,6 +42,29 @@ app.set("views", `${__dirname}/views`);
 // Public - carpeta con estáticos
 app.use(express.static(`${__dirname}/public`));
 
+// Configuracion de Session
+app.use(session(
+  {
+      //ttl: Time to live in seconds,
+      //retries: Reintentos para que el servidor lea el archivo del storage.
+      //path: Ruta a donde se buscará el archivo del session store.
+      // // Usando --> session-file-store
+      // store: new fileStore({ path: "./sessions", ttl: 15, retries: 0 }),
+
+      // Usando --> connect-mongo
+      store: MongoStore.create({
+          mongoUrl: `mongodb+srv://test:test@cluster0.pu728w1.mongodb.net/ecommerce?retryWrites=true&w=majority`,
+          //mongoOptions --> opciones de confi para el save de las sessions
+          mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
+          ttl: 10 * 60
+      }),
+
+      secret: "s3cr37",
+      resave: false, // guarda en memoria
+      saveUninitialized: true //lo guarda a penas se crea
+  }
+))
+
 // Ruta main
 app.use("/", viewsRouter);
 
@@ -50,15 +72,6 @@ app.use("/", viewsRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/users", usersRouter);
-
-//sockets
-// io.on("connection", (socket) => {
-//   console.log("New client connected");
-
-//   socket.on("message", (data) => {
-//     console.log(data);
-//   });
-// });
 
 // Mongoose connection
 mongoose
