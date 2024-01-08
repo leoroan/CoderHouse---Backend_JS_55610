@@ -1,0 +1,58 @@
+<section class="py-3 mb-2 h-100">
+  <div class="container px-2 px-lg-5 mt-1">
+
+    {{#if cart.products }}
+    <div class="container mt-5">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each cart.products}}
+          <tr>
+            <td>{{this.productId.title}}</td>
+            <td>{{this.productId.price}}</td>
+            <td>{{this.quantity}}</td>
+            <td><a class="btn btn-outline-danger btn-sm" onclick="deleteFromCart('{{this.productId.id}}')">❌</a></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container mt-5">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Cart total items</th>
+            <th>Cart Total price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{cart.totalProducts}}</td>
+            <td>${{cart.total}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <a class="btn btn-outline-success mt-2"> Buy (but you can't right now!) </a>
+
+    {{else}}
+    <h4>Theres nothing on cart! <a href="/">go back</a> and pick something!</h4> 
+    {{/if}}
+
+
+  </div>
+
+
+</section>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/script/{{fileJs}}"></script>
