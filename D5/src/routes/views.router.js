@@ -13,8 +13,6 @@ router.get("/", async (req, res, next) => {
     fileCss: "styles.css",
     fileJs: "main.scripts.js",
     title: "Home Shop",
-    name: "admin",
-    admin: true,
     products: products,
   });
 });
