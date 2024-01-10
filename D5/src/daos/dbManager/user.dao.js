@@ -1,7 +1,7 @@
 import { userModel } from "../../model/user.model.js";
 
 
-class UserDao {
+class UserDAO {
 
   static async createUser(user) {
     try {
@@ -60,4 +60,4 @@ class UserDao {
 }
 
 
-export default UserDao;
+export default UserDAO;
