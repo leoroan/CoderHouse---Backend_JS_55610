@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get a cart by ID
-router.get('/:id', async (req, res) => {
+router.get('/cart/:id', async (req, res) => {
   const cartId = req.params.id;
 
   try {
@@ -35,6 +35,24 @@ router.get('/:id', async (req, res) => {
       admin: true,
       cart: cart,
     });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get a cart by user ID
+router.get('/user/:uid', async (req, res) => {
+  const userId = req.params.uid;
+
+  try {
+    const cart = await cartDao.getCartByUserId(userId);
+
+    if (!cart) {
+      return res.status(404).json({ error: 'Carro no encontrado' });
+    }
+
+    // res.status(200).json(cart);
+    res.json(cart);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
