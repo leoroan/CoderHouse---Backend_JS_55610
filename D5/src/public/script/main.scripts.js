@@ -257,6 +257,25 @@ function deleteFromCart(productId) {
     });
 
 }
+// login func
+const loginButton = document.getElementById("loginbtn");
+loginButton.onclick = function (e) {
+  e.preventDefault();
+  let email = document.getElementById('inputEmail1').value;
+  let password = document.getElementById('inputPassword1').value;
+  const obj = { "email": email, "password": password};
+  fetch('/api/users/login', {
+    method: 'POST',
+    body: JSON.stringify(obj),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(result => {
+    if (result.status === 200) {
+      window.location.replace('/users');
+    }
+  })
+}
 
 // const socket = io();
 
