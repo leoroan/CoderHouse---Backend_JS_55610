@@ -25,6 +25,15 @@ class CartDao {
     }
   }
 
+  async getCartByUserId(uid) {
+    try {
+      const cart = await cartModel.findOne({ userId: uid }).populate('products.productId');
+      return cart;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getAllCarts() {
     try {
       return await cartModel.find();
