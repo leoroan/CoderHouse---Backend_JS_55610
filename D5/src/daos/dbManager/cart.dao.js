@@ -62,8 +62,8 @@ class CartDao {
     }
   }
 
-  async addProductToCart(cartId, productId, quantity) {
-    const cart = await cartModel.findById(cartId);
+  async addProductToCart(anId, productId, quantity) {
+    const cart = await cartModel.findOne({ $or: [{ _id: anId }, { userId: anId }] });
     if (!cart) {
       throw new Error("Cart not found");
     }
