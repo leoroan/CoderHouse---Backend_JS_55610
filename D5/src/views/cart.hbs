@@ -1,6 +1,6 @@
 <section class="py-3 mb-2 h-100">
   <div class="container px-2 px-lg-5 mt-1">
-
+    
     {{#if cart.products }}
     <div class="container mt-5">
       <table class="table">
@@ -18,7 +18,7 @@
             <td>{{this.productId.title}}</td>
             <td>{{this.productId.price}}</td>
             <td>{{this.quantity}}</td>
-            <td><a class="btn btn-outline-danger btn-sm" onclick="deleteFromCart('{{this.productId.id}}')">❌</a></td>
+            <td><a class="btn btn-outline-danger btn-sm" onclick="deleteFromCart('{{../cart._id}}', '{{this.productId.id}}')">❌</a></td>
           </tr>
           {{/each}}
         </tbody>

@@ -16,7 +16,7 @@
   <link href="/style/{{fileCss}}" rel="stylesheet" />
 </head>
 
-{{!-- Modal start --}}
+{{!-- Login Modal start --}}
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content text-bg-light border-dark border-3">
@@ -28,7 +28,7 @@
         <form>
           <div class="mb-3">
             <label for="inputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp">
+            <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp" placeholder="CASE SENSITIVE">
             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
           </div>
           <div class="mb-3">
@@ -39,22 +39,52 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" id="loginbtn" class="btn btn-primary" >Login</button>
+        <button type="button" id="loginbtn" class="btn btn-primary">Login</button>
       </div>
     </div>
   </div>
 </div>
-{{!-- Modal end --}}
+{{!-- Login Modal end --}}
+
+{{!-- Register Modal start --}}
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-bg-light border-dark border-3">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="registerModalLabel">Register new user</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="inputUsername2" class="form-label">username</label>
+            <input type="text" class="form-control" id="inputUsername2" aria-describedby="usernameHelp">
+          </div>
+          <div class="mb-3">
+            <label for="inputEmail2" class="form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail2" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="inputPassword2" class="form-label">Password</label>
+            <input type="password" class="form-control" id="inputPassword2">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regret</button>
+        <button type="button" id="registerbtn" class="btn btn-primary">Register</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- Register Modal end --}}
 
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container px-4 px-lg-5">
     <a class="navbar-brand" href="#">
-      {{#if name}}
-      Welcome {{name}}!
-      <button class="btn btn-sm btn-outline-dark align-items-center">
-        <a href="/api/users/logout">log-out!</a>
-      </button>
+      {{#if user}}
+      Welcome {{user.username}}!, glad <span class="fw-bold text-decoration-underline">UR</span> back! 😉
       {{else}}
       <p class="pulsate-fwd" data-bs-toggle="modal" data-bs-target="#loginModal">Welcome stranger, want to <span
           class="fw-bold text-decoration-underline">log-in?</span>
@@ -82,12 +112,18 @@
         </li>
       </ul>
       <div class="d-flex">
-        <button class="btn btn-sm btn-outline-dark align-items-center" type="submit">
-          <a class="bi-cart-fill me-1 dropdown-item" href="/api/carts/657dc8655bdbc8576ca985e7">🛒 UR-Cart</a>
+        {{#if user}}
+        <button class="btn btn-sm btn-outline-dark align-items-center mx-2" type="submit">
+          <a class="bi-cart-fill me-1 dropdown-item" href="/api/carts/user/{{user._id}}">🛒 <span
+              class="fw-bold text-decoration-underline">UR</span>-Cart</a>
         </button>
+        <button class="btn btn-sm btn-outline-danger align-items-center" id="logoutbtn" onclick="handleLogout()">log-out!</button>
+        {{else}}
+        <button class="btn btn-sm btn-outline-dark align-items-center" data-bs-toggle="modal" data-bs-target="#registerModal">Register!</button>
+        {{/if}}
         <!-- Button trigger modal -->
         {{#if admin}}
-        <button type="button" class="btn btn-sm btn-outline-dark mx-2" data-bs-toggle="modal"
+        <button type="button" class="btn btn-sm btn-outline-success mx-2" data-bs-toggle="modal"
           data-bs-target="#addProductModal">
           ➕Add Product
         </button>
