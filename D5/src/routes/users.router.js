@@ -1,8 +1,10 @@
 import { Router } from "express";
 import UserDAO from "../daos/dbManager/user.dao.js";
+import CartDao from "../daos/dbManager/cart.dao.js"
 
 const router = Router();
 const userDao = new UserDAO();
+const cartDao = new CartDao();
 
 router.get('/profile/:uid', async (req, res) => {
   try {
@@ -36,6 +38,7 @@ router.post('/register', async (req, res) => {
     }
 
     const user = await UserDAO.createUser({ username, email, password, type });
+    await cartDao.createCart(user._id); 
     res.send({ status: "success", message: "User crated successfully" });
   } catch (error) {
     console.error(error);
@@ -55,7 +58,6 @@ router.post('/login', async (req, res) => {
       const userProfileWithoutSensitiveInfo = { ...user.toObject(), password: undefined };
 
       req.session.user = userProfileWithoutSensitiveInfo;
-      req.session.save();
 
       return res.json({ message: 'Login successful', payload: req.session.user });
     }
