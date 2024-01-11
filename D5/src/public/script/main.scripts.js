@@ -278,6 +278,8 @@ loginButton.onclick = function (e) {
   }).then(result => {
     if (result.status === 200) {
       window.location.replace('/');
+    } else {
+      alert("Invalid email or password. Please try again.");
     }
   })
 }
