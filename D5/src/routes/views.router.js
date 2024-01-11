@@ -14,6 +14,8 @@ router.get("/", async (req, res, next) => {
     fileJs: "main.scripts.js",
     title: "Home Shop",
     products: products,
+    user: req.session.user,
+    admin: req.session.user && req.session.user.type === "admin"
   });
 });
 
