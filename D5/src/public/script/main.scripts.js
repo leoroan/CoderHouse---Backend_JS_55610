@@ -209,32 +209,37 @@ function deleteProduct(productId) {
     });
 }
 
-function addToCart(productId) {
-  const url = `api/carts/657dc8655bdbc8576ca985e7/product/${productId}/1`;
+function addToCart(userId, productId) {
 
-  fetch(url, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
+  const url = `api/carts/${userId}/product/${productId}/1`;
+  try {
+    fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
-    .then(data => {
-      alert('Product added to cart');
-    })
-    .catch(error => {
-      alert('Error adding product to cart. Please try again.');
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        alert('Product added to cart');
+      })
+      .catch(error => {
+        alert('Error adding product to cart. Please try again.');
+        console.log(error);
+      });
+  }
+  catch (error) {
+    console.log(error);
+  }
 }
 
-function deleteFromCart(productId) {
-  console.log(productId);
-  const url = `/api/carts/657dc8655bdbc8576ca985e7/product/${productId}`;
+function deleteFromCart(cartId, productId) {
+  const url = `/api/carts/${cartId}/product/${productId}`;
 
   fetch(url, {
     method: 'DELETE',
@@ -263,7 +268,7 @@ loginButton.onclick = function (e) {
   e.preventDefault();
   let email = document.getElementById('inputEmail1').value;
   let password = document.getElementById('inputPassword1').value;
-  const obj = { "email": email, "password": password};
+  const obj = { "email": email, "password": password };
   fetch('/api/users/login', {
     method: 'POST',
     body: JSON.stringify(obj),
@@ -272,10 +277,52 @@ loginButton.onclick = function (e) {
     }
   }).then(result => {
     if (result.status === 200) {
-      window.location.replace('/users');
+      window.location.replace('/');
     }
   })
 }
+
+// Register func
+const registerButton = document.getElementById("registerbtn");
+registerButton.onclick = function (e) {
+  e.preventDefault(); 3
+  let username = document.getElementById('inputUsername2').value;
+  let email = document.getElementById('inputEmail2').value;
+  let password = document.getElementById('inputPassword2').value;
+  const obj = { "username": username, "email": email, "password": password };
+  fetch('/api/users/register', {
+    method: 'POST',
+    body: JSON.stringify(obj),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(result => {
+    if (result.status === 200) {
+      alert("User registered successfully. Please login.");
+      window.location.replace('/');
+    } else if (result.status === 400) {
+      alert("Validation failed. Please check your inputs. username and email are uniques");
+    } else if (result.status === 500) {
+      alert("Internal server error. Please try again later.");
+    } else {
+      alert("An unexpected error occurred.");
+    }
+  });
+}
+
+function handleLogout() {
+  fetch('/api/users/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(result => {
+    if (result.status === 200) {
+      window.location.replace('/');
+    }
+  })
+}
+
 
 // const socket = io();
 
