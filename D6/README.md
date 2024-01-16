@@ -14,4 +14,12 @@ Repo con los tps y trabajo final del curso de Back-End de "Coder House" 2023
 - Link al repositorio de Github, el cual debe contar con todo el proyecto.
 - No incluir node_modules
 
+## Dependencias agregadas al desafio
+
+```javascript
+  "dependencies": {
+      "bcrypt": "^5.1.1",
+      "session-file-store": "^1.5.0"
+    }
+```
 
