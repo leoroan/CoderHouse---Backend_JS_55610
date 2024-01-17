@@ -299,7 +299,7 @@ registerButton.onclick = function (e) {
       'Content-Type': 'application/json'
     }
   }).then(result => {
-    if (result.status === 200) {
+    if (result.status === 201) {
       alert("User registered successfully. Please login.");
       window.location.replace('/');
     } else if (result.status === 400) {
