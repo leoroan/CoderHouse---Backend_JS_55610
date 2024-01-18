@@ -312,6 +312,11 @@ registerButton.onclick = function (e) {
   });
 }
 
+function handleGitHubLogin() {
+  const targetHref = "/api/users/github"; // Replace this with your desired URL
+  window.location.href = targetHref;
+};
+
 function handleLogout() {
   fetch('/api/users/logout', {
     method: 'POST',

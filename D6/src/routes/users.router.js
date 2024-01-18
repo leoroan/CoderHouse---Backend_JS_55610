@@ -24,6 +24,17 @@ router.get('/profile/:uid', async (req, res) => {
   }
 });
 
+router.get("/github", passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {
+  { }
+})
+
+router.get("/githubcallback", passport.authenticate('github', { failureRedirect: '/fail-login' }), async (req, res) => {
+  const user = req.user;
+  await cartDao.createCart(req.user._id);
+  req.session.user = { ...user.toObject() }
+  res.redirect("/")
+})
+
 // router.post('/register', async (req, res) => {
 //   try {
 //     const { username, email, password, type } = req.body;
@@ -54,7 +65,6 @@ router.get('/profile/:uid', async (req, res) => {
 router.post('/register', passport.authenticate('register', {
   failureRedirect: 'api/users/fail-register'
 }), async (req, res) => {
-  console.log("Registrando usuario:");
   await cartDao.createCart(req.user._id);
   res.status(201).send({ status: "success", message: "User crated successfully" });
 })
@@ -107,7 +117,7 @@ router.get("/fail-register", (req, res) => {
 });
 
 router.get("/fail-login", (req, res) => {
-  res.status(401).send({ error: "Failed to login!" });
+  res.status(401).send({ error: "Something went wrong, try again shortly!" });
 });
 
 export default router;

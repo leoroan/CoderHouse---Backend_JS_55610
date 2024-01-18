@@ -282,7 +282,9 @@
             </div>
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              {{#if ../user }}
               <div class="text-center"><a class="btn btn-outline-dark mt-auto" onclick="addToCart('{{../user._id}}', '{{this._id}}')">Add to cart 🛒</a></div>
+              {{/if}}
               {{#if ../admin }}
               <div class="d-flex flex-row mb-3 justify-content-center">
                 <div class="text-center"><a class="btn btn-outline-danger mt-2 btn-sm mx-2"
