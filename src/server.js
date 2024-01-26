@@ -6,6 +6,7 @@ import viewsRouter from "./routes/views.router.js";
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import mongoose from "mongoose";
+import cookieParser from 'cookie-parser';
 
 import handlebars from "express-handlebars";
 import __dirname from "./util.js";
@@ -68,6 +69,11 @@ app.use(session(
     saveUninitialized: true //lo guarda a penas se crea
   }
 ))
+
+//Cookies
+//router.use(cookieParser());
+app.use(cookieParser("CoderS3cr3tC0d3"));
+
 // Middleware de passport
 initializePassport();
 app.use(passport.initialize());
@@ -85,8 +91,7 @@ app.use("/api/users", usersRouter);
 mongoose
   .connect(
     // `mongodb+srv://test:${PASSWORD}@cluster0.pu728w1.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
-    `mongodb+srv://test:test@cluster0.pu728w1.mongodb.net/ecommerce?retryWrites=true&w=majority`
-  )
+    `mongodb+srv://test:test@cluster0.pu728w1.mongodb.net/ecommerce?retryWrites=true&w=majority`)
   .then(() => {
     console.log("DB Connected");
   })

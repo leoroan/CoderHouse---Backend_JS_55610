@@ -1,16 +1,36 @@
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import { userModel } from '../model/user.model.js';
-import { createHash, isValidPassword } from '../util.js';
+import { createHash, isValidPassword, PRIVATE_KEY } from '../util.js';
 import GitHubStrategy from 'passport-github2';
+import jwtStrategy from 'passport-jwt';
 
 //  Declaramos estrategia
 const localStrategy = passportLocal.Strategy;
+const JwtStrategy = jwtStrategy.Strategy;
+const ExtractJWT = jwtStrategy.ExtractJwt;
+
 const initializePassport = () => {
   /**
         *  Inicializando la estrategia local, username sera para nosotros email.
         *  "Done" será nuestro callback
   */
+
+  //Estrategia de obtener Token JWT por Cookie:
+  passport.use('jwt', new JwtStrategy(
+    {
+      jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+      secretOrKey: PRIVATE_KEY
+    }, async (jwt_payload, done) => {
+      // console.log("Entrando a passport Strategy con JWT.");
+      try {
+        return done(null, jwt_payload.user);
+      } catch (error) {
+        console.error(error);
+        return done(error);
+      }
+    }
+  ));
 
   // Usando GitHub
   passport.use('github', new GitHubStrategy(
@@ -101,7 +121,7 @@ const initializePassport = () => {
 
   passport.serializeUser((user, done) => {
     done(null, user._id)
-  })
+  });
 
   passport.deserializeUser(async (id, done) => {
     try {
@@ -110,7 +130,15 @@ const initializePassport = () => {
     } catch (error) {
       console.error("Error deserializando el usuario: " + error);
     }
-  })
-}
+  });
+};
+
+const cookieExtractor = req => {
+  let token = null;
+  if (req && req.cookies) { //Validamos que exista el request y las cookies.
+      token = req.cookies['jwtCookieToken'];
+  }
+  return token;
+};
 
 export default initializePassport;

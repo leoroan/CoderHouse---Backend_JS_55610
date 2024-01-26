@@ -28,11 +28,8 @@ Repo con los tps y trabajo final del curso de Back-End de "Coder House" 2023
 
 ```javascript
   "dependencies": {
-      "bcrypt": "^5.1.1",
-      "session-file-store": "^1.5.0",
-      "passport": "^0.7.0",
-      "passport-local": "^1.0.0",
-      "passport-github2": "^0.1.12",
+      (...)
+      "jsonwebtoken": "^9.0.2",
     }
 ```
 
