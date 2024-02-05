@@ -42,7 +42,8 @@
         <hr>
         <p>Or login with..</p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-          <button type="button" class="btn btn-outline-dark btn-lg" onclick="handleGitHubLogin()"><i class="bi bi-github"></i></button>
+          <button type="button" class="btn btn-outline-dark btn-lg" onclick="handleGitHubLogin()"><i
+              class="bi bi-github"></i></button>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
           <button class="btn btn-outline-primary text-center mt-2 " data-bs-toggle="modal"
@@ -129,15 +130,20 @@
           <a class=" me-1 dropdown-item" href="/api/carts/user/{{user._id}}">🛒 <span
               class="fw-bold text-decoration-underline">UR</span>-Cart</a>
         </button>
+
+        <button class="btn btn-sm btn-outline-success align-items-center mx-2" id="profilebtn"
+          onclick="handleProfile()">profile</button>
+
         <button class="btn btn-sm btn-outline-danger align-items-center" id="logoutbtn"
           onclick="handleLogout()">log-out!</button>
+
         {{else}}
         <button class="btn btn-sm btn-outline-dark align-items-center" data-bs-toggle="modal"
           data-bs-target="#registerModal">Register!</button>
         {{/if}}
         <!-- Button trigger modal -->
         {{#if admin}}
-        <button type="button" class="btn btn-sm btn-outline-success mx-2" data-bs-toggle="modal"
+        <button type="button" class="btn btn-sm btn-outline-warning mx-2" data-bs-toggle="modal"
           data-bs-target="#addProductModal">
           ➕Add Product
         </button>

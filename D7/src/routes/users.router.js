@@ -1,7 +1,7 @@
 import { Router } from "express";
 import UserDAO from "../daos/dbManager/user.dao.js";
 import CartDao from "../daos/dbManager/cart.dao.js"
-import { createHash, isValidPassword } from "../util.js";
+import { createHash, isValidPassword, generateJWToken } from "../util.js";
 import passport from 'passport';
 
 
@@ -32,7 +32,11 @@ router.get("/githubcallback", passport.authenticate('github', { failureRedirect:
   const user = req.user;
   await cartDao.createCart(req.user._id);
   req.session.user = { ...user.toObject() }
-  res.redirect("/")
+
+  const access_token = generateJWToken(user)
+  res.cookie('jwtCookieToken', access_token, { httpOnly: true });
+  res.redirect("/");
+  // res.redirect("/")
 })
 
 // router.post('/register', async (req, res) => {
@@ -100,10 +104,18 @@ router.post('/login', passport.authenticate('login',
 ), async (req, res) => {
   const user = req.user;
   req.session.user = { ...user.toObject() }
-  res.send({ status: "success", payload: req.session.user, message: "Login successful" });
+  if (!user) return res.status(401).send({ status: "error", error: "Wrong user/password credentials" });
+  // Usando JWT 
+  const access_token = generateJWToken(user)
+  // console.log(access_token);
+  res.cookie('jwtCookieToken', access_token, { httpOnly: true });
+  res.send({ access_token: access_token });
+  // res.send({ status: "success", payload: user, access_token, message: "Login successful" });
+  // res.send({ status: "success", payload: req.session.user, message: "Login successful" });
 })
 
 router.post('/logout', (req, res) => {
+  res.clearCookie('jwtCookieToken');
   req.session.destroy(error => {
     if (error) {
       res.json({ error: 'Error logout', msg: "Error logging out" })

@@ -1,5 +1,7 @@
 import { Router } from "express";
 import ProductDAO from "../daos/dbManager/product.dao.js";
+import passport from "passport";
+import { authToken, authorization } from '../util.js';
 
 const router = Router();
 
@@ -14,9 +16,23 @@ router.get("/", async (req, res, next) => {
     fileJs: "main.scripts.js",
     title: "Home Shop",
     products: products,
-    user: req.session.user,
+    user: req.session.user || req.user,
     admin: req.session.user && req.session.user.type === "admin"
   });
 });
+
+router.get("/profile", 
+  // authToken,
+  passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+  res.render('profile', {
+    fileFavicon: "favicon.ico",
+    fileCss: "styles.css",
+    fileJs: "main.scripts.js",
+    title: "user profile",
+    user: req.user // Trtabajando con JWT
+  })
+})
+
 
 export default router;
