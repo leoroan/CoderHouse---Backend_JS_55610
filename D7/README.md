@@ -1,6 +1,3 @@
-### CoderHouse---Backend_JS_55610
-Repo con los tps y trabajo final del curso de Back-End de "Coder House" 2023
-
 # DESAFÍO ENTREGABLE - Refactor a nuestro login
 ## Consigna
 - Continuar sobre el proyecto que has trabajado para tu ecommerce y configurar los siguientes elementos:
