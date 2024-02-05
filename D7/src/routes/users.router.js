@@ -1,6 +1,6 @@
 import { Router } from "express";
-import UserDAO from "../daos/dbManager/user.dao.js";
-import CartDao from "../daos/dbManager/cart.dao.js"
+import UserDAO from "../services/db/user.dao.js";
+import CartDao from "../services/db/cart.dao.js"
 import { createHash, isValidPassword, generateJWToken } from "../util.js";
 import passport from 'passport';
 

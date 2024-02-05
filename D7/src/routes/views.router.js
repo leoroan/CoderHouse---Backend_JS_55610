@@ -1,5 +1,5 @@
 import { Router } from "express";
-import ProductDAO from "../daos/dbManager/product.dao.js";
+import ProductDAO from "../services/db/product.dao.js";
 import passport from "passport";
 import { authToken, authorization } from '../util.js';
 

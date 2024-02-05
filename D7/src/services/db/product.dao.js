@@ -1,4 +1,4 @@
-import { productModel } from "../../model/product.model.js";
+import { productModel } from "../db/models/product.model.js";
 
 class ProductDAO {
   // Insert a new product
