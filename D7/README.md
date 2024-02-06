@@ -13,7 +13,7 @@
 ## Dependencias agregadas al desafio
 ```javascript
   "dependencies": {
-      
+    "commander": "^12.0.0"
     }
 ```
 
