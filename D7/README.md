@@ -13,7 +13,8 @@
 ## Dependencias agregadas al desafio
 ```javascript
   "dependencies": {
-    "commander": "^12.0.0"
+    "commander": "^12.0.0",
+    "dotenv": "^16.4.1"
     }
 ```
 
