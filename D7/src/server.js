@@ -8,6 +8,7 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import mongoose from "mongoose";
 import cookieParser from 'cookie-parser';
+import config from './config/config.js';
 
 import handlebars from "express-handlebars";
 import __dirname from "./util.js";
@@ -19,6 +20,9 @@ import initializePassport from './config/passport.config.js'
 // import http from 'http';
 import { Server } from "socket.io";
 
+const SERVER_PORT = config.port;
+const MONGO_URL = config.urlMongo;
+
 //express conf.
 const app = express();
 
@@ -27,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // const server = http.createServer(app);
-app.listen(8080, () => console.log(`Server listening on port ${8080}`));
+app.listen(SERVER_PORT, () => console.log(`Server listening on port ${SERVER_PORT}`));
 
 // Configuramos el engine
 app.engine("hbs",
@@ -59,7 +63,7 @@ app.use(session(
 
     // Usando --> connect-mongo
     store: MongoStore.create({
-      mongoUrl: `mongodb+srv://test:test@cluster0.pu728w1.mongodb.net/ecommerce?retryWrites=true&w=majority`,
+      mongoUrl: MONGO_URL,
       //mongoOptions --> opciones de confi para el save de las sessions
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
       ttl: 10 * 60
@@ -93,8 +97,8 @@ app.use("/api/carts", cartsRouter);
 // Mongoose connection
 mongoose
   .connect(
-    // `mongodb+srv://test:${PASSWORD}@cluster0.pu728w1.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
-    `mongodb+srv://test:test@cluster0.pu728w1.mongodb.net/ecommerce?retryWrites=true&w=majority`)
+    MONGO_URL
+  )
   .then(() => {
     console.log("DB Connected");
   })
