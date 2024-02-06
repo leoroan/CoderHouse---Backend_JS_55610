@@ -1,4 +1,5 @@
 import express from 'express';
+import UserExtendRouter from './routes/users.extend.router.js';
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import usersRouter from "./routes/users.router.js";
@@ -83,9 +84,11 @@ app.use(passport.session());
 app.use("/", viewsRouter);
 
 // Routes
+const userExtRouter = new UserExtendRouter();
+app.use("/api/users", userExtRouter.getRouter());
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
-app.use("/api/users", usersRouter);
+// app.use("/api/users", usersRouter);
 
 // Mongoose connection
 mongoose

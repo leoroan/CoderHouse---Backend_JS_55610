@@ -1,6 +1,6 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { PRIVATE_KEY } from "../../utils.js";
+import { PRIVATE_KEY } from "../../util.js";
 
 
 export default class CustomRouter {
@@ -12,16 +12,16 @@ export default class CustomRouter {
   getRouter() {
     return this.router;
   };
-  init() { }; //Esta inicialilzacion se usa para las clases heredadas.
+
+  //Esta inicialilzacion se usa para las clases heredadas.
+  init() { };
 
   get(path, policies, ...callbacks) {
-    console.log("Entrando por GET a custom router con Path: " + path);
-    console.log(policies);
     this.router.get(
       path,
       this.handlePolicies(policies),
       this.generateCustomResponses,
-      this.applyCallbacks(callbacks))
+      this.#applyCallbacks(callbacks))
   }
 
   // POST
@@ -29,7 +29,7 @@ export default class CustomRouter {
     this.router.post(path,
       this.handlePolicies(policies),
       this.generateCustomResponses,
-      this.applyCallbacks(callbacks));
+      this.#applyCallbacks(callbacks));
   };
 
 
@@ -38,7 +38,7 @@ export default class CustomRouter {
     this.router.put(path,
       this.handlePolicies(policies),
       this.generateCustomResponses,
-      this.applyCallbacks(callbacks));
+      this.#applyCallbacks(callbacks));
   };
 
 
@@ -47,12 +47,12 @@ export default class CustomRouter {
     this.router.delete(path,
       this.handlePolicies(policies),
       this.generateCustomResponses,
-      this.applyCallbacks(callbacks));
+      this.#applyCallbacks(callbacks));
   };
 
   handlePolicies = policies => (req, res, next) => {
-    console.log("Politicas a evaluar:");
-    console.log(policies);
+    // console.log("Politicas a evaluar:");
+    // console.log(policies);
 
     //Validar si tiene acceso publico:
     if (policies[0] === "PUBLIC") return next();
@@ -99,7 +99,7 @@ export default class CustomRouter {
 
   // función que procese todas las funciones internas del router (middlewares y el callback principal)
   // Se explica en el slice 28
-  applyCallbacks(callbacks) {
+  #applyCallbacks(callbacks) {
     return callbacks.map((callback) => async (...item) => {
       try {
         await callback.apply(this, item);
