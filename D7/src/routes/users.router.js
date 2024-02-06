@@ -1,33 +1,27 @@
 import { Router } from "express";
-import UserDAO from "../services/db/user.dao.js";
+// import UserDAO from "../services/db/user.dao.js";
 import CartDao from "../services/db/cart.dao.js"
 import { createHash, isValidPassword, generateJWToken } from "../util.js";
 import passport from 'passport';
+import {
+  getUserProfileController,
+
+} from "../controllers/users.controller.js";
 
 
 const router = Router();
-const userDao = new UserDAO();
+// const userDao = new UserDAO();
 const cartDao = new CartDao();
 
-router.get('/profile/:uid', async (req, res) => {
-  try {
-    const userId = req.params.uid;
-    const userProfile = await UserDAO.getUserById(userId);
-    if (!userProfile) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    const userProfileWithoutSensitiveInfo = { ...userProfile.toObject(), password: undefined };
-    res.json({ userProfile: userProfileWithoutSensitiveInfo });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
+// Obtener perfil de usuario
+router.get('/profile/:uid', getUserProfileController)
 
+//Route to github login
 router.get("/github", passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {
   { }
 })
 
+//Route to github callback
 router.get("/githubcallback", passport.authenticate('github', { failureRedirect: '/fail-login' }), async (req, res) => {
   const user = req.user;
   await cartDao.createCart(req.user._id);
