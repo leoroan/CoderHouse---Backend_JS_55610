@@ -1,4 +1,4 @@
-# **Segunda Pre entrega** - Mejorando la arquitectura del servidor
+# **Tercer Pre entrega** - Mejorando la arquitectura del servidor
 
 **Objetivos generales**
 - Profesionalizar el servidor
