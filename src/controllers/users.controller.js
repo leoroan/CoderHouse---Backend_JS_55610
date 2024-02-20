@@ -1,3 +1,4 @@
+import { UserDTO } from "../services/db/dto/user.dto.js";
 import UserDAO from "../services/db/user.dao.js";
 const userDao = new UserDAO();
 
@@ -9,8 +10,10 @@ export const getUserProfileController = async (req, res) => {
     if (!userProfile) {
       return res.status(404).json({ error: 'User not found' });
     }
-    const userProfileWithoutSensitiveInfo = { ...userProfile.toObject(), password: undefined };
-    res.json({ userProfile: userProfileWithoutSensitiveInfo });
+    const user = new UserDTO(userProfile.username, userProfile.email, userProfile.type)
+    // const userProfileWithoutSensitiveInfo = { ...userProfile.toObject(), password: undefined };
+    // res.json({ userProfile: userProfileWithoutSensitiveInfo });
+    res.json({ userProfile: user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
