@@ -1,6 +1,7 @@
 import express from 'express';
 import UserExtendRouter from './routes/users.extend.router.js';
 import ProductsExtendRouter from './routes/products.extended.router.js';
+import CartExtendRouter from './routes/carts.extended.router.js';
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 // import usersRouter from "./routes/users.router.js";
@@ -91,11 +92,13 @@ app.use("/", viewsRouter);
 // Routes
 const userExtRouter = new UserExtendRouter();
 const productsExtRouter = new ProductsExtendRouter();
+const cartsExtRouter = new CartExtendRouter();
 
 app.use("/api/users", userExtRouter.getRouter());
 // app.use("/api/products", productsRouter);
 app.use("/api/products", productsExtRouter.getRouter());
-app.use("/api/carts", cartsRouter);
+// app.use("/api/carts", cartsRouter);
+app.use("/api/carts", cartsExtRouter.getRouter());
 // app.use("/api/users", usersRouter);
 
 // Mongoose connection

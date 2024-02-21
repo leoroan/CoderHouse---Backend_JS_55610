@@ -1,4 +1,5 @@
 import ProductDAO from "../services/db/product.dao.js";
+import { ProductDTO } from "../services/db/dto/product.dto.js";
 const productDao = new ProductDAO();
 
 //Get all products
@@ -20,7 +21,8 @@ export const getProductByIdController = async (req, res) => {
     if (!product) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
-    res.status(200).json(product);
+    const productDTO = new ProductDTO(product.id, product.title, product.description, product.price, product.thumbnail, product.code, product.stock, product.category, product.status)
+    res.status(200).json(productDTO);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -29,7 +31,7 @@ export const getProductByIdController = async (req, res) => {
 // Create a new product
 export const createProductController = async (req, res) => {
   const newProductData = req.body;
-  console.log(newProductData);
+  // console.log(newProductData);
   try {
     const newProduct = await productDao.addProduct(newProductData);
     res.status(201).json(newProduct);

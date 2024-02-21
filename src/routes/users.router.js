@@ -4,6 +4,7 @@ import CartDao from "../services/db/cart.dao.js"
 import { createHash, isValidPassword, generateJWToken } from "../util.js";
 import passport from 'passport';
 import { getUserProfileController } from "../controllers/users.controller.js";
+import { UserDTO } from "../services/db/dto/user.dto.js";
 
 
 const router = Router();
@@ -20,11 +21,12 @@ router.get("/github", passport.authenticate('github', { scope: ['user:email'] })
 
 //Route to github callback
 router.get("/githubcallback", passport.authenticate('github', { failureRedirect: '/fail-login' }), async (req, res) => {
-  const user = req.user;
+  req.session.user = userDTO;
+  const userDTO = new UserDTO(req.user.username, req.user.mail, req.user.type);
   await cartDao.createCart(req.user._id);
-  req.session.user = { ...user.toObject() }
-
-  const access_token = generateJWToken(user)
+  // const user = req.user;
+  // req.session.user = { ...user.toObject() }
+  const access_token = generateJWToken(userDTO)
   res.cookie('jwtCookieToken', access_token, { httpOnly: true });
   res.redirect("/");
   // res.redirect("/")
@@ -93,9 +95,11 @@ router.post('/login', passport.authenticate('login',
     failureRedirect: 'api/session/fail-login'
   }
 ), async (req, res) => {
-  const user = req.user;
-  req.session.user = { ...user.toObject() }
-  if (!user) return res.status(401).send({ status: "error", error: "Wrong user/password credentials" });
+  // const user = req.user;
+  // req.session.user = { ...user.toObject() }
+  const userDTO = new UserDTO(req.user.username, req.user.mail, req.user.type);
+  req.session.user = userDTO;
+  if (!userDTO) return res.status(401).send({ status: "error", error: "Wrong user/password credentials" });
   // Usando JWT 
   const access_token = generateJWToken(user)
   // console.log(access_token);
