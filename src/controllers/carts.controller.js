@@ -1,6 +1,17 @@
 import CartDao from '../services/db/cart.dao.js'
 const cartDao = new CartDao();
 
+export const purchaseCartController = async (req, res) => {
+  const cartId = req.params.id;
+  //corroborar stock de productos
+  //  pregutnar al product.controller por cada uno de ellos
+  //  (le envio el arreglo de productos y que me devuelva lo q corresponda)
+  //   un array de validos e invalidos
+  //   en caso de continuar lo validos deben bajar stock
+  // invalidos deben volver al carrito
+  // total el base a los validos  
+};
+
 export const getAllCartsController = async (req, res) => {
   return await res.json(cartDao.getAllCarts());
 };

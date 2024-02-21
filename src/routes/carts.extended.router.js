@@ -7,10 +7,16 @@ import {
   deleteWholeCartController,
   deleteProductFromCartByIdController,
   addProductToCartByIdController,
+  purchaseCartController,
 } from "../controllers/carts.controller.js";
 
 export default class CartExtendRouter extends CustomRouter {
   init() {
+
+    // purchase cart
+    this.post('/:cid/purchase', ["USER", "ADMIN"], async (req, res) => {
+      purchaseCartController(req, res)
+    });
 
     // Get all carts
     this.get('/', ["ADMIN"], async (req, res) => {

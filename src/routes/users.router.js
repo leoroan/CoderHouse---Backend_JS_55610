@@ -12,7 +12,7 @@ const router = Router();
 const cartDao = new CartDao();
 
 // Obtener perfil de usuario
-router.get('/profile/:uid', getUserProfileController)
+router.get('/profile/:uid', getUserProfileController(req, res));
 
 //Route to github login
 router.get("/github", passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {
