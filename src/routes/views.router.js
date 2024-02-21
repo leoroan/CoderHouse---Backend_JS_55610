@@ -21,18 +21,19 @@ router.get("/", async (req, res, next) => {
   });
 });
 
-router.get("/profile", 
-  // authToken,
-  passport.authenticate('jwt', {session: false}),
-  (req, res) => {
-  res.render('profile', {
-    fileFavicon: "favicon.ico",
-    fileCss: "styles.css",
-    fileJs: "main.scripts.js",
-    title: "user profile",
-    user: req.user // Trtabajando con JWT
-  })
-})
+// router.get("/profile",
+//   // authToken,
+//   passport.authenticate('jwt', {session: false}),
+//   (req, res) => {
+//   res.render('profile', {
+//     fileFavicon: "favicon.ico",
+//     fileCss: "styles.css",
+//     fileJs: "main.scripts.js",
+//     title: "user profile",
+//     user: req.user // Trtabajando con JWT
+//   })
+// })
+
 
 
 export default router;

@@ -318,7 +318,7 @@ function handleGitHubLogin() {
 };
 
 function handleProfile() {
-  const targetHref = "/profile"; // Replace this with your desired URL
+  const targetHref = "/api/users/profile"; // Replace this with your desired URL
   window.location.href = targetHref;
 };
 

@@ -29,6 +29,7 @@ export const getProductByIdController = async (req, res) => {
 // Create a new product
 export const createProductController = async (req, res) => {
   const newProductData = req.body;
+  console.log(newProductData);
   try {
     const newProduct = await productDao.addProduct(newProductData);
     res.status(201).json(newProduct);

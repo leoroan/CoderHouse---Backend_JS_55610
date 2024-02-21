@@ -1,8 +1,9 @@
 import express from 'express';
 import UserExtendRouter from './routes/users.extend.router.js';
+import ProductsExtendRouter from './routes/products.extended.router.js';
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
-import usersRouter from "./routes/users.router.js";
+// import usersRouter from "./routes/users.router.js";
 import viewsRouter from "./routes/views.router.js";
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
@@ -89,8 +90,11 @@ app.use("/", viewsRouter);
 
 // Routes
 const userExtRouter = new UserExtendRouter();
+const productsExtRouter = new ProductsExtendRouter();
+
 app.use("/api/users", userExtRouter.getRouter());
-app.use("/api/products", productsRouter);
+// app.use("/api/products", productsRouter);
+app.use("/api/products", productsExtRouter.getRouter());
 app.use("/api/carts", cartsRouter);
 // app.use("/api/users", usersRouter);
 

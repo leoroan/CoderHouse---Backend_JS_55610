@@ -3,10 +3,7 @@ import { Router } from "express";
 import CartDao from "../services/db/cart.dao.js"
 import { createHash, isValidPassword, generateJWToken } from "../util.js";
 import passport from 'passport';
-import {
-  getUserProfileController,
-
-} from "../controllers/users.controller.js";
+import { getUserProfileController } from "../controllers/users.controller.js";
 
 
 const router = Router();

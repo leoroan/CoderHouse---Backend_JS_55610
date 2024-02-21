@@ -51,22 +51,24 @@ export default class CustomRouter {
   };
 
   handlePolicies = policies => (req, res, next) => {
-    // console.log("Politicas a evaluar:");
-    // console.log(policies);
+    console.log("Politicas a evaluar:");
+    console.log(policies);
 
     //Validar si tiene acceso publico:
     if (policies[0] === "PUBLIC") return next();
 
     //El JWT token se guarda en los headers de autorización.
-    const authHeader = req.headers.authorization;
-    console.log("Token present in header auth:");
-    console.log(authHeader);
+    // const authHeader = req.headers.authorization;
+    // console.log("Token present in cookies:");
+    const authHeader = req.cookies;
+    // console.log(authHeader);
 
     if (!authHeader) {
       return res.status(401).send({ error: "User not authenticated or missing token." });
     }
 
-    const token = authHeader.split(' ')[1]//Se hace el split para retirar la palabra Bearer.
+    // const token = authHeader.split(' ')[1]//Se hace el split para retirar la palabra Bearer.
+    const token = authHeader['jwtCookieToken'];
 
     // Validamos token
     jwt.verify(token, PRIVATE_KEY, (error, credential) => {
@@ -76,11 +78,12 @@ export default class CustomRouter {
       const user = credential.user
 
       // Preguntamos si dentro del array policies se encuentra el user.role que me esta llegando con este usuario
-      if (!policies.includes(user.role.toUpperCase())) return res.status(403).send({ error: "El usuario no tiene privilegios, revisa tus roles!" });
+      if (!policies.includes(user.type.toUpperCase())) return res.status(403).send({ error: "El usuario no tiene privilegios, revisa tus roles!" });
 
       // si el user.role se encuentra dentro de policies, podes ingresar
-      req.user = user;
-      console.log(req.user);
+      // req.user = user;
+      // console.log(req.user);
+      console.log("usuario con politica aceptada");
       next()
     })
   }

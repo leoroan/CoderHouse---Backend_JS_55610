@@ -1,28 +1,23 @@
 import CustomRouter from "./custom/custom.router.js";
-import UserDAO from "../services/db/user.dao.js";
 import CartDao from "../services/db/cart.dao.js"
 import { createHash, isValidPassword, generateJWToken } from "../util.js";
 import passport from 'passport';
+import { getUserProfileController } from "../controllers/users.controller.js";
 
 //ejemplo de router para usuario con politicas (aunq por practicidad aca son todas publicas)
 export default class UserExtendRouter extends CustomRouter {
   init() {
-    const userDao = new UserDAO();
     const cartDao = new CartDao();
 
-    this.get('/profile/:uid', ["PUBLIC"], async (req, res) => {
-      try {
-        const userId = req.params.uid;
-        const userProfile = await UserDAO.getUserById(userId);
-        if (!userProfile) {
-          return res.status(404).json({ error: 'User not found' });
-        }
-        const userProfileWithoutSensitiveInfo = { ...userProfile.toObject(), password: undefined };
-        res.json({ userProfile: userProfileWithoutSensitiveInfo });
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal server error' });
-      }
+    this.get('/profile', ["USER", "ADMIN"], passport.authenticate('jwt', {session: false}), async (req, res) => {
+      // getUserProfileController
+      res.render('profile', {
+        fileFavicon: "favicon.ico",
+        fileCss: "styles.css",
+        fileJs: "main.scripts.js",
+        title: "user profile",
+        user: req.user // Trtabajando con JWT
+      })
     });
 
     this.get("/github", ["PUBLIC"], passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {

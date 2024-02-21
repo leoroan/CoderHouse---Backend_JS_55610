@@ -22,7 +22,7 @@ const initializePassport = () => {
       jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
       secretOrKey: PRIVATE_KEY
     }, async (jwt_payload, done) => {
-      // console.log("Entrando a passport Strategy con JWT.");
+      console.log("Entrando a passport Strategy con JWT.");
       try {
         return done(null, jwt_payload.user);
       } catch (error) {
@@ -136,7 +136,7 @@ const initializePassport = () => {
 const cookieExtractor = req => {
   let token = null;
   if (req && req.cookies) { //Validamos que exista el request y las cookies.
-      token = req.cookies['jwtCookieToken'];
+    token = req.cookies['jwtCookieToken'];
   }
   return token;
 };
