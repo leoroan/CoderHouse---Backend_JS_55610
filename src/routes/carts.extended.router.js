@@ -16,6 +16,9 @@ export default class CartExtendRouter extends CustomRouter {
     // purchase cart
     this.post('/:cid/purchase', ["USER", "ADMIN"], async (req, res) => {
       purchaseCartController(req, res)
+        .then((result) => {
+          res.status(200).json(result);
+        })
     });
 
     // Get all carts

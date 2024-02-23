@@ -59,6 +59,14 @@ class ProductDAO {
       throw error;
     }
   }
+
+  async updateStock(productId, qtty) {
+    try {
+      return await productModel.updateOne( { _id: productId}, { $set: { stock: qtty }});
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ProductDAO;

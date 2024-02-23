@@ -3,7 +3,6 @@ var limitSelect = document.getElementById("limitSelect");
 
 limitSelect.addEventListener("change", function () {
   var selectedLimit = limitSelect.value;
-
   window.location.href = `/?limit=${selectedLimit}`;
 });
 
@@ -287,7 +286,7 @@ loginButton.onclick = function (e) {
 // Register func
 const registerButton = document.getElementById("registerbtn");
 registerButton.onclick = function (e) {
-  e.preventDefault(); 3
+  e.preventDefault();
   let username = document.getElementById('inputUsername2').value;
   let email = document.getElementById('inputEmail2').value;
   let password = document.getElementById('inputPassword2').value;
@@ -335,6 +334,30 @@ function handleLogout() {
   })
 }
 
+// buy func
+function buyCart(cartId) {
+  const url = `/api/carts/${cartId}/purchase`;
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      alert('Cart Buyed');
+      location.reload();
+    })
+    .catch(error => {
+      alert('Some products without sotck, try less');
+      location.reload();
+    });
+}
 
 // const socket = io();
 

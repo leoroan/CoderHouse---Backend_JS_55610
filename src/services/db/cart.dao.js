@@ -119,7 +119,7 @@ class CartDao {
           cart.totalProducts -= Number(quantity);
           cart.updatedAt = new Date();
 
-          console.log('Product removed from cart successfully');
+          // console.log('Product removed from cart successfully');
           return await cart.save();
         } else {
           console.error('Product not found in the cart');

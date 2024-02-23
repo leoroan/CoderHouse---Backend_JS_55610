@@ -4,11 +4,11 @@ import mongoosePaginate from "mongoose-paginate-v2";
 const ticketSchema = new Schema({
   code: {
     type: String,
-    required: true
+    default: "ABC123",
+    required: false
   },
   purchase_datetime: {
     type: Date,
-    required: true,
     default: Date.now()
   },
   amount: {
