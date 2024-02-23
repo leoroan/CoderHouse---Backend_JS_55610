@@ -7,7 +7,7 @@ export const createTicket = async (req, res) => {
   const newTicket = { amount: req.amount, purchaser: req.purchaser };
   try {
     const ticket = await ticketDAO.createTicket(newTicket);
-    // res.status(201).json({ success: true, ticket });
+    res.json(ticket);
   } catch (error) {
     console.error("Error al crear el ticket:", error);
     // res.status(500).json({ success: false, error: "Error al crear el ticket" });

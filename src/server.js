@@ -6,6 +6,7 @@ import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 // import usersRouter from "./routes/users.router.js";
 import viewsRouter from "./routes/views.router.js";
+import mailRouter from "./routes/mailer.router.js";
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import mongoose from "mongoose";
@@ -100,6 +101,7 @@ app.use("/api/products", productsExtRouter.getRouter());
 // app.use("/api/carts", cartsRouter);
 app.use("/api/carts", cartsExtRouter.getRouter());
 // app.use("/api/users", usersRouter);
+app.use("/mailer", mailRouter);
 
 // Mongoose connection
 mongoose
