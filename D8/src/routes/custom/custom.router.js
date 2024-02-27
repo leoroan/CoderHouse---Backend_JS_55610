@@ -51,8 +51,8 @@ export default class CustomRouter {
   };
 
   handlePolicies = policies => (req, res, next) => {
-    console.log("Politicas a evaluar:");
-    console.log(policies);
+    // console.log("Politicas a evaluar:");
+    // console.log(policies);
 
     //Validar si tiene acceso publico:
     if (policies[0] === "PUBLIC") return next();

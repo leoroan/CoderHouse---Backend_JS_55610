@@ -31,3 +31,14 @@ export const mensajeCompra = (username, amount, code) => {
   <p>¡Gracias por confiar en nosotros!</p>
   `;
 }
+
+export const mensajeRegister = (username, urlEnlace) => {
+  return `
+  <h1>Hola ${username}!</h1>
+  <p>Gracias por registrarte en UR-SHOP!</p>
+  <p>Tu registro ha sido procesada y se encuentra en proceso de revision hasta que no valides tu direccion de correo electrónico!.</p>
+  
+  <p> hace click en el siguiente enlace $(urlEnlace) para verificar tu cuenta!</p>
+  <p>¡Gracias por confiar en nosotros!</p>
+  `;
+}
