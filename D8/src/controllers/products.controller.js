@@ -1,3 +1,6 @@
+import CustomError from "../services/errors/CustomErrors.js";
+import { generateValidationErrorInfo } from "../services/errors/products-error.messages.js";
+import EErrors from "../services/errors/errors-nums.js";
 import ProductDAO from "../services/db/product.dao.js";
 // import { ProductDTO } from "../services/db/dto/product.dto.js";
 const productDao = new ProductDAO();
@@ -31,6 +34,18 @@ export const getProductByIdController = async (req, res) => {
 // Create a new product
 export const createProductController = async (req, res) => {
   const newProductData = req.body;
+  const { title, description, price, code } = newProductData;
+
+  //TODO:: Create Custom Error
+  if (!title || !description || !price || !code) {
+    throw new CustomError({
+      name: "Product Create Error",
+      cause: generateValidationErrorInfo(newProductData),
+      message: "Error trying to create the product. Required fields are missing.",
+      code: EErrors.INVALID_TYPES_ERROR
+    });
+  }
+
   try {
     const newProduct = await productDao.addProduct(newProductData);
     res.status(201).json(newProduct);
@@ -79,7 +94,7 @@ export const updateStockController = async (prod, qtty) => {
       console.log("couldnt update stock from model");
     }
     console.log("stock updated");
-    console.log("producto :", prod.title," stock_actual: ", actualStock, " stock_nuevo: ", updatedStock);
+    console.log("producto :", prod.title, " stock_actual: ", actualStock, " stock_nuevo: ", updatedStock);
   } catch (error) {
     console.log("error in update stock controller", error);
   }
