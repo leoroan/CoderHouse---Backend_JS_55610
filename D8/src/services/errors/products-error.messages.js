@@ -1,4 +1,4 @@
-export const generateValidationErrorInfo = (product) => {
+export const generateProductValidationErrorInfo = (product) => {
   const requiredProperties = [
     { name: 'title', type: 'String', received: product.title },
     { name: 'description', type: 'String', received: product.description },
@@ -11,8 +11,7 @@ export const generateValidationErrorInfo = (product) => {
     .map(property => `-> ${property.name}: type ${property.type}, received: ${property.received}`);
 
   if (invalidProperties.length > 0) {
-    return `
-      Required properties:
+    return `Required properties:
         ${invalidProperties.join('\n        ')}`;
   }
 
