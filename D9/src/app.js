@@ -22,7 +22,7 @@ import passport from 'passport';
 import initializePassport from './configs/auth/passport.config.js'
 
 // import http from 'http';
-import { Server } from "socket.io";
+// import { Server } from "socket.io";
 
 const SERVER_PORT = config.port;
 const MONGO_URL = config.urlMongo;
@@ -39,7 +39,8 @@ app.use(addLogger);
 
 // **BASE
 app.get("/logger", (req, res) => {
-  req.logger.warning("Prueba de log level warn --> en Endpoint"); // **BASE
+  req.logger.debug("Prueba de log level warn --> en developer mode");
+  req.logger.info("Prueba de log level info --> en production mode");
   res.send("Prueba de logger!");
 });
 

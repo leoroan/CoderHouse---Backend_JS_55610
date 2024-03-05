@@ -12,7 +12,7 @@ export const addLogger = (req, res, next) => {
     req.logger.info(`${req.method} en ${req.url} - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`)
     req.logger.fatal(`${req.method} en ${req.url} - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`)
 
-  } else {
+  } else if (config.enviroment !== 'DEV') {
     req.logger = prodLogger
 
     req.logger.warning(`${req.method} en ${req.url} - at ${new Date().toLocaleDateString()} - ${new Date().toLocaleTimeString()}`)

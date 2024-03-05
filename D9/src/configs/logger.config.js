@@ -48,7 +48,21 @@ export const prodLogger = winston.createLogger({
     // Declaramos el trasnport
     levels: customLevelsOptions.levels,
     transports: [
-        new transports.Console({ level: "info" }),
-        new transports.File({ filename: './errors.log', level: 'error' })
+        new transports.Console(
+            {
+                level: "info",
+                format: winston.format.combine(
+                    winston.format.colorize({ colors: customLevelsOptions.colors }),
+                    winston.format.simple()
+                )
+            }
+        ),
+        new transports.File(
+            {
+                filename: './errors.log',
+                level: 'error', //Cambiamos el logger level name.
+                format: winston.format.simple()
+            }
+        )
     ]
 })
