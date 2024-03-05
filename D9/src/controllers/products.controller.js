@@ -1,3 +1,6 @@
+import CustomError from "../services/errors/CustomErrors.js";
+import EErrors from "../services/errors/errors-nums.js";
+import { generateProductValidationErrorInfo } from "../services/errors/products-error.messages.js";
 import ProductDAO from "../services/dao/mongo/product.dao.js";
 // import { ProductDTO } from "../services/db/dto/product.dto.js";
 const productDao = new ProductDAO();
@@ -30,27 +33,52 @@ export const getProductByIdController = async (req, res) => {
 
 // Create a new product
 export const createProductController = async (req, res) => {
-  const newProductData = req.body;
   try {
+    const newProductData = req.body;
+    const { title, description, price, code } = newProductData;
+
+    //TODO:: Create Custom Error
+    if (!title || !description || !price || !code) {
+      CustomError.createError({
+        name: "Product Create Error",
+        cause: generateProductValidationErrorInfo(newProductData),
+        message: "Error trying to create the product. Required fields are missing.",
+        code: EErrors.INVALID_TYPES_ERROR
+      });
+    }
     const newProduct = await productDao.addProduct(newProductData);
     res.status(201).json(newProduct);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error.cause);
+    res.status(500).json({ error: error.code, message: error.message });
   }
 };
 
 // Update a product by ID
 export const updateProductController = async (req, res) => {
-  const productId = req.params.id;
-  const updatedProductData = req.body;
   try {
+    const productId = req.params.id;
+    const updatedProductData = req.body;
+
+    const { title, description, price, code } = updatedProductData;
+    //TODO:: Create Custom Error
+    if (!title || !description || !price || !code) {
+      CustomError.createError({
+        name: "Product Update Error",
+        cause: generateProductValidationErrorInfo(updatedProductData),
+        message: "Error trying to Update the product. Required fields are missing.",
+        code: EErrors.INVALID_TYPES_ERROR
+      });
+    }
+    
     const updatedProduct = await productDao.updateProduct(productId, updatedProductData);
     if (!updatedProduct) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
     res.status(201).json(updatedProduct);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error.cause);
+    res.status(500).json({ error: error.code, message: error.message });
   }
 };
 
@@ -79,7 +107,7 @@ export const updateStockController = async (prod, qtty) => {
       console.log("couldnt update stock from model");
     }
     console.log("stock updated");
-    console.log("producto :", prod.title," stock_actual: ", actualStock, " stock_nuevo: ", updatedStock);
+    console.log("producto :", prod.title, " stock_actual: ", actualStock, " stock_nuevo: ", updatedStock);
   } catch (error) {
     console.log("error in update stock controller", error);
   }

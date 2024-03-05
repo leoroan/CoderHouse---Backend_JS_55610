@@ -2,6 +2,10 @@ import CartDao from '../services/dao/mongo/cart.dao.js';
 import { updateStockController } from './products.controller.js';
 import { createTicket } from '../controllers/tickets.controller.js';
 import { sendMail, mensajeCompra } from './nodemailer.controller.js';
+import CustomError from "../services/errors/CustomErrors.js";
+import EErrors from "../services/errors/errors-nums.js";
+// import { addtoCartErrorInfo } from '../services/errors/products-error.messages.js';
+
 const cartDao = new CartDao();
 
 export const purchaseCartController = async (req, res) => {
@@ -29,7 +33,7 @@ export const purchaseCartController = async (req, res) => {
       const ticket = { amount: grandTotal, purchaser: req.session.user.username };
       const createdTicket = await createTicket(ticket, res);
       // console.log(createTicket);
-      sendMail(req.session.user.email, " compra realizada ", mensajeCompra(req.session.user.username, grandTotal, "code" ) );
+      sendMail(req.session.user.email, " compra realizada ", mensajeCompra(req.session.user.username, grandTotal, "code"));
     } else {
       // res.status(400).json({ message: "No hay productos válidos en el carrito" });
     }
@@ -151,7 +155,6 @@ export const addProductToCartByIdController = async (req, res) => {
 
 async function getProductsFromCartById(cartId) {
   try {
-    // console.log("Getting products for cart with ID:", cartId);
     const cart = await cartDao.getCartById(cartId);
     if (!cart) {
       console.error("Cart not found for ID:", cartId);

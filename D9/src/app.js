@@ -13,7 +13,7 @@ import MongoStore from 'connect-mongo';
 import mongoose from "mongoose";
 import cookieParser from 'cookie-parser';
 import config from './utils/process.js';
-
+import { addLogger } from './middlewares/logger.middleware.js';
 import handlebars from "express-handlebars";
 import __dirname from "./utils.js";
 
@@ -33,6 +33,15 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// **Logger
+app.use(addLogger);
+
+// **BASE
+app.get("/logger", (req, res) => {
+  req.logger.warning("Prueba de log level warn --> en Endpoint"); // **BASE
+  res.send("Prueba de logger!");
+});
 
 // const server = http.createServer(app);
 app.listen(SERVER_PORT, () => console.log(`Server listening on port ${SERVER_PORT}`));
