@@ -12,14 +12,14 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import mongoose from "mongoose";
 import cookieParser from 'cookie-parser';
-import config from './config/config.js';
+import config from './utils/process.js';
 
 import handlebars from "express-handlebars";
-import __dirname from "./util.js";
+import __dirname from "./utils.js";
 
 // Passport Imports
 import passport from 'passport';
-import initializePassport from './config/passport.config.js'
+import initializePassport from './configs/auth/passport.config.js'
 
 // import http from 'http';
 import { Server } from "socket.io";

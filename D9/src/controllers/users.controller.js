@@ -1,5 +1,5 @@
-import { UserDTO } from "../services/db/dto/user.dto.js";
-import UserDAO from "../services/db/user.dao.js";
+import { UserDTO } from "../services/dto/user.dto.js";
+import UserDAO from "../services/dao/mongo/user.dao.js";
 
 //Get user profile
 export const getUserProfileController = async (req, res) => {

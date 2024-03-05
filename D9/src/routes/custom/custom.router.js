@@ -1,6 +1,6 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { PRIVATE_KEY } from "../../util.js";
+import { PRIVATE_KEY } from "../../utils/jwt.js";
 
 
 export default class CustomRouter {
@@ -83,7 +83,7 @@ export default class CustomRouter {
       // si el user.role se encuentra dentro de policies, podes ingresar
       // req.user = user;
       // console.log(req.user);
-      console.log("usuario con politica aceptada");
+      // console.log("usuario con politica aceptada");
       next()
     })
   }

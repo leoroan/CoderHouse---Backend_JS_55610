@@ -1,6 +1,7 @@
 import CustomRouter from "./custom/custom.router.js";
-import CartDao from "../services/db/cart.dao.js"
-import { createHash, isValidPassword, generateJWToken } from "../util.js";
+import CartDao from "../services/dao/mongo/cart.dao.js"
+import { createHash, isValidPassword } from "../utils/bcrypt.js";
+import { generateJWToken } from "../utils/jwt.js";
 import passport from 'passport';
 import { getUserProfileController } from "../controllers/users.controller.js";
 

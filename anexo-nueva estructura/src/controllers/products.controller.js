@@ -1,4 +1,4 @@
-import ProductDAO from "../services/db/product.dao.js";
+import ProductDAO from "../services/dao/mongo/product.dao.js";
 // import { ProductDTO } from "../services/db/dto/product.dto.js";
 const productDao = new ProductDAO();
 

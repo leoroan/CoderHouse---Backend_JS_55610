@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import program from '../process.js';
+import program from '../utils/commander.js';
 
 // dotenv.config();
 
@@ -9,7 +9,7 @@ const enviroment = program.opts().mode.toUpperCase();
 console.log("enviroment: ", enviroment === "DEV" ? "development mode" : "production mode");
 
 dotenv.config({
-  path: enviroment === "DEV" ? "./src/config/.env.development" : "./src/config/.env.production"
+  path: enviroment === "DEV" ? "./src/utils/.env.development" : "./src/utils/.env.production"
 });
 
 export default {

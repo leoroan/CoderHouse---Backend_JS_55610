@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "start": "node src/server.js -- --mode prod"
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js -- --mode prod"
   },
   "keywords": [],
   "author": "",

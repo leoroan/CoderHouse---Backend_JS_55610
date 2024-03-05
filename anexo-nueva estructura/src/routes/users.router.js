@@ -1,10 +1,11 @@
 import { Router } from "express";
 // import UserDAO from "../services/db/user.dao.js";
-import CartDao from "../services/db/cart.dao.js"
-import { createHash, isValidPassword, generateJWToken } from "../util.js";
+import CartDao from "../services/dao/mongo/cart.dao.js";
+import { createHash, isValidPassword,  } from "../util.js";
+import { generateJWToken} from "../utils/jwt.js";
 import passport from 'passport';
 import { getUserProfileController } from "../controllers/users.controller.js";
-import { UserDTO } from "../services/db/dto/user.dto.js";
+import { UserDTO } from "../services/dto/user.dto.js";
 
 
 const router = Router();
