@@ -1,4 +1,5 @@
 import transporter from '../utils/mail.js';
+import { uuid } from 'uuidv4';
 
 export const sendMail = async (email, subject, html, attachments) => {
   try {
@@ -20,6 +21,31 @@ export const sendMail = async (email, subject, html, attachments) => {
     throw error;
   }
 };
+
+export const sendForgotMail = async (email, attachments) => {
+  try {
+    const token = uuid();
+    // Aquí deberías almacenar el token en tu base de datos
+    // junto con el correo electrónico y la marca de tiempo
+
+    const result = await transporter.sendMail({
+      from: 'UR-SHOP!',
+      to: email,
+      subject: 'Restablece tu contraseña',
+      html: `
+      <p>Haz clic en el siguiente botón para restablecer tu contraseña:</p>
+      <a href="http://127.0.01:8080/mailer/reset-password?token=${token}">Restablecer contraseña</a>
+    `,
+      attachments: attachments
+    });
+    return `Correo electrónico de restablecimiento de cuenta, enviado a ${email}. ID del mensaje: ${result.messageId}`;
+  } catch (error) {
+    console.error('Error al enviar el correo de restablecimiento de contraseña:', error);
+    throw error;
+  }
+};
+
+
 
 export const mensajeCompra = (username, amount, code) => {
   return `
