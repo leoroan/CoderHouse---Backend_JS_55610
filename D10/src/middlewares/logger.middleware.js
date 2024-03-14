@@ -1,4 +1,4 @@
-import { devLogger, prodLogger } from '../configs/logger.config.js';
+import { devLogger, prodLogger } from '../utils/logger.config.js';
 import config from '../utils/process.js'
 
 export const addLogger = (req, res, next) => {
