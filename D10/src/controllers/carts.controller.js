@@ -1,12 +1,10 @@
-import CartDao from '../services/dao/mongo/cart.dao.js';
+import { cartService } from '../services/repository/services.js';
 import { updateStockController } from './products.controller.js';
 import { createTicket } from '../controllers/tickets.controller.js';
 import { sendMail, mensajeCompra } from './nodemailer.controller.js';
 import CustomError from "../services/errors/CustomErrors.js";
 import EErrors from "../services/errors/errors-nums.js";
 // import { addtoCartErrorInfo } from '../services/errors/products-error.messages.js';
-
-const cartDao = new CartDao();
 
 export const purchaseCartController = async (req, res) => {
   try {
@@ -58,13 +56,13 @@ function evaluateStock(productsFromCart) {
 }
 
 export const getAllCartsController = async (req, res) => {
-  return await res.json(cartDao.getAllCarts());
+  return await res.json(cartService.getAllCarts());
 };
 
 export const getCartByIdController = async (req, res) => {
   const cartId = req.params.id;
   try {
-    const cart = await cartDao.getCartById(cartId);
+    const cart = await cartService.getCartById(cartId);
 
     if (!cart) {
       return res.status(404).json({ error: 'Carro no encontrado' });
@@ -86,9 +84,9 @@ export const getCartByIdController = async (req, res) => {
 export const getCartByUserIdController = async (req, res) => {
   const userId = req.params.uid;
   try {
-    const cart = await cartDao.getCartByUserId(userId);
+    const cart = await cartService.getCartByUserId(userId);
     if (!cart) {
-      await cartDao.createCart(userId);
+      await cartService.createCart(userId);
     }
     res.render("cart", {
       fileFavicon: "favicon.ico",
@@ -106,7 +104,7 @@ export const getCartByUserIdController = async (req, res) => {
 export const createCartController = async (req, res) => {
   const userID = req.params.uid;
   try {
-    const newCart = await cartDao.createCart(userID);
+    const newCart = await cartService.createCart(userID);
     res.status(201).json(newCart);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -116,7 +114,7 @@ export const createCartController = async (req, res) => {
 export const deleteWholeCartController = async (req, res) => {
   const cartID = req.params.cid;
   try {
-    const updatedCart = await cartDao.deleteCart(cartID);
+    const updatedCart = await cartService.deleteCart(cartID);
     res.status(200).json(updatedCart);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -128,7 +126,7 @@ export const deleteProductFromCartByIdController = async (req, res) => {
   const cartID = req.params ? req.params.cid : req.cid;
   const productID = req.params ? req.params.pid : req.pid._id;
   try {
-    const updatedCart = await cartDao.deleteProductFromCart(cartID, productID);
+    const updatedCart = await cartService.deleteProductFromCart(cartID, productID);
     if (!updatedCart) {
       // return res.status(404).json({ error: 'carrito no actualizado' });
     }
@@ -143,7 +141,7 @@ export const addProductToCartByIdController = async (req, res) => {
   const productID = req.params.pid;
   const qtty = req.params.qtty;
   try {
-    const updatedCart = await cartDao.addProductToCart(anID, productID, qtty);
+    const updatedCart = await cartService.addProductToCart(anID, productID, qtty);
     if (!updatedCart) {
       return res.status(404).json({ error: 'carrito no actualizado' });
     }
@@ -155,7 +153,7 @@ export const addProductToCartByIdController = async (req, res) => {
 
 async function getProductsFromCartById(cartId) {
   try {
-    const cart = await cartDao.getCartById(cartId);
+    const cart = await cartService.getCartById(cartId);
     if (!cart) {
       console.error("Cart not found for ID:", cartId);
       return res.status(404).json({ error: "Cart not found" });

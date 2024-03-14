@@ -1,15 +1,13 @@
 import CustomError from "../services/errors/CustomErrors.js";
 import EErrors from "../services/errors/errors-nums.js";
 import { generateProductValidationErrorInfo } from "../services/errors/products-error.messages.js";
-import ProductDAO from "../services/dao/mongo/product.dao.js";
 // import { ProductDTO } from "../services/db/dto/product.dto.js";
-const productDao = new ProductDAO();
-
+import { productService } from "../services/repository/services.js";
 //Get all products
 export const getAllProductsController = async (req, res) => {
   const { limit, page, sort, category } = req.query;
   try {
-    const products = await productDao.getAllProducts({ limit, page, sort, category });
+    const products = await productService.getAllProducts({ limit, page, sort, category });
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -20,7 +18,7 @@ export const getAllProductsController = async (req, res) => {
 export const getProductByIdController = async (req, res) => {
   const productId = req.params.id;
   try {
-    const product = await productDao.getProductById(productId);
+    const product = await productService.getProductById(productId);
     if (!product) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
@@ -46,7 +44,7 @@ export const createProductController = async (req, res) => {
         code: EErrors.INVALID_TYPES_ERROR
       });
     }
-    const newProduct = await productDao.addProduct(newProductData);
+    const newProduct = await productService.addProduct(newProductData);
     res.status(201).json(newProduct);
   } catch (error) {
     console.error(error.cause);
@@ -70,8 +68,8 @@ export const updateProductController = async (req, res) => {
         code: EErrors.INVALID_TYPES_ERROR
       });
     }
-    
-    const updatedProduct = await productDao.updateProduct(productId, updatedProductData);
+
+    const updatedProduct = await productService.updateProduct(productId, updatedProductData);
     if (!updatedProduct) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
@@ -86,7 +84,7 @@ export const updateProductController = async (req, res) => {
 export const deleteProductController = async (req, res) => {
   const productId = req.params.id;
   try {
-    const deletedProduct = await productDao.deleteProduct(productId);
+    const deletedProduct = await productService.deleteProduct(productId);
     if (!deletedProduct) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
@@ -102,7 +100,7 @@ export const updateStockController = async (prod, qtty) => {
   const actualStock = prod.stock;
   const updatedStock = actualStock - qtty;
   try {
-    const updatedProduct = await productDao.updateStock(productId, updatedStock);
+    const updatedProduct = await productService.updateStock(productId, updatedStock);
     if (!updatedProduct) {
       console.log("couldnt update stock from model");
     }
