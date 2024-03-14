@@ -10,7 +10,6 @@ import mailRouter from "./routes/mailer.router.js";
 import mockingRouter from "./routes/mocking.router.js";
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import mongoose from "mongoose";
 import cookieParser from 'cookie-parser';
 import config from './configs/config.js';
 import { addLogger } from './middlewares/logger.middleware.js';
@@ -20,12 +19,12 @@ import __dirname from "./utils.js";
 // Passport Imports
 import passport from 'passport';
 import initializePassport from './configs/auth/passport.config.js'
+import MongoSingleton from './configs/mongoDB-singleton.js';
 
 // import http from 'http';
 // import { Server } from "socket.io";
 
 const SERVER_PORT = config.port;
-const MONGO_URL = config.urlMongo;
 
 //express conf.
 const app = express();
@@ -77,7 +76,7 @@ app.use(session(
 
     // Usando --> connect-mongo
     store: MongoStore.create({
-      mongoUrl: MONGO_URL,
+      mongoUrl: config.urlMongo,
       //mongoOptions --> opciones de confi para el save de las sessions
       mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
       ttl: 10 * 60
@@ -115,15 +114,12 @@ app.use("/api/carts", cartsExtRouter.getRouter());
 app.use("/mailer", mailRouter);
 app.use("/mockingrouter", mockingRouter);
 
-// Mongoose connection
-mongoose
-  .connect(
-    MONGO_URL
-  )
-  .then(() => {
-    console.log("DB Connected");
-  })
-  .catch((err) => {
-    console.log("There were an error trying to connect db...");
-    console.log(err);
-  });
+const mongoInstance = async () => {
+  try {
+      await MongoSingleton.getInstance();
+  } catch (error) {
+      console.error(error);
+      process.exit();
+  }
+};
+mongoInstance();
