@@ -12,7 +12,7 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import mongoose from "mongoose";
 import cookieParser from 'cookie-parser';
-import config from './utils/process.js';
+import config from './configs/config.js';
 import { addLogger } from './middlewares/logger.middleware.js';
 import handlebars from "express-handlebars";
 import __dirname from "./utils.js";

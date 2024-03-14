@@ -1,5 +1,5 @@
 import { devLogger, prodLogger } from '../utils/logger.config.js';
-import config from '../utils/process.js'
+import config from '../configs/config.js';
 
 export const addLogger = (req, res, next) => {
   if (config.enviroment === 'DEV') {
