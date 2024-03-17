@@ -62,10 +62,10 @@ router.post('/reset-password', async (req, res) => {
   // }
   // Verifica si el token es válido (existe en tu base de datos y no ha expirado)
   if (!resultToken || tokenTime < Date.now()) {
-    return res.status(401).send('Token inválido o expirado');
     if (tokenTime < Date.now()) {
-      
+      res.render('reresetpassword');
     }
+    return res.status(401).send('Token inválido');
   }
   console.log("newpass:", password, "DBpass: ", userPassword);
   const match = comparePasswords(password, userPassword.password);
