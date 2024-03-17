@@ -360,12 +360,12 @@ function buyCart(cartId) {
 }
 
 
-function restablecerContrasenia(username, email, id) {
+function restablecerContrasenia(email) {
   if (email.includes('@')) {
     // Aquí deberías hacer la solicitud a tu API
-    fetch(`/mailer/forgot-password/${id}`, {
+    fetch(`/mailer/forgot-password/`, {
       method: 'POST',
-      body: JSON.stringify({ username: username, email: email }),
+      body: JSON.stringify({ email: email }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -379,10 +379,10 @@ function restablecerContrasenia(username, email, id) {
       })
       .catch(error => {
         console.error('Error:', error);
-        alert(`Ha ocurrido un error al intentar restablecer la contraseña.`);
+        alert(`Ha ocurrido un error al intentar restablecer la contraseña o mail incorrecto.`);
       });
   } else {
-    alert(`Debes revisar tu cuenta de GitHub: '${username}', esta no tiene un correo público para restablecer la contraseña!!`);
+    alert(`No ncluiste un mail o este es incorrecto`);
   }
 }
 

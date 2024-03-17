@@ -17,7 +17,7 @@ class UserDAO {
     }
   }
 
-  static async getUserByEmail(email) {
+  async getUserByEmail(email) {
     try {
       return await userModel.findOne({ email: email });
     } catch (error) {

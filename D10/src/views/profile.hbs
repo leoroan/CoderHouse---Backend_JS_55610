@@ -11,11 +11,13 @@
             <p><span class="fw-bolder">tipo:</span> {{user.type}}</p><br>
         </div>
         <div class="mt-5">
-        <button class="btn btn-sm btn-outline-primary m-5"
-            onclick="restablecerContrasenia('{{user.username}}','{{user.email}}', '{{user._id}}')">Restablecer Contraseña</button>
+            <button class="btn btn-sm btn-outline-primary m-5"
+                onclick="restablecerContrasenia('{{user.email}}')">
+                Restablecer Contraseña
+            </button>
+        </div>
     </div>
-    </div>
-    
+
 
 </div>
 

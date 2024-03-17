@@ -27,7 +27,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form class="text-center">
           <div class="mb-3">
             <label for="inputEmail1" class="form-label">Email address</label>
             <input type="email" class="form-control" id="inputEmail1" aria-describedby="emailHelp"
@@ -38,26 +38,63 @@
             <label for="inputPassword1" class="form-label">Password</label>
             <input type="password" class="form-control" id="inputPassword1">
           </div>
+          <button type="button" id="loginbtn" class="btn btn-success">Login</button>
         </form>
         <hr>
-        <p>Or login with..</p>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-          <button type="button" class="btn btn-outline-dark btn-lg" onclick="handleGitHubLogin()"><i
-              class="bi bi-github"></i></button>
-        </div>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center flex-column">
           <button class="btn btn-outline-primary text-center mt-2 " data-bs-toggle="modal"
-            data-bs-target="#registerModal">Do U-want to resgister?</button>
+            data-bs-target="#registerModal">Do U-want to resgister?
+          </button>
+          <button class="btn btn-outline-warning text-center mt-2 " data-bs-toggle="modal"
+            data-bs-target="#forgotPasswordModal">Did U-forget your password??
+          </button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" id="loginbtn" class="btn btn-primary">Login</button>
+      <div class="text-center">
+        <p>Or login with..</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-3">
+          <button type="button" class="btn btn-outline-dark btn-lg" onclick="handleGitHubLogin()"><i
+              class="bi bi-github"></i>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 {{!-- Login Modal end --}}
+
+{{!-- forgot password modal --}}
+<div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-bg-light border-dark border-3">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="forgotPasswordModalLabel">Recorver password</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <form>
+          <div class="mb-3">
+            <label for="inputEmail3" class="form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail3" aria-describedby="emailHelp">
+          </div>
+          <p class="fw-bold fs-italic"> If its correct, we will send you an email! </p>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Regret</button>
+        <button type="button" class="btn btn-primary"
+          onclick="restablecerContrasenia(document.getElementById('inputEmail3').value)" data-bs-dismiss="modal">
+          recover
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {{!-- Register Modal start --}}
 <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">

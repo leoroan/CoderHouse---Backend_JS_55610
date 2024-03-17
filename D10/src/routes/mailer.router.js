@@ -17,10 +17,9 @@ router.post("/send-mail", async (req, res) => {
 });
 
 // Ruta para solicitar recuperación de contraseña
-router.post('/forgot-password/:id', async (req, res) => {
-  const userId = req.params.id;
+router.post('/forgot-password/', async (req, res) => {
   try {
-    const result = await sendForgotMail(req.body.email, req.body.attachments, userId);
+    const result = await sendForgotMail(req.body.email, req.body.attachments);
     res.status(200).json({ message: 'Correo electrónico de restablecimiento enviado correctamente', messageId: result.messageId });
   } catch (error) {
     console.error('Error al enviar el correo electrónico de restablecimiento:', error);
@@ -64,6 +63,9 @@ router.post('/reset-password', async (req, res) => {
   // Verifica si el token es válido (existe en tu base de datos y no ha expirado)
   if (!resultToken || tokenTime < Date.now()) {
     return res.status(401).send('Token inválido o expirado');
+    if (tokenTime < Date.now()) {
+      
+    }
   }
   console.log("newpass:", password, "DBpass: ", userPassword);
   const match = comparePasswords(password, userPassword.password);

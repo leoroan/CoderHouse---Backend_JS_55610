@@ -25,12 +25,13 @@ export const sendMail = async (email, subject, html, attachments) => {
 
 export const sendForgotMail = async (email, attachments, userId) => {
   try {
+    const user = await userService.getUserByEmail(email);
     const resetToken = uuidv4();
     const resetTokenExpiration = Date.now() + 3600000;
-    const resetLink = `http://127.0.0.1:8080/mailer/reset-password?token=${resetToken}&uid=${userId}`;
+    const resetLink = `http://127.0.0.1:8080/mailer/reset-password?token=${resetToken}&uid=${user._id}`;
     // Aquí deberías almacenar el token en tu base de datos
     // junto con el correo electrónico y la marca de tiempo
-    const updatedUser = await userService.updateUser(userId, { resetToken, resetTokenExpiration });
+    const updatedUser = await userService.updateUser(user._id, { resetToken, resetTokenExpiration });
 
     const result = await transporter.sendMail({
       from: 'UR-SHOP!',
