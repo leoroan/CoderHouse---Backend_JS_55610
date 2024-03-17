@@ -7,3 +7,7 @@ export const createHash = password => bcrypt.hashSync(password, bcrypt.genSaltSy
 export const isValidPassword = (user, password) => {
     return bcrypt.compareSync(password, user.password);
 }
+
+export const comparePasswords = (userInputPassword, storedHash) => {
+    return bcrypt.compareSync(userInputPassword, storedHash);
+}

@@ -22,12 +22,24 @@ export const getUserProfileController = async (req, res) => {
 
 export const getToken = async (userId) => {
   try {
-    console.log(userId);
     const userProfile = await userService.getUserById(userId);
     if (!userProfile) {
       return ({ error: 'User not found' });
     }
-    return({ resultToken: userProfile.resetToken, tokenTime: userProfile.resetTokenExpiration });
+    return ({ resultToken: userProfile.resetToken, tokenTime: userProfile.resetTokenExpiration });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
+export const getPassword = async (userId) => {
+  try {
+    const userProfile = await userService.getUserById(userId);
+    if (!userProfile) {
+      return ({ error: 'User not found' });
+    }
+    return ({ password: userProfile.password });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });

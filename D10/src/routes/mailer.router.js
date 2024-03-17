@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { sendForgotMail, sendMail } from "../controllers/nodemailer.controller.js";
-import { getToken } from "../controllers/users.controller.js";
-import { createHash } from "../utils/bcrypt.js";
+import { getToken, getPassword } from "../controllers/users.controller.js";
+import { comparePasswords, createHash } from "../utils/bcrypt.js";
 import { userService } from "../services/repository/services.js";
 const router = Router();
 
@@ -46,6 +46,7 @@ router.post('/reset-password', async (req, res) => {
   const { token, password } = req.body;
   const uid = req.query.uid;
   const { resultToken, tokenTime } = await getToken(uid);
+  const userPassword = await getPassword(uid);
 
 
   // if (!password) {
@@ -64,7 +65,12 @@ router.post('/reset-password', async (req, res) => {
   if (!resultToken || tokenTime < Date.now()) {
     return res.status(401).send('Token inválido o expirado');
   }
-  // Hashea la contraseña antes de almacenarla utilizando bcrypt u otro algoritmo seguro
+  console.log("newpass:", password, "DBpass: ", userPassword);
+  const match = comparePasswords(password, userPassword.password);
+  if (match) {
+    return res.status(401).send('La contraseña no puede ser igual a la anterior');
+  }
+  
   const hashedPassword = createHash(password);
   console.log("pass:", password, "hashed: ", hashedPassword);
   // Si el token es válido, actualiza la contraseña en tu base de datos
