@@ -359,6 +359,35 @@ function buyCart(cartId) {
     });
 }
 
+
+function restablecerContrasenia(username, email, id) {
+  if (email.includes('@')) {
+    // Aquí deberías hacer la solicitud a tu API
+    fetch(`/mailer/forgot-password/${id}`, {
+      method: 'POST',
+      body: JSON.stringify({ username: username, email: email }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          alert(`Se ha enviado un correo a '${email}', para proceder a restablecer la contraseña.`);
+        } else {
+          alert(`Ha ocurrido un error al intentar restablecer la contraseña.`);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert(`Ha ocurrido un error al intentar restablecer la contraseña.`);
+      });
+  } else {
+    alert(`Debes revisar tu cuenta de GitHub: '${username}', esta no tiene un correo público para restablecer la contraseña!!`);
+  }
+}
+
+
+
 // const socket = io();
 
 // socket.emit('message', "home conecction")

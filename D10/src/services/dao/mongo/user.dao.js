@@ -25,7 +25,7 @@ class UserDAO {
     }
   }
 
-  static async getUserById(id) {
+  async getUserById(id) {
     try {
       return await userModel.findById(id);
     } catch (error) {
@@ -41,7 +41,7 @@ class UserDAO {
     }
   }
 
-  static async updateUser(id, user) {
+  async updateUser(id, user) {
     try {
       return await userModel.findByIdAndUpdate(id, user);
     } catch (error) {
@@ -49,7 +49,7 @@ class UserDAO {
     }
   }
 
-  static async deleteUser(id) {
+  async deleteUser(id) {
     try {
       return await userModel.findByIdAndDelete(id);
     } catch (error) {

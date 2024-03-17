@@ -18,7 +18,9 @@ const userSchema = new Schema({
   type: {
     type: String,
     default: 'user'
-},
+  },
+  resetToken: String,
+  resetTokenExpiration: Date
 });
 
 const userModel = model('User', userSchema);

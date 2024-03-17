@@ -1,5 +1,6 @@
 import transporter from '../utils/mail.js';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
+import { userService } from '../services/repository/services.js';
 
 export const sendMail = async (email, subject, html, attachments) => {
   try {
@@ -22,19 +23,23 @@ export const sendMail = async (email, subject, html, attachments) => {
   }
 };
 
-export const sendForgotMail = async (email, attachments) => {
+export const sendForgotMail = async (email, attachments, userId) => {
   try {
-    const token = uuid();
+    const resetToken = uuidv4();
+    const resetTokenExpiration = Date.now() + 3600000;
+    const resetLink = `http://127.0.0.1:8080/mailer/reset-password?token=${resetToken}&uid=${userId}`;
     // Aquí deberías almacenar el token en tu base de datos
     // junto con el correo electrónico y la marca de tiempo
+    const updatedUser = await userService.updateUser(userId, { resetToken, resetTokenExpiration });
 
     const result = await transporter.sendMail({
       from: 'UR-SHOP!',
       to: email,
       subject: 'Restablece tu contraseña',
       html: `
+      <p>Hola! Solicitaste restablecer tu contraseña de UR-SHOP!</p>
       <p>Haz clic en el siguiente botón para restablecer tu contraseña:</p>
-      <a href="http://127.0.01:8080/mailer/reset-password?token=${token}">Restablecer contraseña</a>
+      <a href="${resetLink}">Restablecer contraseña</a>
     `,
       attachments: attachments
     });

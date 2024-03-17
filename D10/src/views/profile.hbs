@@ -1,8 +1,21 @@
 <div class="container">
-    <h1>Perfil visto con autorizacion via JWT </h1>
-    <p>nombre de usuario: {{user.username}}</p>
-    <p>e-mail/github: {{user.email}}</p>
-    <p>tipo: {{user.type}}</p>
+    <p class="text-end fw-bold">Perfil visto con autorizacion via JWT </p>
+    <div class="d-flex justify-content-center flex-column ">
+        <div>
+            <p><span class="fw-bolder">nombre de usuario:</span> {{user.username}}</p><br>
+        </div>
+        <div>
+            <p><span class="fw-bolder">e-mail/github:</span>{{user.email}}</p><br>
+        </div>
+        <div>
+            <p><span class="fw-bolder">tipo:</span> {{user.type}}</p><br>
+        </div>
+        <div class="mt-5">
+        <button class="btn btn-sm btn-outline-primary m-5"
+            onclick="restablecerContrasenia('{{user.username}}','{{user.email}}', '{{user._id}}')">Restablecer Contraseña</button>
+    </div>
+    </div>
+    
 
 </div>
 
