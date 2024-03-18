@@ -9,6 +9,7 @@ import {
   addProductToCartByIdController,
   purchaseCartController,
 } from "../controllers/carts.controller.js";
+import { verificarPropietarioCarritoMiddleware } from "../middlewares/ownership.middleware.js";
 
 export default class CartExtendRouter extends CustomRouter {
   init() {
@@ -37,7 +38,7 @@ export default class CartExtendRouter extends CustomRouter {
     });
 
     // Agregar un producto al carrito por ID
-    this.put('/:cid/product/:pid/:qtty', ["USER", "ADMIN"], async (req, res) => {
+    this.put('/:cid/product/:pid/:qtty', ["USER", "ADMIN"],  async (req, res) => {
       addProductToCartByIdController(req, res)
     });
 

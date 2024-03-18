@@ -47,7 +47,6 @@ router.post('/reset-password', async (req, res) => {
   const { resultToken, tokenTime } = await getToken(uid);
   const userPassword = await getPassword(uid);
 
-
   // if (!password) {
   //   return res.status(400).send('La contraseña es requerida');
   // }
@@ -60,7 +59,7 @@ router.post('/reset-password', async (req, res) => {
   // if (!password.match(/[0-9]/)) {
   //   return res.status(400).send('La contraseña debe tener al menos un número');
   // }
-  // Verifica si el token es válido (existe en tu base de datos y no ha expirado)
+  // Verifica si el token es válido (existe en la base de datos y no ha expirado)
   if (!resultToken || tokenTime < Date.now()) {
     if (tokenTime < Date.now()) {
       res.render('reresetpassword');

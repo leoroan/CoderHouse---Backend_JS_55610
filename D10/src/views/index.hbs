@@ -74,6 +74,17 @@
               <label for="newmodal_category">Category</label>
               <input type="text" class="form-control border-dark" id="newmodal_category" placeholder="all">
             </div>
+
+            {{#if rolPremium}}
+            <div class="form-group d-none">
+              <input type="text" class="form-control border-dark" id="newmodal_owner" value='{{user._id}}' disabled>
+            </div>
+            {{else}}
+            <div class="form-group d-none">
+              <input type="text" class="form-control border-dark" id="newmodal_owner" value='admin' disabled>
+            </div>
+            {{/if}}
+
           </form>
 
         </div>
@@ -160,6 +171,11 @@
               <label for="category">Category</label>
               <input type="text" class="form-control border-dark" id="editmodal_category" placeholder="all">
             </div>
+
+            <div class="form-group d-none">
+              <input type="text" class="form-control border-dark" id="editmodal_owner" disabled>
+            </div>
+
           </form>
 
         </div>
@@ -177,7 +193,7 @@
       <div class="d-flex">
 
         <div class="flex-grow-1 ">
-          <label for="sortSelect"> Order price by  </label>
+          <label for="sortSelect"> Order price by </label>
           <select id="sortSelect" name="sortSelect">
             <option value="def" selected>choose</option>
             <option value="asc">ASC</option>
@@ -226,7 +242,8 @@
 
             {{#if products.hasPrevPage}}
             <li class="page-item">
-              <a class="page-link" href="/?page={{products.prevPage}}&limit={{products.limit}}"> {{ products.prevPage}} </a>
+              <a class="page-link" href="/?page={{products.prevPage}}&limit={{products.limit}}"> {{ products.prevPage}}
+              </a>
             </li>
             {{/if}}
 
@@ -236,7 +253,8 @@
 
             {{#if products.hasNextPage}}
             <li class="page-item">
-              <a class="page-link" href="/?page={{products.nextPage}}&limit={{products.limit}}"> {{ products.nextPage}} </a>
+              <a class="page-link" href="/?page={{products.nextPage}}&limit={{products.limit}}"> {{ products.nextPage}}
+              </a>
             </li>
             {{/if}}
 
@@ -283,7 +301,10 @@
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
               {{#if ../user }}
-              <div class="text-center"><a class="btn btn-outline-dark mt-auto" onclick="addToCart('{{../user._id}}', '{{this._id}}')">Add to cart 🛒</a></div>
+              <div class="text-center"><a class="btn btn-outline-dark mt-auto" data-product-id="{{this._id}}"
+                  data-product-prodOwner="{{this.owner}}" data-product-ownerid="{{../user._id}}"
+                  data-product-ownerRol="{{../user.type}}" onclick="addToCart(this)">Add to cart 🛒</a>
+              </div>
               {{/if}}
               {{#if ../admin }}
               <div class="d-flex flex-row mb-3 justify-content-center">
@@ -291,7 +312,24 @@
                     data-product-id="{{this._id}}" onclick="showDeleteAlert(this)"> Delete ❌</a></div>
 
                 <div class="text-center"><a class="btn btn-outline-success mt-2 btn-sm" data-bs-toggle="modal"
-                    data-bs-target="#editProductModal" onclick="editModal('{{this._id}}')"> Edit 🖊 </a></div>
+                    data-bs-target="#editProductModal" data-product-id="{{this._id}}" onclick="editModal(this)"> Edit 🖊
+                  </a></div>
+
+              </div>
+              {{/if}}
+              {{#if ../rolPremium }}
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="text-center"><a class="btn btn-outline-danger mt-2 btn-sm mx-2"
+                    data-product-id="{{this._id}}" data-product-prodOwner="{{this.owner}}"
+                    data-product-ownerid="{{../user._id}}" data-product-ownerRol="{{../user.type}}"
+                    onclick="showDeleteAlert(this)"> 👑 Delete ❌</a>
+                </div>
+
+                <div class="text-center"><a class="btn btn-outline-success mt-2 btn-sm mx-2" data-bs-toggle="modal"
+                    data-bs-target="#editProductModal" data-product-id="{{this._id}}"
+                    data-product-prodOwner="{{this.owner}}" data-product-ownerid="{{../user._id}}"
+                    data-product-ownerRol="{{../user.type}}" onclick="editModal(this)"> 👑 Edit 🖊 </a>
+                </div>
 
               </div>
               {{/if}}

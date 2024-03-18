@@ -76,9 +76,14 @@ export default class CustomRouter {
 
       // Token ok
       const user = credential.user
+      // console.log(user);
 
       // Preguntamos si dentro del array policies se encuentra el user.role que me esta llegando con este usuario
-      if (!policies.includes(user.type.toUpperCase())) return res.status(403).send({ error: "El usuario no tiene privilegios, revisa tus roles!" });
+      // if (!policies.includes(user.type.toUpperCase())) return res.status(403).send({ error: "El usuario no tiene privilegios, revisa tus roles!" });
+      if (!policies.includes(user.type.toUpperCase()) && !policies.includes(user.rol.toUpperCase())) {
+        return res.status(403).send({ error: "El usuario no tiene privilegios, revisa tus roles o tipo de usuario!" });
+      }
+
 
       // si el user.role se encuentra dentro de policies, podes ingresar
       // req.user = user;

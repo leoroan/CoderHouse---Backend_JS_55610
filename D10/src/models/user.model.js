@@ -19,6 +19,10 @@ const userSchema = new Schema({
     type: String,
     default: 'user'
   },
+  rol: {
+    type: String,
+    default: 'standar'
+  },
   resetToken: String,
   resetTokenExpiration: Date
 });

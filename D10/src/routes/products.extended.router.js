@@ -6,6 +6,7 @@ import {
   getProductByIdController,
   updateProductController
 } from "../controllers/products.controller.js";
+import { verificarPropietarioMiddleware } from "../middlewares/ownership.middleware.js";
 
 export default class ProductExtendRouter extends CustomRouter {
   init() {
@@ -21,18 +22,18 @@ export default class ProductExtendRouter extends CustomRouter {
     });
 
     // Crear un nuevo producto
-    this.post('/', ["ADMIN"], async (req, res) => {
+    this.post('/', ["ADMIN", "PREMIUM"], async (req, res) => {
       createProductController(req, res)
     });
 
 
     // Actualizar un producto por ID
-    this.put('/:id', ["ADMIN"], async (req, res) => {
+    this.put('/:id', ["ADMIN", "PREMIUM"], verificarPropietarioMiddleware, async (req, res) => {
       updateProductController(req, res)
     });
 
     // Eliminar un producto por ID
-    this.delete('/:id', ["ADMIN"], async (req, res) => {
+    this.delete('/:id', ["ADMIN", "PREMIUM"], verificarPropietarioMiddleware, async (req, res) => {
       deleteProductController(req, res)
     });
 

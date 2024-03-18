@@ -37,7 +37,11 @@ const productSchema = new Schema({
   updated: {
     type: Date,
     default: Date.now()
-  }
+  },
+  owner: {
+    type: String,
+    default: 'admin'
+  },
 });
 
 productSchema.plugin(mongoosePaginate);

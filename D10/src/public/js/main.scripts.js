@@ -23,19 +23,28 @@ sortSelect.addEventListener("change", function () {
 
 function showDeleteAlert(button) {
   var productId = button.getAttribute('data-product-id');
+  var productOwnerId = button.getAttribute('data-product-prodOwner');
+  var userId = button.getAttribute('data-product-ownerid');
+  var userType = button.getAttribute('data-product-ownerRol');
+
+  if ((productOwnerId !== userId) && (userType !== "admin")) {
+    alert('You are not authorized to delete this product.');
+    return;
+  }
 
   var userConfirmed = confirm('Are you sure you want to DELETE this item?');
 
   if (userConfirmed) {
-    deleteProduct(productId);
+    deleteProduct(productId, productOwnerId);
   }
 }
 
-async function editModal(productId) {
+async function editModal(button) {
+  var productId = button.getAttribute('data-product-id');
+
   try {
     const productData = await getProductById(productId);
-    console.log(productData);
-    updateEditModal(productData);
+    updateEditModal(productData, button);
   } catch (error) {
     console.error('Error editing product:', error);
   }
@@ -51,6 +60,7 @@ async function saveNewProduct() {
   let stock = document.getElementById('newmodal_stock').value;
   let status = document.getElementById('newmodal_status').value;
   let category = document.getElementById('newmodal_category').value;
+  let owner = document.getElementById('newmodal_owner').value;
 
   if (
     title.trim() !== "" &&
@@ -67,12 +77,13 @@ async function saveNewProduct() {
       title,
       description,
       price,
+      code,
       oldPrice,
       thumbnail,
-      code,
       stock,
       status,
-      category
+      category,
+      owner
     };
 
     try {
@@ -87,7 +98,6 @@ async function saveNewProduct() {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
       location.reload();
 
     } catch (error) {
@@ -99,7 +109,7 @@ async function saveNewProduct() {
 }
 
 
-async function saveEditedProduct(productId) {
+async function saveEditedProduct(productId, buttonData) {
   const title = document.getElementById('editmodal_title').value;
   const description = document.getElementById('editmodal_description').value;
   const price = document.getElementById('editmodal_price').value;
@@ -109,6 +119,7 @@ async function saveEditedProduct(productId) {
   const stock = document.getElementById('editmodal_stock').value;
   const status = document.getElementById('editmodal_status').value;
   const category = document.getElementById('editmodal_category').value;
+  const owner = document.getElementById('editmodal_owner').value;
 
   const productData = {
     title,
@@ -120,9 +131,19 @@ async function saveEditedProduct(productId) {
     stock,
     status,
     category,
+    owner
   };
 
-  const url = `api/products/${productId}`;
+  var productOwnerId = buttonData.getAttribute('data-product-prodOwner');
+  var userId = buttonData.getAttribute('data-product-ownerid');
+  var userType = buttonData.getAttribute('data-product-ownerRol');
+
+  if ((productOwnerId !== userId) && (userType !== "admin")) {
+    alert('You are not authorized to edit this product.');
+    return;
+  }
+
+  const url = `api/products/${productId}?oid=${productOwnerId}`;
 
   fetch(url, {
     method: 'PUT',
@@ -147,7 +168,8 @@ async function saveEditedProduct(productId) {
 }
 
 
-function updateEditModal(productData) {
+function updateEditModal(productData, buttonData) {
+
   document.getElementById('editmodal_title').value = productData.title;
   document.getElementById('editmodal_description').value = productData.description;
   document.getElementById('editmodal_price').value = productData.price;
@@ -157,9 +179,10 @@ function updateEditModal(productData) {
   document.getElementById('editmodal_stock').value = productData.stock;
   document.getElementById('editmodal_status').value = productData.status;
   document.getElementById('editmodal_category').value = productData.category;
+  document.getElementById('editmodal_owner').value = productData.owner;
 
   var saveButton = document.getElementById("saveEditedProduct");
-  saveButton.onclick = function () { saveEditedProduct(productData._id) }
+  saveButton.onclick = function () { saveEditedProduct(productData._id, buttonData) }
 
 }
 
@@ -187,8 +210,8 @@ async function getProductById(productId) {
   }
 }
 
-function deleteProduct(productId) {
-  fetch(`api/products/${productId}`, {
+function deleteProduct(productId, oid) {
+  fetch(`api/products/${productId}?oid=${oid}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
@@ -197,7 +220,7 @@ function deleteProduct(productId) {
   })
     .then(response => {
       if (response.ok) {
-        console.log(response);
+        // console.log(response);
         location.reload();
       } else {
         console.error('Error:', response.statusText);
@@ -208,9 +231,22 @@ function deleteProduct(productId) {
     });
 }
 
-function addToCart(userId, productId) {
+function addToCart(buttonData) {
+  var productId = buttonData.getAttribute('data-product-id');
+  var productOwnerId = buttonData.getAttribute('data-product-prodOwner');
+  var userId = buttonData.getAttribute('data-product-ownerid');
+  var userType = buttonData.getAttribute('data-product-ownerRol');
 
-  const url = `api/carts/${userId}/product/${productId}/1`;
+  if (userType === "admin") {
+    alert('You cant add to the cart this product, you are an admin!.');
+    return;
+  }
+  if (productOwnerId === userId) {
+    alert('This product already belongs to you!.');
+    return;
+  }
+
+  const url = `api/carts/${userId}/product/${productId}/1?oid=${productOwnerId}`;
   try {
     fetch(url, {
       method: 'PUT',
@@ -229,11 +265,12 @@ function addToCart(userId, productId) {
       })
       .catch(error => {
         alert('Error adding product to cart. Please try again.');
-        console.log(error);
+        // console.log(error);
       });
   }
   catch (error) {
-    console.log(error);
+    // console.log(error);
+    alert('Error adding product to cart. Please try again.');
   }
 }
 

@@ -17,7 +17,8 @@ router.get("/", async (req, res, next) => {
     title: "Home Shop",
     products: products,
     user: req.session.user || req.user,
-    admin: req.session.user && req.session.user.type === "admin"
+    admin: req.session.user && req.session.user.type === "admin"? true : false,
+    rolPremium: req.session.user && req.session.user.rol === "premium" ? true : false,
   });
 });
 

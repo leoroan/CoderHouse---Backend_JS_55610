@@ -184,6 +184,12 @@
           data-bs-target="#addProductModal">
           ➕Add Product
         </button>
+        {{/if}} 
+        {{#if rolPremium}}
+        <button type="button" class="btn btn-sm btn-outline-warning mx-2" data-bs-toggle="modal"
+          data-bs-target="#addProductModal">
+          👑 Add UR-you NEW Product
+        </button>
         {{/if}}
       </div>
     </div>

@@ -14,6 +14,10 @@ export const getAllProductsController = async (req, res) => {
   }
 };
 
+function checkOwnership(prodOwnerId, actualUserId) {
+  return prodOwnerId === actualUserId;
+}
+
 //Get product by id
 export const getProductByIdController = async (req, res) => {
   const productId = req.params.id;
@@ -104,7 +108,7 @@ export const updateStockController = async (prod, qtty) => {
     if (!updatedProduct) {
       console.log("couldnt update stock from model");
     }
-    console.log("stock updated");
+    // console.log("stock updated");
     console.log("producto :", prod.title, " stock_actual: ", actualStock, " stock_nuevo: ", updatedStock);
   } catch (error) {
     console.log("error in update stock controller", error);
