@@ -423,6 +423,20 @@ function restablecerContrasenia(email) {
   }
 }
 
+function becomePremium(userId) {
+  fetch(`/api/users/premium/${userId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(result => {
+    if (result.status === 201) {
+      alert("Your rol has been changed, now log again!");
+      window.location.reload();
+    }
+  })
+}
+
 
 
 // const socket = io();

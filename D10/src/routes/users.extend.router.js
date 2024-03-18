@@ -1,16 +1,15 @@
 import CustomRouter from "./custom/custom.router.js";
 import CartDao from "../services/dao/mongo/cart.dao.js"
-import { createHash, isValidPassword } from "../utils/bcrypt.js";
 import { generateJWToken } from "../utils/jwt.js";
 import passport from 'passport';
-import { getUserProfileController } from "../controllers/users.controller.js";
+import { updateUserRol } from "../controllers/users.controller.js";
 
 //ejemplo de router para usuario con politicas (aunq por practicidad aca son todas publicas)
 export default class UserExtendRouter extends CustomRouter {
   init() {
     const cartDao = new CartDao();
 
-    this.get('/profile', ["USER", "ADMIN"], passport.authenticate('jwt', {session: false}), async (req, res) => {
+    this.get('/profile', ["USER", "ADMIN"], passport.authenticate('jwt', { session: false }), async (req, res) => {
       // getUserProfileController
       res.render('profile', {
         fileFavicon: "favicon.ico",
@@ -33,36 +32,8 @@ export default class UserExtendRouter extends CustomRouter {
       const access_token = generateJWToken(user)
       res.cookie('jwtCookieToken', access_token, { httpOnly: true });
       res.redirect("/");
-      // res.redirect("/")
     })
 
-    // this.post('/register', async (req, res) => {
-    //   try {
-    //     const { username, email, password, type } = req.body;
-    //     if (!username || !email || !password) {
-    //       return res.status(400).json({ error: 'Invalid request parameters' });
-    //     }
-    //     const exist = await UserDAO.getUserByEmail(email);
-    //     if (exist) {
-    //       return res.status(400).send({ status: 'error', message: "Usuario existente!" })
-    //     }
-    //     const user = {
-    //       username,
-    //       email,
-    //       password: createHash(password),
-    //       type
-    //     }
-
-    //     const result = await UserDAO.createUser(user);
-    //     await cartDao.createCart(result._id);
-    //     res.send({ status: "success", message: "User crated successfully" });
-    //   } catch (error) {
-    //     console.error(error);
-    //     res.status(500).json({ error: 'Internal server error' });
-    //   }
-    // });
-
-    // Register with passport
     this.post('/register', ["PUBLIC"], passport.authenticate('register', {
       failureRedirect: 'api/users/fail-register'
     }), async (req, res) => {
@@ -70,30 +41,6 @@ export default class UserExtendRouter extends CustomRouter {
       res.status(201).send({ status: "success", message: "User crated successfully" });
     })
 
-    // this.post('/login', async (req, res) => {
-    //   try {
-    //     const { email, password } = req.body;
-    //     const user = await UserDAO.getUserByEmail(email);
-    //     // if (!user || user.password !== password) {
-    //     //   return res.status(401).json({ error: 'Invalid credentials' });
-    //     // } else if (user.password === password) {
-    //     //   const userProfileWithoutSensitiveInfo = { ...user.toObject(), password: undefined };
-    //     //   req.session.user = userProfileWithoutSensitiveInfo;
-    //     //   return res.json({ message: 'Login successful', payload: req.session.user });
-    //     // }
-    //     if (!user) return res.status(401).send({ status: 'error', error: "Wrong credentials" })
-    //     if (!isValidPassword(user, password)) {
-    //       return res.status(401).send({ status: "error", error: "Incorrect credentials" })
-    //     }
-    //     const userProfileWithoutSensitiveInfo = { ...user.toObject(), password: undefined };
-    //     req.session.user = userProfileWithoutSensitiveInfo;
-    //     return res.json({ message: 'Login successful', payload: req.session.user });
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // });
-
-    // Login with passport
     this.post('/login', ["PUBLIC"], passport.authenticate('login',
       {
         failureRedirect: 'api/session/fail-login'
@@ -104,11 +51,8 @@ export default class UserExtendRouter extends CustomRouter {
       if (!user) return res.status(401).send({ status: "error", error: "Wrong user/password credentials" });
       // Usando JWT 
       const access_token = generateJWToken(user)
-      // console.log(access_token);
       res.cookie('jwtCookieToken', access_token, { httpOnly: true });
       res.send({ access_token: access_token });
-      // res.send({ status: "success", payload: user, access_token, message: "Login successful" });
-      // res.send({ status: "success", payload: req.session.user, message: "Login successful" });
     })
 
     this.post('/logout', ["PUBLIC"], (req, res) => {
@@ -127,6 +71,16 @@ export default class UserExtendRouter extends CustomRouter {
 
     this.get("/fail-login", ["PUBLIC"], (req, res) => {
       res.status(401).send({ error: "Something went wrong, try again shortly!" });
+    });
+
+    this.post("/premium/:uid", ["PUBLIC"], (req, res) => {
+      try {
+        updateUserRol(req);
+        req.session.destroy();
+        res.status(201).send({ status: "success", message: "User updated successfully" });
+      } catch (error) {
+        res.status(401).send({ error: "Something went wrong, try again shortly!" });
+      }
     });
   }
 }

@@ -2,8 +2,6 @@ import express from 'express';
 import UserExtendRouter from './routes/users.extend.router.js';
 import ProductsExtendRouter from './routes/products.extended.router.js';
 import CartExtendRouter from './routes/carts.extended.router.js';
-import productsRouter from "./routes/products.router.js";
-import cartsRouter from "./routes/carts.router.js";
 // import usersRouter from "./routes/users.router.js";
 import viewsRouter from "./routes/views.router.js";
 import mailRouter from "./routes/mailer.router.js";

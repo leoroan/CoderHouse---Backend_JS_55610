@@ -184,11 +184,19 @@
           data-bs-target="#addProductModal">
           ➕Add Product
         </button>
-        {{/if}} 
+        {{/if}}
         {{#if rolPremium}}
         <button type="button" class="btn btn-sm btn-outline-warning mx-2" data-bs-toggle="modal"
           data-bs-target="#addProductModal">
           👑 Add UR-you NEW Product
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-success mx-2" onclick="becomePremium(('{{user._id}}'))">
+          🎩 BECOME STANDAR
+        </button>
+        {{/if}}
+        {{#if rolStandar}}
+        <button type="button" class="btn btn-sm btn-outline-success mx-2" onclick="becomePremium(('{{user._id}}'))">
+          👑 BECOME PREMIUM
         </button>
         {{/if}}
       </div>

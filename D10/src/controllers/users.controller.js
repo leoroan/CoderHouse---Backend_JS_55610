@@ -46,3 +46,15 @@ export const getPassword = async (userId) => {
   }
 }
 
+export const updateUserRol = async (req, res) => {
+  const userId = req.params.uid;
+  const user = await userService.getUserById(userId);
+  let nuevoRol = user.rol;
+
+  if (user.rol === "premium") {
+    nuevoRol = "standar";
+  } else {
+    nuevoRol = "premium";
+  }
+  return userService.updateUser(userId, { rol: nuevoRol })
+}
