@@ -14,13 +14,6 @@ paths:
       responses:
         '200':
           description: Producto obtenido exitosamente
-          headers:
-            Link:
-              description: Enlace al recurso obtenido
-              schema:
-                type: string
-                format: uri
-              example: /products/{id}
         '400':
           description: id invalido
         '404':

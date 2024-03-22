@@ -14,7 +14,8 @@ const options = {
         "description": "Productos de la tienda"
       },
       {
-        "name": "carts",
+        "name": "Carritos",
+        "description": "Carritos de compras de la tienda"
       }
     ],
     

@@ -99,7 +99,6 @@ app.use("/api/carts", cartsExtRouter.getRouter());
 app.use("/mailer", mailRouter);
 app.use("/mockingrouter", mockingRouter);
 
-console.log(swaggerSpecs);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 const mongoInstance = async () => {

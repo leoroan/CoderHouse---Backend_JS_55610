@@ -1,0 +1,14 @@
+paths:
+  /products:
+    post:
+      tags:
+        - Productos
+      summary: Crear un nuevo producto
+      description: Ruta para crear u nuevo producto.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true

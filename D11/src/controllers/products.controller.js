@@ -4,10 +4,28 @@ import { generateProductValidationErrorInfo } from "../services/errors/products-
 import { productService } from "../services/repository/services.js";
 
 //Get all products
+// export const getAllProductsController = async (req, res) => {
+//   const { limit, page, sort, category } = req.query;
+//   try {
+//     const products = await productService.getAllProducts({ limit, page, sort, category });
+//     res.status(200).json(products);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
 export const getAllProductsController = async (req, res) => {
-  const { limit, page, sort, category } = req.query;
   try {
-    const products = await productService.getAllProducts({ limit, page, sort, category });
+    const products = await productService.getAllProducts();
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getAllProducts = async (req, res) => {
+  try {
+    const products = await productService.getAllProductsLegacy();
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ error: error.message });

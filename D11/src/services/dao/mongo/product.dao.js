@@ -22,12 +22,20 @@ class ProductDAO {
 
     try {
       const result = await productModel.paginate(filter, { limit: limit, page: page, sort: { price: sorted } });
-  
+
       if (page > result.totalPages) {
         throw new Error("Requested page exceeds total pages");
       }
-  
+
       return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getAllLegacy() {
+    try {
+      return await productModel.find();
     } catch (error) {
       throw error;
     }
@@ -62,7 +70,7 @@ class ProductDAO {
 
   async updateStock(productId, qtty) {
     try {
-      return await productModel.updateOne( { _id: productId}, { $set: { stock: qtty }});
+      return await productModel.updateOne({ _id: productId }, { $set: { stock: qtty } });
     } catch (error) {
       throw error;
     }
