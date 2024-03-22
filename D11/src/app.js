@@ -2,7 +2,6 @@ import express from 'express';
 import UserExtendRouter from './routes/users.extend.router.js';
 import ProductsExtendRouter from './routes/products.extended.router.js';
 import CartExtendRouter from './routes/carts.extended.router.js';
-// import usersRouter from "./routes/users.router.js";
 import viewsRouter from "./routes/views.router.js";
 import mailRouter from "./routes/mailer.router.js";
 import mockingRouter from "./routes/mocking.router.js";
@@ -13,14 +12,11 @@ import config from './configs/config.js';
 import { addLogger } from './middlewares/logger.middleware.js';
 import handlebars from "express-handlebars";
 import __dirname from "./utils.js";
-
-// Passport Imports
 import passport from 'passport';
 import initializePassport from './configs/auth/passport.config.js'
 import MongoSingleton from './configs/mongoDB-singleton.js';
-
-// import http from 'http';
-// import { Server } from "socket.io";
+import swaggerSpecs from './configs/swagger.config.js';
+import swaggerUi from "swagger-ui-express";
 
 const SERVER_PORT = config.port;
 
@@ -66,12 +62,6 @@ app.use(express.static(`${__dirname}/public`));
 // Configuracion de Session
 app.use(session(
   {
-    //ttl: Time to live in seconds,
-    //retries: Reintentos para que el servidor lea el archivo del storage.
-    //path: Ruta a donde se buscará el archivo del session store.
-    // // Usando --> session-file-store
-    // store: new fileStore({ path: "./sessions", ttl: 15, retries: 0 }),
-
     // Usando --> connect-mongo
     store: MongoStore.create({
       mongoUrl: config.urlMongo,
@@ -104,20 +94,20 @@ const productsExtRouter = new ProductsExtendRouter();
 const cartsExtRouter = new CartExtendRouter();
 
 app.use("/api/users", userExtRouter.getRouter());
-// app.use("/api/products", productsRouter);
 app.use("/api/products", productsExtRouter.getRouter());
-// app.use("/api/carts", cartsRouter);
 app.use("/api/carts", cartsExtRouter.getRouter());
-// app.use("/api/users", usersRouter);
 app.use("/mailer", mailRouter);
 app.use("/mockingrouter", mockingRouter);
 
+console.log(swaggerSpecs);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+
 const mongoInstance = async () => {
   try {
-      await MongoSingleton.getInstance();
+    await MongoSingleton.getInstance();
   } catch (error) {
-      console.error(error);
-      process.exit();
+    console.error(error);
+    process.exit();
   }
 };
 mongoInstance();

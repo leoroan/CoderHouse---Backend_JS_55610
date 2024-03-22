@@ -1,8 +1,8 @@
 import CustomError from "../services/errors/CustomErrors.js";
 import EErrors from "../services/errors/errors-nums.js";
 import { generateProductValidationErrorInfo } from "../services/errors/products-error.messages.js";
-// import { ProductDTO } from "../services/db/dto/product.dto.js";
 import { productService } from "../services/repository/services.js";
+
 //Get all products
 export const getAllProductsController = async (req, res) => {
   const { limit, page, sort, category } = req.query;
