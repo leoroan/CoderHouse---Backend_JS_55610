@@ -8,6 +8,7 @@ import {
   deleteProductFromCartByIdController,
   addProductToCartByIdController,
   purchaseCartController,
+  getCartById
 } from "../controllers/carts.controller.js";
 import { verificarPropietarioCarritoMiddleware } from "../middlewares/ownership.middleware.js";
 
@@ -31,7 +32,11 @@ export default class CartExtendRouter extends CustomRouter {
     this.get('/:id', ["USER", "ADMIN"], async (req, res) => {
       getCartByIdController(req, res)
     });
-
+   
+    this.get('/aCart/:id', ["USER", "ADMIN"], async (req, res) => {
+      getCartById(req, res)
+    });
+    
     // Get a cart by user ID
     this.get('/user/:uid', ["USER", "ADMIN"], async (req, res) => {
       getCartByUserIdController(req, res)

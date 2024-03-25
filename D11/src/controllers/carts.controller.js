@@ -56,7 +56,8 @@ function evaluateStock(productsFromCart) {
 }
 
 export const getAllCartsController = async (req, res) => {
-  return await res.json(cartService.getAllCarts());
+  const carts = await cartService.getAllCarts();
+  return res.json(carts);
 };
 
 export const getCartByIdController = async (req, res) => {
@@ -76,6 +77,20 @@ export const getCartByIdController = async (req, res) => {
       admin: true,
       cart: cart,
     });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getCartById = async (req, res) => {
+  const cartId = req.params.id;
+  try {
+    const cart = await cartService.getCartById(cartId);
+
+    if (!cart) {
+      return res.status(404).json({ error: 'Carro no encontrado' });
+    }
+    res.status(200).json(cart);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
