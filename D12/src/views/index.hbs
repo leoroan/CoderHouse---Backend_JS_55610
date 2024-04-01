@@ -1,0 +1,346 @@
+<section class="py-3 mb-2 h-100">
+
+  <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-bg-light border-dark border-3">
+        <div class="modal-header">
+          <h5 class="modal-title"> Create new product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form class="row g-3 needs-validation was-validated" novalidate="">
+            <div class="form-group">
+
+              <label for="newmodal_title">Title</label>
+              <input type="text" class="form-control border-dark" id="newmodal_title" placeholder="Enter product title"
+                required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please choose a title.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="newmodal_description">Description</label>
+              <textarea class="form-control border-dark" id="newmodal_description" rows="3"
+                placeholder="Enter product description" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="newmodal_price">Price</label>
+              <input type="number" class="form-control border-dark" id="newmodal_price"
+                placeholder="Enter product price" required>
+            </div>
+
+            <div class="form-group">
+              <label for="newmodal_oldPrice">Old Price</label>
+              <input type="number" class="form-control border-dark" id="newmodal_oldPrice"
+                placeholder="Enter old product price">
+            </div>
+
+            <div class="form-group">
+              <label for="newmodal_thumbnail">Thumbnail URL</label>
+              <input type="text" class="form-control border-dark" id="newmodal_thumbnail"
+                placeholder="Enter thumbnail URL" value="http://www." required>
+            </div>
+
+            <div class="form-group">
+              <label for="newmodal_code">Product Code</label>
+              <input type="text" class="form-control border-dark" id="newmodal_code"
+                placeholder="Enter product code, like ABC-123" required>
+            </div>
+
+            <div class="form-group">
+              <label for="newmodal_stock">Stock</label>
+              <input type="number" class="form-control border-dark" id="newmodal_stock"
+                placeholder="Enter product stock" required>
+            </div>
+
+            <div class="form-group">
+              <label for="newmodal_status">Status</label>
+              <select class="form-control border-dark" id="newmodal_status" required>
+                <option value="true" selected>Active</option>
+                <option value="false">Inactive</option>
+              </select>
+              <div class="invalid-feedback">
+                Please choose an status
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="newmodal_category">Category</label>
+              <input type="text" class="form-control border-dark" id="newmodal_category" placeholder="all">
+            </div>
+
+            {{#if rolPremium}}
+            <div class="form-group d-none">
+              <input type="text" class="form-control border-dark" id="newmodal_owner" value='{{user._id}}' disabled>
+            </div>
+            {{else}}
+            <div class="form-group d-none">
+              <input type="text" class="form-control border-dark" id="newmodal_owner" value='admin' disabled>
+            </div>
+            {{/if}}
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button id="saveNewProduct" type="submit" class="btn btn-primary" onclick="saveNewProduct()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-bg-light border-dark border-3">
+        <div class="modal-header">
+          <h5 class="modal-title"> Edit product</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form class="row g-3 needs-validation was-validated" novalidate="">
+            <div class="form-group">
+
+              <label for="editmodal_title">Title</label>
+              <input type="text" class="form-control border-dark" id="editmodal_title" placeholder="Enter product title"
+                required>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please choose a title.
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea class="form-control border-dark" id="editmodal_description" rows="3"
+                placeholder="Enter product description" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="number" class="form-control border-dark" id="editmodal_price"
+                placeholder="Enter product price" required>
+            </div>
+
+            <div class="form-group">
+              <label for="oldPrice">Old Price</label>
+              <input type="number" class="form-control border-dark" id="editmodal_oldPrice"
+                placeholder="Enter old product price">
+            </div>
+
+            <div class="form-group">
+              <label for="thumbnail">Thumbnail URL</label>
+              <input type="text" class="form-control border-dark" id="editmodal_thumbnail"
+                placeholder="Enter thumbnail URL" value="http://www." required>
+            </div>
+
+            <div class="form-group">
+              <label for="code">Product Code</label>
+              <input type="text" class="form-control border-dark" id="editmodal_code"
+                placeholder="Enter product code, like ABC-123" required>
+            </div>
+
+            <div class="form-group">
+              <label for="stock">Stock</label>
+              <input type="number" class="form-control border-dark" id="editmodal_stock"
+                placeholder="Enter product stock" required>
+            </div>
+
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select class="form-control border-dark" id="editmodal_status" required>
+                <option value="true" selected>Active</option>
+                <option value="false">Inactive</option>
+              </select>
+              <div class="invalid-feedback">
+                Please choose an status
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="category">Category</label>
+              <input type="text" class="form-control border-dark" id="editmodal_category" placeholder="all">
+            </div>
+
+            <div class="form-group d-none">
+              <input type="text" class="form-control border-dark" id="editmodal_owner" disabled>
+            </div>
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button id="saveEditedProduct" type="submit" class="btn btn-primary" onclick="saveEditedProduct">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container px-2 px-lg-5 mt-1">
+    <div>
+
+      <div class="d-flex">
+
+        <div class="flex-grow-1 ">
+          <label for="sortSelect"> Order price by </label>
+          <select id="sortSelect" name="sortSelect">
+            <option value="def" selected>choose</option>
+            <option value="asc">ASC</option>
+            <option value="desc">DESC</option>
+
+            <!-- Add more options as needed -->
+          </select>
+        </div>
+
+        <div class="flex-grow-1 ">
+          <label for="limitSelect"> Products to display </label>
+          <select id="limitSelect" name="limitSelect">
+            <option value="def" selected>choose</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <!-- Add more options as needed -->
+          </select>
+        </div>
+
+        <div class="flex-grow-1 ">
+          <label for="categorySelect"> category to filter </label>
+          <select id="categorySelect" name="categorySelect">
+            <option value="def" selected>choose</option>
+            <option value="kitchen">kitchen</option>
+            <option value="wereables">wereables</option>
+            <option value="healthcare">healthcare</option>
+            <option value="technology">technology</option>
+            <option value="bikes">bikes</option>
+            <option value="all">all</option>
+            <!-- Add more options as needed -->
+          </select>
+        </div>
+
+        <div>
+          <ul class="pagination justify-content-center">
+
+            {{#if products.hasPrevPage}}
+            <li class="page-item">
+              <a class="page-link" href="/?page={{products.prevPage}}&limit={{products.limit}}">Previous</a>
+            </li>
+
+            {{/if}}
+
+
+            {{#if products.hasPrevPage}}
+            <li class="page-item">
+              <a class="page-link" href="/?page={{products.prevPage}}&limit={{products.limit}}"> {{ products.prevPage}}
+              </a>
+            </li>
+            {{/if}}
+
+            <li class="page-item disabled">
+              <a class="page-link" href="#"> {{ products.page}} </a>
+            </li>
+
+            {{#if products.hasNextPage}}
+            <li class="page-item">
+              <a class="page-link" href="/?page={{products.nextPage}}&limit={{products.limit}}"> {{ products.nextPage}}
+              </a>
+            </li>
+            {{/if}}
+
+
+
+
+            {{#if products.hasNextPage}}
+            <li class="page-item">
+              <a class="page-link" href="/?page={{products.nextPage}}&limit={{products.limit}}">Next</a>
+            </li>
+            {{/if}}
+          </ul>
+        </div>
+
+      </div>
+
+      <p class="text-center fs-5 fw-bolder lead text-black-50 mb-3 fst-italic"> Our products </p>
+      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+        id="mainCardProductContainer">
+        {{!-- a card --}}
+        {{#each products.docs}}
+        <div class="col mb-5">
+          <div class="card h-100 border border-black shadow ">
+            <!-- Sale badge-->
+            {{#if user}}
+            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+            {{/if}}
+            <!-- Product image-->
+            <img class="card-img-top" src={{this.thumbnail}} alt={{this.title}} />
+            <!-- Product details-->
+            <div class="card-body p-4 ">
+              <div class="text-center">
+                <!-- Product name-->
+                <h5 class="fw-bolder">{{this.title}}</h5>
+                <!-- Product reviews-->
+                <div class="d-flex justify-content-center small text-warning mb-2 fw-medium cardDescription">
+                  <div class="bi-star-fill">{{this.description}}</div>
+                </div>
+                <!-- Product price-->
+                <span class="text-muted text-decoration-line-through">${{this.oldPrice}}</span>
+                ${{this.price}}
+              </div>
+            </div>
+            <!-- Product actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              {{#if ../user }}
+              <div class="text-center"><a class="btn btn-outline-dark mt-auto" data-product-id="{{this._id}}"
+                  data-product-prodOwner="{{this.owner}}" data-product-ownerid="{{../user._id}}"
+                  data-product-ownerRol="{{../user.type}}" onclick="addToCart(this)">Add to cart 🛒</a>
+              </div>
+              {{/if}}
+              {{#if ../admin }}
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="text-center"><a class="btn btn-outline-danger mt-2 btn-sm mx-2"
+                    data-product-id="{{this._id}}" onclick="showDeleteAlert(this)"> Delete ❌</a></div>
+
+                <div class="text-center"><a class="btn btn-outline-success mt-2 btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#editProductModal" data-product-id="{{this._id}}" onclick="editModal(this)"> Edit 🖊
+                  </a></div>
+
+              </div>
+              {{/if}}
+              {{#if ../rolPremium }}
+              <div class="d-flex flex-row mb-3 justify-content-center">
+                <div class="text-center"><a class="btn btn-outline-danger mt-2 btn-sm mx-2"
+                    data-product-id="{{this._id}}" data-product-prodOwner="{{this.owner}}"
+                    data-product-ownerid="{{../user._id}}" data-product-ownerRol="{{../user.type}}"
+                    onclick="showDeleteAlert(this)"> 👑 Delete ❌</a>
+                </div>
+
+                <div class="text-center"><a class="btn btn-outline-success mt-2 btn-sm mx-2" data-bs-toggle="modal"
+                    data-bs-target="#editProductModal" data-product-id="{{this._id}}"
+                    data-product-prodOwner="{{this.owner}}" data-product-ownerid="{{../user._id}}"
+                    data-product-ownerRol="{{../user.type}}" onclick="editModal(this)"> 👑 Edit 🖊 </a>
+                </div>
+
+              </div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</section>S
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/{{fileJs}}"></script>

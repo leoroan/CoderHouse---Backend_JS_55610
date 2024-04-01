@@ -1,0 +1,23 @@
+ProductUpdate:
+  type: object
+  properties:
+    title:
+      type: string
+    description:
+      type: string
+    price:
+      type: number
+    oldPrice:
+      type: number
+    thumbnail:
+      type: string
+    code:
+      type: string
+    stock:
+      type: number
+    status:
+      type: boolean
+    category:
+      type: array
+      items:
+        type: string
