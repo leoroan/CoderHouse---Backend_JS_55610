@@ -36,8 +36,9 @@
     "winston": "^3.13.0"
   },
   "devDependencies": {
-    "chai": "^5.1.0",
-    "mocha": "^10.4.0"
+    "chai": "^4.3.7",
+    "mocha": "^10.4.0",
+    "supertest": "^6.3.4"
   },
   "directories": {
     "test": "test"

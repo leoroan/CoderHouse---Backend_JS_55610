@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import ProductDao from '../src/services/dao/mongo/product.dao.js'
-import { productModel } from '../src/models/product.model.js';
+import ProductDao from '../../src/services/dao/mongo/product.dao.js' 
+import { productModel } from '../../src/models/product.model.js';
 import Assert from 'assert'
 
 const assert = Assert.strict
@@ -9,14 +9,9 @@ describe('ProductDAO', function () {
   let productDao;
 
   before(async function () {
-    // Conéctate a la base de datos de prueba
-    await mongoose.connect(`mongodb+srv://test:test@cluster0.pu728w1.mongodb.net/ecommerce-test?retryWrites=true&w=majority`, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
+    this.timeout(5000);
+    await mongoose.connect(`mongodb+srv://test:test@cluster0.pu728w1.mongodb.net/ecommerce-test?retryWrites=true&w=majority`);
 
-    // Configura el ProductDAO
     productDao = new ProductDao();
   });
 
@@ -51,10 +46,23 @@ describe('ProductDAO', function () {
   describe('#getAllProducts()', function () {
     it('debería obtener todos los productos de la bdd', async function () {
       // When
-      const allProducts = await productDao.getAllProducts({});
-
+      this.timeout(5000);
+      const allProducts = await productDao.getAllLegacy();
       // Then
       assert.strictEqual(Array.isArray(allProducts), true);
+    });
+  });
+
+  describe('#deleteProduct()', function () {
+    it('debería eliminar el producto creado en la bdd', async function () {
+      //given
+      const product = await productModel.findOne({ code: 'ABC123' });
+      // When
+      const result = await productDao.deleteProduct(product._id);
+      // Then
+      assert.strictEqual(result._id.toString(), product._id.toString());
+      const deletedProduct = await productModel.findById(product._id);
+      assert.strictEqual(deletedProduct, null);
     });
   });
 
