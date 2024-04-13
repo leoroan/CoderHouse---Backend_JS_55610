@@ -66,14 +66,14 @@ router.post('/reset-password', async (req, res) => {
     }
     return res.status(401).send('Token inválido');
   }
-  console.log("newpass:", password, "DBpass: ", userPassword);
+  // console.log("newpass:", password, "DBpass: ", userPassword);
   const match = comparePasswords(password, userPassword.password);
   if (match) {
     return res.status(401).send('La contraseña no puede ser igual a la anterior');
   }
   
   const hashedPassword = createHash(password);
-  console.log("pass:", password, "hashed: ", hashedPassword);
+  // console.log("pass:", password, "hashed: ", hashedPassword);
   // Si el token es válido, actualiza la contraseña en tu base de datos
   const result = userService.updateUser(req.query.uid, { password: hashedPassword, resetToken: null, resetTokenExpiration: null });
 

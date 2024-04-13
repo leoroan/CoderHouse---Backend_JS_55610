@@ -3,6 +3,7 @@ import CartDao from "../services/dao/mongo/cart.dao.js"
 import { generateJWToken } from "../utils/jwt.js";
 import passport from 'passport';
 import { updateUserRol } from "../controllers/users.controller.js";
+import uploadDocumentAndUpdateUser from "../middlewares/multer.middleware.js";
 
 //ejemplo de router para usuario con politicas (aunq por practicidad aca son todas publicas)
 export default class UserExtendRouter extends CustomRouter {
@@ -78,6 +79,14 @@ export default class UserExtendRouter extends CustomRouter {
         updateUserRol(req);
         req.session.destroy();
         res.status(201).send({ status: "success", message: "User updated successfully" });
+      } catch (error) {
+        res.status(401).send({ error: "Something went wrong, try again shortly!" });
+      }
+    });
+
+    this.post("/:uid/documents", ["PUBLIC"], uploadDocumentAndUpdateUser, (req, res) => {
+      try {
+        res.status(201).send({ status: "success", message: "File upload updated successfully" });
       } catch (error) {
         res.status(401).send({ error: "Something went wrong, try again shortly!" });
       }

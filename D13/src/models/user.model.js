@@ -23,9 +23,24 @@ const userSchema = new Schema({
     type: String,
     default: 'standar'
   },
+  documents: [{
+    name: String,
+    reference: String
+  }],
+  last_connection: Date,
   resetToken: String,
   resetTokenExpiration: Date
 });
+
+userSchema.methods.login = function() {
+  this.last_connection = new Date();
+  return this.save();
+};
+
+userSchema.methods.logout = function() {
+  this.last_connection = new Date();
+  return this.save();
+};
 
 const userModel = model('User', userSchema);
 
