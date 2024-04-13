@@ -1,0 +1,28 @@
+<div class="container">
+    <p class="text-end fw-bold">Perfil visto con autorizacion via JWT </p>
+    <div class="d-flex justify-content-center flex-column ">
+        <div>
+            <p><span class="fw-bolder">nombre de usuario:</span> {{user.username}}</p><br>
+        </div>
+        <div>
+            <p><span class="fw-bolder">e-mail/github:</span>{{user.email}}</p><br>
+        </div>
+        <div>
+            <p><span class="fw-bolder">tipo:</span> {{user.type}}</p><br>
+        </div>
+        <div>
+            <p><span class="fw-bolder">Rol:</span> {{user.rol}}</p><br>
+        </div>
+        <div class="mt-5">
+            <button class="btn btn-sm btn-outline-primary m-5"
+                onclick="restablecerContrasenia('{{user.email}}')">
+                Restablecer Contraseña
+            </button>
+        </div>
+    </div>
+
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/{{fileJs}}"></script>
