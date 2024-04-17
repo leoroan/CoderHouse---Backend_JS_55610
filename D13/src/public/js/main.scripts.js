@@ -337,6 +337,7 @@ registerButton.onclick = function (e) {
   }).then(result => {
     if (result.status === 201) {
       alert("User registered successfully. Please login.");
+      handleLogout();
       window.location.replace('/');
     } else if (result.status === 400) {
       alert("Validation failed. Please check your inputs. username and email are uniques");
@@ -408,15 +409,11 @@ function restablecerContrasenia(email) {
       }
     })
       .then(response => {
-        if (response.ok) {
           alert(`Se ha enviado un correo a '${email}', para proceder a restablecer la contraseña.`);
-        } else {
-          alert(`Ha ocurrido un error al intentar restablecer la contraseña.`);
-        }
       })
       .catch(error => {
-        console.error('Error:', error);
-        alert(`Ha ocurrido un error al intentar restablecer la contraseña o mail incorrecto.`);
+        // alert(`Ha ocurrido un error al intentar restablecer la contraseña o mail incorrecto.`);
+        alert(`Se ha enviado un correo a '${email}', para proceder a restablecer la contraseña.`);
       });
   } else {
     alert(`No ncluiste un mail o este es incorrecto`);
@@ -433,9 +430,38 @@ function becomePremium(userId) {
     if (result.status === 201) {
       alert("Your rol has been changed, now log again!");
       window.location.reload();
+    } else {
+      alert("Your rol didnt change, check your documents!");
     }
   })
 }
+
+function uploadImage(userId, folderName, formfileId) {
+  const fileInput = document.getElementById(formfileId);
+  const file = fileInput.files[0];
+  const formData = new FormData();
+  formData.append(folderName, file);
+
+  fetch(`/api/users/${userId}/documents?folder=${folderName}`, {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Error al subir el archivo');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Manejar la respuesta del servidor si es necesario
+      location.reload();
+      console.log('Archivo subido exitosamente:', data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
 
 
 

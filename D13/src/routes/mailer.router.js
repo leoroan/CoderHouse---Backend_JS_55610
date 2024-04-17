@@ -20,10 +20,10 @@ router.post("/send-mail", async (req, res) => {
 router.post('/forgot-password/', async (req, res) => {
   try {
     const result = await sendForgotMail(req.body.email, req.body.attachments);
-    res.status(200).json({ message: 'Correo electrónico de restablecimiento enviado correctamente', messageId: result.messageId });
+    res.status(200).json({ message: 'Correo electrónico de restablecimiento enviado correctamente' });
   } catch (error) {
     console.error('Error al enviar el correo electrónico de restablecimiento:', error);
-    res.status(500).json({ error: 'Ocurrió un error al enviar el correo electrónico de restablecimiento' });
+    res.status(500).json({ error: `Ocurrió un error al enviar el correo electrónico de restablecimiento: ${error.message}` });
   }
 });
 

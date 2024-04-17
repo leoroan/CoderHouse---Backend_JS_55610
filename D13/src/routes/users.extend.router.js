@@ -3,7 +3,9 @@ import CartDao from "../services/dao/mongo/cart.dao.js"
 import { generateJWToken } from "../utils/jwt.js";
 import passport from 'passport';
 import { updateUserRol } from "../controllers/users.controller.js";
-import uploadDocumentAndUpdateUser from "../middlewares/multer.middleware.js";
+import uploadDocumentMiddleware from "../middlewares/multer.middleware.js";
+import { upload } from "../configs/multer.config.js";
+import { userService } from "../services/repository/services.js";
 
 //ejemplo de router para usuario con politicas (aunq por practicidad aca son todas publicas)
 export default class UserExtendRouter extends CustomRouter {
@@ -11,13 +13,22 @@ export default class UserExtendRouter extends CustomRouter {
     const cartDao = new CartDao();
 
     this.get('/profile', ["USER", "ADMIN"], passport.authenticate('jwt', { session: false }), async (req, res) => {
-      // getUserProfileController
+      const user = await userService.getUserById(req.user._id);
+      const docs = user.documents;
+      const profileDoc = docs.filter(doc => doc.tipo === "profilePhoto");
+      const productDoc = docs.filter(doc => doc.tipo === "productsPhotos");
+      const generalDoc = docs.filter(doc => doc.tipo === "gralDocs");
+
+      console.log(profileDoc);
       res.render('profile', {
         fileFavicon: "favicon.ico",
         fileCss: "styles.css",
         fileJs: "main.scripts.js",
         title: "user profile",
-        user: req.user // Trtabajando con JWT
+        user: req.user, // Trtabajando con JWT
+        profileDocs: profileDoc,
+        productDocs: productDoc,
+        generalDocs: generalDoc
       })
     });
 
@@ -74,9 +85,10 @@ export default class UserExtendRouter extends CustomRouter {
       res.status(401).send({ error: "Something went wrong, try again shortly!" });
     });
 
-    this.post("/premium/:uid", ["PUBLIC"], (req, res) => {
+    this.post("/premium/:uid", ["PUBLIC"], async (req, res) => {
       try {
-        updateUserRol(req);
+        const result = await updateUserRol(req);console.log(result);
+        if (!result) return res.status(401).send({ error: "Something went wrong, try again shortly!" });
         req.session.destroy();
         res.status(201).send({ status: "success", message: "User updated successfully" });
       } catch (error) {
@@ -84,13 +96,36 @@ export default class UserExtendRouter extends CustomRouter {
       }
     });
 
-    this.post("/:uid/documents", ["PUBLIC"], uploadDocumentAndUpdateUser, (req, res) => {
+    this.post("/:uid/documents", ["PUBLIC"], uploadDocumentMiddleware, async (req, res) => {
       try {
-        res.status(201).send({ status: "success", message: "File upload updated successfully" });
+        const folder = req.query.folder;
+        const userId = req.params.uid;
+        const user = await userService.getUserById(userId);
+        if (!user) {
+          return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+        let tipos;
+        if (folder === 'profileImage') {
+          tipos = 'profilePhoto';
+        } else if (folder === 'productImage') {
+          tipos = 'productsPhotos';
+        } else {
+          tipos = 'gralDocs';
+        }
+
+        const fileName = req.file.filename;
+        const filePath = req.file.path;
+        user.documents.push({ tipo: tipos, name: fileName, reference: filePath });
+        await user.save();
+
+        res.status(200).json({ message: 'Documento subido correctamente' });
       } catch (error) {
-        res.status(401).send({ error: "Something went wrong, try again shortly!" });
+        console.error(error);
+        res.status(500).json({ error: 'Error interno del servidor' });
       }
     });
+
+
   }
 }
 

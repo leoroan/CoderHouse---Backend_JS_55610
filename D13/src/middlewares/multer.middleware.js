@@ -1,33 +1,15 @@
-import storage from "../configs/multer.config.js";
-import { userService } from "../services/repository/services.js";
-import multer from "multer";
+import { upload } from "../configs/multer.config.js";
 
-const upload = multer({ storage: storage });
-
-const uploadDocumentAndUpdateUser = (req, res, next) => {
-  upload.single('document')(req, res, async (err) => {
+const uploadDocumentMiddleware = async (req, res, next) => {
+  const folder = req.query.folder;
+  upload.single(folder)(req, res, function (err) {
     if (err) {
-      return res.status(400).json({ error: 'Error al subir el documento' });
+      return res.status(500).json({ error: err.message });
+    } else if (err) {
+      return res.status(500).json({ error: 'Error al cargar el archivo.' });
     }
-
-    try {
-      const userId = req.params.uid;
-      const documentName = req.file.originalname;
-
-      const user = await userService.getUserById(userId);
-      if (!user) {
-        return res.status(404).json({ error: 'Usuario no encontrado' });
-      }
-
-      user.documents.push({ name: documentName, reference: req.file.path });
-      await user.save();
-
-      res.status(200).json({ message: 'Documento subido correctamente' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error interno del servidor' });
-    }
+    next();
   });
 };
 
-export default uploadDocumentAndUpdateUser;
+export default uploadDocumentMiddleware;

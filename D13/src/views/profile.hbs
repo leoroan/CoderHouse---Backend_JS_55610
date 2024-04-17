@@ -13,15 +13,63 @@
         <div>
             <p><span class="fw-bolder">Rol:</span> {{user.rol}}</p><br>
         </div>
+
+
+        <div class="mb-3">
+            <label for="profileImage" class="form-label">Imagen de perfil</label>
+            <form id="uploadProfileForm" enctype="multipart/form-data">
+                <input class="form-control" type="file" name="profileImage" id="formProfileFile"
+                    onchange="uploadImage('{{user._id}}', 'profileImage', 'formProfileFile')">
+            </form>
+        </div>
+
+        <div class="mb-3">
+            <label for="productImage" class="form-label">Imágenes productos</label>
+            <form id="uploadProductForm" enctype="multipart/form-data">
+                <input class="form-control" type="file" name="productImage" id="formProductFile"
+                    onchange="uploadImage('{{user._id}}', 'productImage', 'formProductFile')">
+            </form>
+        </div>
+
+        <div class="mb-3">
+            <label for="document" class="form-label">Documentos</label>
+            <form id="uploadDocumentForm" enctype="multipart/form-data">
+                <input class="form-control" type="file" name="document" id="document"
+                    onchange="uploadImage('{{user._id}}', 'document', 'document')">
+            </form>
+        </div>
+
+
+        <div>
+            <p><span class="fw-bolder">foto perfil cargados :</span></p>
+            <ul class="">
+                {{#each profileDocs}}
+                <li>{{this.name}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        <div>
+            <p><span class="fw-bolder">foto productos cargados :</span></p>
+            <ul class="">
+                {{#each productDocs}}
+                <li>{{this.name}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        <div>
+            <p><span class="fw-bolder">foto documentos cargados :</span></p>
+            <ul class="">
+                {{#each generalDocs}}
+                <li>{{this.name}}</li>
+                {{/each}}
+            </ul>
+        </div>
         <div class="mt-5">
-            <button class="btn btn-sm btn-outline-primary m-5"
-                onclick="restablecerContrasenia('{{user.email}}')">
+            <button class="btn btn-sm btn-outline-primary m-5" onclick="restablecerContrasenia('{{user.email}}')">
                 Restablecer Contraseña
             </button>
         </div>
     </div>
-
-
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

@@ -1,6 +1,7 @@
 import transporter from '../utils/mail.js';
 import { v4 as uuidv4 } from 'uuid';
 import { userService } from '../services/repository/services.js';
+import { response } from 'express';
 
 export const sendMail = async (email, subject, html, attachments) => {
   try {
@@ -38,13 +39,14 @@ export const sendForgotMail = async (email, attachments, userId) => {
       to: email,
       subject: 'Restablece tu contraseña',
       html: `
-      <p>Hola! Solicitaste restablecer tu contraseña de UR-SHOP!</p>
+      <p>Hola! ${user.username} Solicitaste restablecer tu contraseña de UR-SHOP!</p>
       <p>Haz clic en el siguiente botón para restablecer tu contraseña:</p>
       <a href="${resetLink}">Restablecer contraseña</a>
     `,
       attachments: attachments
     });
-    return `Correo electrónico de restablecimiento de cuenta, enviado a ${email}. ID del mensaje: ${result.messageId}`;
+    // return `Correo electrónico de restablecimiento de cuenta, enviado a ${email}. ID del mensaje: ${result.messageId}`;
+    return result.response;
   } catch (error) {
     console.error('Error al enviar el correo de restablecimiento de contraseña:', error);
     throw error;

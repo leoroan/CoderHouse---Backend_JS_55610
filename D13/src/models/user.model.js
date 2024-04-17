@@ -24,6 +24,7 @@ const userSchema = new Schema({
     default: 'standar'
   },
   documents: [{
+    tipo: String,
     name: String,
     reference: String
   }],

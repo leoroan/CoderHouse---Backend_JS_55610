@@ -1,3 +1,4 @@
+import { error } from "console";
 import { UserDTO } from "../services/dto/user.dto.js";
 import { userService } from "../services/repository/services.js";
 
@@ -50,11 +51,16 @@ export const updateUserRol = async (req, res) => {
   const userId = req.params.uid;
   const user = await userService.getUserById(userId);
   let nuevoRol = user.rol;
+  const docs = user.documents;
+  const generalDoc = docs.filter(doc => doc.tipo === "gralDocs");
 
-  if (user.rol === "premium") {
+  if (user.rol == "premium") {
     nuevoRol = "standar";
   } else {
-    nuevoRol = "premium";
+    if (generalDoc.length !== 0) {
+      nuevoRol = "premium";
+    }
+    else { return false; }
   }
   return userService.updateUser(userId, { rol: nuevoRol })
 }

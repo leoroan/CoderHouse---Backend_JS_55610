@@ -1,8 +1,10 @@
 import multer from "multer";
+import  __dirname from "../utils.js";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    let uploadPath = '../docs/files/uploads';
+
+    let uploadPath = `${__dirname}/docs/files/uploads/`;
 
     if (file.fieldname === 'profileImage') {
       uploadPath += 'profiles/';
@@ -15,8 +17,8 @@ const storage = multer.diskStorage({
     cb(null, uploadPath);
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname); // Usa el nombre original del archivo
+    cb(null, file.originalname);
   }
 });
 
-export default storage
+export const upload = multer({ storage: storage });
