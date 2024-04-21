@@ -2,12 +2,11 @@ import CustomRouter from "./custom/custom.router.js";
 import CartDao from "../services/dao/mongo/cart.dao.js"
 import { generateJWToken } from "../utils/jwt.js";
 import passport from 'passport';
-import { updateUserRol } from "../controllers/users.controller.js";
+import { updateUserRol, deleteInactiveUsers } from "../controllers/users.controller.js";
 import uploadDocumentMiddleware from "../middlewares/multer.middleware.js";
-import { upload } from "../configs/multer.config.js";
 import { userService } from "../services/repository/services.js";
+import { UserDTO } from "../services/dto/user.dto.js";
 
-//ejemplo de router para usuario con politicas (aunq por practicidad aca son todas publicas)
 export default class UserExtendRouter extends CustomRouter {
   init() {
     const cartDao = new CartDao();
@@ -59,22 +58,38 @@ export default class UserExtendRouter extends CustomRouter {
       }
     ), async (req, res) => {
       const user = req.user;
-      req.session.user = { ...user.toObject() }
       if (!user) return res.status(401).send({ status: "error", error: "Wrong user/password credentials" });
-      // Usando JWT 
-      const access_token = generateJWToken(user)
-      res.cookie('jwtCookieToken', access_token, { httpOnly: true });
-      res.send({ access_token: access_token });
+      try {
+        await user.login();
+        req.session.user = { ...user.toObject() };
+        const access_token = generateJWToken(user);
+        res.cookie('jwtCookieToken', access_token, { httpOnly: true });
+        res.send({ access_token: access_token });
+      } catch (error) {
+        console.error('Error al iniciar sesión:', error);
+        res.status(500).send({ error: "Something went wrong, try again shortly!" });
+      }
     })
 
-    this.post('/logout', ["PUBLIC"], (req, res) => {
-      res.clearCookie('jwtCookieToken');
-      req.session.destroy(error => {
-        if (error) {
-          res.json({ error: 'Error logout', msg: "Error logging out" })
+    this.post('/logout', ["PUBLIC"], async (req, res) => {
+      try {
+        const user = req.user;
+        if (!user) {
+          return res.status(401).send({ status: "error", error: "Usuario no autenticado" });
         }
-        res.send('Session cerrada correctamente!')
-      })
+        await user.logout();
+        res.clearCookie('jwtCookieToken');
+        req.session.destroy(error => {
+          if (error) {
+            console.error('Error al cerrar la sesión:', error);
+            return res.status(500).json({ error: 'Error logout', msg: "Error logging out" });
+          }
+          res.send('Sesión cerrada correctamente!');
+        });
+      } catch (error) {
+        console.error('Error al cerrar la sesión:', error);
+        res.status(500).send({ error: "Something went wrong, try again shortly!" });
+      }
     });
 
     this.get("/fail-register", ["PUBLIC"], (req, res) => {
@@ -87,7 +102,7 @@ export default class UserExtendRouter extends CustomRouter {
 
     this.post("/premium/:uid", ["PUBLIC"], async (req, res) => {
       try {
-        const result = await updateUserRol(req);console.log(result);
+        const result = await updateUserRol(req);
         if (!result) return res.status(401).send({ error: "Something went wrong, try again shortly!" });
         req.session.destroy();
         res.status(201).send({ status: "success", message: "User updated successfully" });
@@ -125,6 +140,27 @@ export default class UserExtendRouter extends CustomRouter {
       }
     });
 
+    this.get("/all-users", ["ADMIN"], async (req, res) => {
+      try {
+        const users = await userService.getAllUsers();
+        if (!users || users.length === 0) {
+          return res.status(404).json({ error: 'Usuarios no encontrados' });
+        }
+        const usersDTO = users.map(user => new UserDTO(user.username, user.email, user.type));
+        res.status(200).json({ users: usersDTO });
+      } catch (error) {
+        console.error('Error al obtener usuarios:', error);
+        res.status(500).send({ error: "Something went wrong, try again shortly!" });
+      }
+    });
+
+    this.get('/delete-all-inactive-users', ["ADMIN"], async (req, res) => {
+      try {
+        await deleteInactiveUsers(req, res);
+      } catch (error) {
+        res.status(500).json({ error: 'Error al limpiar usuarios inactivos' });
+      }
+    });
 
   }
 }

@@ -3,7 +3,7 @@ import { userModel } from "../../../models/user.model.js";
 
 class UserDAO {
 
-  static async createUser(user) {
+  async createUser(user) {
     try {
       const existingUser = await userModel.findOne({ email: user.email });
       if (existingUser) {
@@ -25,6 +25,14 @@ class UserDAO {
     }
   }
 
+  async getUsersByLastConnection(sinceDays) {
+    try {
+      return await userModel.find({ last_connection: { $lt: sinceDays } });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getUserById(id) {
     try {
       return await userModel.findById(id);
@@ -33,7 +41,7 @@ class UserDAO {
     }
   }
 
-  static async getAllUsers() {
+  async getAllUsers() {
     try {
       return await userModel.find();
     } catch (error) {
@@ -52,6 +60,14 @@ class UserDAO {
   async deleteUser(id) {
     try {
       return await userModel.findByIdAndDelete(id);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteIdles(date) {
+    try {
+      return await userModel.deleteMany({ last_connection: { $lt: date } });
     } catch (error) {
       throw error;
     }

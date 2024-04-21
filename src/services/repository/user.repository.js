@@ -15,12 +15,20 @@ export default class UserRepository {
     return this.dao.getUserById(id);
   }
 
+  getUsersByLastConnection = (date) => {
+    return this.dao.getUsersByLastConnection(date);
+  }
+
   getAllUsers = () => {
     return this.dao.getAllUsers();
   }
 
-  deleteUser = (id) => {  
+  deleteUser = (id) => {
     return this.dao.deleteUser(id);
+  }
+
+  deleteIdles = (date) => {
+    return this.dao.deleteIdles(date);
   }
 
   updateUser = (id, user) => {

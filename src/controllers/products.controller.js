@@ -3,17 +3,6 @@ import EErrors from "../services/errors/errors-nums.js";
 import { generateProductValidationErrorInfo } from "../services/errors/products-error.messages.js";
 import { productService } from "../services/repository/services.js";
 
-//Get all products
-// export const getAllProductsController = async (req, res) => {
-//   const { limit, page, sort, category } = req.query;
-//   try {
-//     const products = await productService.getAllProducts({ limit, page, sort, category });
-//     res.status(200).json(products);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
 export const getAllProductsController = async (req, res) => {
   try {
     const products = await productService.getAllProducts();
@@ -56,8 +45,6 @@ export const createProductController = async (req, res) => {
   try {
     const newProductData = req.body;
     const { title, description, price, code } = newProductData;
-
-    //TODO:: Create Custom Error
     if (!title || !description || !price || !code) {
       CustomError.createError({
         name: "Product Create Error",
@@ -79,9 +66,7 @@ export const updateProductController = async (req, res) => {
   try {
     const productId = req.params.id;
     const updatedProductData = req.body;
-
     const { title, description, price, code } = updatedProductData;
-    //TODO:: Create Custom Error
     if (!title || !description || !price || !code) {
       CustomError.createError({
         name: "Product Update Error",
@@ -126,7 +111,6 @@ export const updateStockController = async (prod, qtty) => {
     if (!updatedProduct) {
       console.log("couldnt update stock from model");
     }
-    // console.log("stock updated");
     console.log("producto :", prod.title, " stock_actual: ", actualStock, " stock_nuevo: ", updatedStock);
   } catch (error) {
     console.log("error in update stock controller", error);
