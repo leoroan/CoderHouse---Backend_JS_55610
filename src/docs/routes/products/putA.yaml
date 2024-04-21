@@ -1,0 +1,54 @@
+paths:
+  /api/products/{id}:
+    put:
+      tags:
+        - Productos
+      summary: Actualizar un producto
+      description: Actualiza un producto existente por ID.
+      requestBody:
+        description: Producto a actualizar.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+        required: true
+      responses:
+        '200':
+          description: Producto actualizado exitosamente
+        '400':
+          description: id invalido
+        '404':
+          description: El producto no fue encontrado
+        '500':
+          description: Error interno del servidor
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        oldPrice:
+          type: number
+        thumbnail:
+          type: string
+        code:
+          type: string
+        stock:
+          type: number
+        status:
+          type: boolean
+        category:
+          type: array
+          items:
+            type: string
+      required:
+        - title
+        - description
+        - price
+        - code

@@ -1,0 +1,16 @@
+<body>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form method="POST" action='/mailer/reset-password?uid={{uid}}' class="p-4 border rounded">
+          <input type="hidden" name="token" value="${token}">
+          <div class="form-group">
+            <label for="password">Nueva contraseña:</label>
+            <input type="password" name="password" id="password" class="form-control my-3" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Restablecer contraseña</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
