@@ -98,11 +98,10 @@ export const deleteInactiveUsersMocked = async (req, res) => {
     const inactiveUsers = await userService.getUsersByLastConnection(cantDias);
     // const inactiveUsers = await userModel.find({ last_connection: { $lt: cantDias } });
     if (inactiveUsers.length === 0) {
-      return res.status(404).json({ error: 'No hay usuarios inactivos para eliminar' });
+      return { error: 'No hay usuarios inactivos para eliminar' };
     }
     return inactiveUsers;
   } catch (error) {
     console.error('Error al limpiar usuarios inactivos:', error);
-    res.status(500).json({ error: 'Error al limpiar usuarios inactivos' });
   }
 }

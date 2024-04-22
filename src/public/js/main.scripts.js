@@ -494,6 +494,7 @@ function eliminarPorDias() {
       .then(data => {
         alert('Se eliminaron correctamente.');
         console.log(data);
+        location.reload();
       })
       .catch(error => {
         console.error('Se produjo un error:', error);
@@ -536,10 +537,9 @@ async function eliminarPorDiasLogico() {
         const nombres = data.deleted.map(objeto => objeto.username);
         const mensaje = `Se podrian eliminar correctamente: ${nombres.join(', ')}.`;
         alert(mensaje);
-
       })
       .catch(error => {
-        console.error('Se produjo un error:', error);
+        alert('Se produjo un error.', error.error);
       });
   } else {
     alert('La eliminación ha sido cancelada.');
