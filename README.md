@@ -5,6 +5,11 @@ Repo con los tps y trabajo final del curso de Back-End de "Coder House" 2023
 
 --cool readme here
 
+**TODO**
+- crear usuarios con fecha de conexion anterior a la fecha para que se puede probar la api.
+
+
+
 ## Índice
 
 1. [Desafíos](https://github.com/leoroan/CoderHouse---Backend_JS_55610/tree/desafios)
