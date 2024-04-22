@@ -20,7 +20,7 @@ const options = {
     ],
     
   },
-  apis: [`./src/docs/**/*.yaml`] // Ruta a los archivos que contienen tus rutas
+  apis: [`./src/docs/**/*.yaml`] 
     
 };
 const swaggerSpec = swaggerJsdoc(options);

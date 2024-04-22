@@ -1,7 +1,6 @@
 import transporter from '../utils/mail.js';
 import { v4 as uuidv4 } from 'uuid';
 import { userService } from '../services/repository/services.js';
-import { response } from 'express';
 
 export const sendMail = async (email, subject, html, attachments) => {
   try {
@@ -30,8 +29,6 @@ export const sendForgotMail = async (email, attachments, userId) => {
     const resetToken = uuidv4();
     const resetTokenExpiration = Date.now() + 3600000;
     const resetLink = `http://127.0.0.1:8080/mailer/reset-password?token=${resetToken}&uid=${user._id}`;
-    // Aquí deberías almacenar el token en tu base de datos
-    // junto con el correo electrónico y la marca de tiempo
     const updatedUser = await userService.updateUser(user._id, { resetToken, resetTokenExpiration });
 
     const result = await transporter.sendMail({
@@ -45,7 +42,6 @@ export const sendForgotMail = async (email, attachments, userId) => {
     `,
       attachments: attachments
     });
-    // return `Correo electrónico de restablecimiento de cuenta, enviado a ${email}. ID del mensaje: ${result.messageId}`;
     return result.response;
   } catch (error) {
     console.error('Error al enviar el correo de restablecimiento de contraseña:', error);

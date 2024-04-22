@@ -12,12 +12,6 @@ const JwtStrategy = jwtStrategy.Strategy;
 const ExtractJWT = jwtStrategy.ExtractJwt;
 
 const initializePassport = () => {
-  /**
-        *  Inicializando la estrategia local, username sera para nosotros email.
-        *  "Done" será nuestro callback
-  */
-
-  //Estrategia de obtener Token JWT por Cookie:
   passport.use('jwt', new JwtStrategy(
     {
       jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
@@ -41,11 +35,7 @@ const initializePassport = () => {
       callbackUrl: 'http://localhost:8080/api/users/githubcallback'
     },
     async (accessToken, refreshToken, profile, done) => {
-      // console.log("Profile obtenido del usuario de GitHub: ");
-      // console.log(profile);
       try {
-        //Validamos si el user existe en la DB
-        // const user = await userModel.findOne({ email: profile._json.email });
         const user = await userModel.findOne({ $or: [{ email: profile._json.email }, { username: profile._json.login }] });
         if (!user) {
           let newUser = {
@@ -58,7 +48,6 @@ const initializePassport = () => {
           const result = await userModel.create(newUser);
           return done(null, result)
         } else {
-          // Si entramos por aca significa que el user ya existe en la DB
           return done(null, user)
         }
 
@@ -69,9 +58,6 @@ const initializePassport = () => {
   ));
 
   passport.use('register', new localStrategy(
-    // passReqToCallback: para convertirlo en un callback de request, para asi poder iteracturar con la data que viene del cliente
-    // usernameField: renombramos el username
-    // { passReqToCallback: true, usernameField: 'email' },
     { passReqToCallback: true },
     async (req, username, password, done) => {
       const { email, type } = req.body;
@@ -114,12 +100,6 @@ const initializePassport = () => {
     })
   );
 
-  //Funciones de Serializacion y Desserializacion:
-  // estas funciones permiten a Passport.js manejar la información del usuario durante el proceso de autenticación,
-  // serializando y deserializando los usuarios para almacenar
-  // y recuperar información de la sesión. Estas funciones son esenciales cuando se implementa la autenticación de 
-  // usuarios en una aplicación Node.js utilizando Passport.js.
-
   passport.serializeUser((user, done) => {
     done(null, user._id)
   });
@@ -136,7 +116,7 @@ const initializePassport = () => {
 
 const cookieExtractor = req => {
   let token = null;
-  if (req && req.cookies) { //Validamos que exista el request y las cookies.
+  if (req && req.cookies) { 
     token = req.cookies['jwtCookieToken'];
   }
   return token;

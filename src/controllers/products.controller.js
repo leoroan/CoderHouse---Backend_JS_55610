@@ -96,7 +96,6 @@ export const deleteProductController = async (req, res) => {
   if (product.owner !== "admin") {
     user = await userService.getUserById(product.owner);
   }
-
   try {
     const deletedProduct = await productService.deleteProduct(productId);
     if (!deletedProduct) {

@@ -1,7 +1,5 @@
 import { Router } from "express";
 import ProductDAO from "../services/dao/mongo/product.dao.js";
-// import passport from "passport";
-// import { authToken, authorization } from '../utils/jwt.js';
 
 const router = Router();
 
@@ -9,7 +7,6 @@ router.get("/", async (req, res, next) => {
   const { limit, page, sort, category } = req.query;
   const productDao = new ProductDAO();
   const products = await productDao.getAllProducts({ limit, page, sort, category });
-
   res.render("index", {
     fileFavicon: "favicon.ico",
     fileCss: "styles.css",
@@ -22,20 +19,5 @@ router.get("/", async (req, res, next) => {
     rolStandar: req.session.user && req.session.user.rol === "standar" ? true : false,
   });
 });
-
-// router.get("/profile",
-//   // authToken,
-//   passport.authenticate('jwt', {session: false}),
-//   (req, res) => {
-//   res.render('profile', {
-//     fileFavicon: "favicon.ico",
-//     fileCss: "styles.css",
-//     fileJs: "main.scripts.js",
-//     title: "user profile",
-//     user: req.user // Trtabajando con JWT
-//   })
-// })
-
-
 
 export default router;

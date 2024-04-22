@@ -10,7 +10,6 @@ import {
   purchaseCartController,
   getCartById
 } from "../controllers/carts.controller.js";
-import { verificarPropietarioCarritoMiddleware } from "../middlewares/ownership.middleware.js";
 
 export default class CartExtendRouter extends CustomRouter {
   init() {

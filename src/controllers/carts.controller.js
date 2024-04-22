@@ -2,42 +2,27 @@ import { cartService } from '../services/repository/services.js';
 import { updateStockController } from './products.controller.js';
 import { createTicket } from '../controllers/tickets.controller.js';
 import { sendMail, mensajeCompra } from './nodemailer.controller.js';
-import CustomError from "../services/errors/CustomErrors.js";
-import EErrors from "../services/errors/errors-nums.js";
-// import { addtoCartErrorInfo } from '../services/errors/products-error.messages.js';
 
 export const purchaseCartController = async (req, res) => {
   try {
     const cartId = req.params.cid;
-    // obtengo los productos del carrito
     const productsFromCart = await getProductsFromCartById(cartId);
-    //  le envio el arreglo de productos y que me devuelva un array de validos e invalidos
     const { validProducts, invalidProducts } = evaluateStock(productsFromCart);
-    // lo validos deben bajar stock 
     let grandTotal = 0;
-    // Recorrer los productos válidos y realizar operaciones asincrónicas
     for (const product of validProducts) {
-      // Sumar al total
       grandTotal += product.productId.price * product.quantity;
-      // Actualizar stock
       await updateStockController(product.productId, product.quantity);
-      // Eliminar producto del carrito
       const reqs = { cid: cartId, pid: product.productId };
       await deleteProductFromCartByIdController(reqs, res);
     }
-    // Si hay productos válidos, crear el ticket
     if (validProducts.length > 0) {
-      // console.log("total: ", grandTotal);
       const ticket = { amount: grandTotal, purchaser: req.session.user.username };
       const createdTicket = await createTicket(ticket, res);
-      // console.log(createTicket);
       sendMail(req.session.user.email, " compra realizada ", mensajeCompra(req.session.user.username, grandTotal, "code"));
     } else {
-      // res.status(400).json({ message: "No hay productos válidos en el carrito" });
     }
   } catch (error) {
     console.error("Error en purchaseCartController:", error);
-    // res.status(500).json({ message: "Error en el servidor" });
   };
 }
 

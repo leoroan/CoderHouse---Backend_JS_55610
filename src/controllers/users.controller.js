@@ -2,7 +2,6 @@ import { UserDTO } from "../services/dto/user.dto.js";
 import { userService } from "../services/repository/services.js";
 import { sendMail } from './nodemailer.controller.js';
 
-//Get user profile
 export const getUserProfileController = async (req, res) => {
   try {
     const userId = req.params.uid;
