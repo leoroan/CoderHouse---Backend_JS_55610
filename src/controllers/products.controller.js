@@ -1,7 +1,8 @@
 import CustomError from "../services/errors/CustomErrors.js";
 import EErrors from "../services/errors/errors-nums.js";
 import { generateProductValidationErrorInfo } from "../services/errors/products-error.messages.js";
-import { productService } from "../services/repository/services.js";
+import { productService, userService } from "../services/repository/services.js";
+import { sendMail } from './nodemailer.controller.js';
 
 export const getAllProductsController = async (req, res) => {
   try {
@@ -21,10 +22,6 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-function checkOwnership(prodOwnerId, actualUserId) {
-  return prodOwnerId === actualUserId;
-}
-
 //Get product by id
 export const getProductByIdController = async (req, res) => {
   const productId = req.params.id;
@@ -33,7 +30,6 @@ export const getProductByIdController = async (req, res) => {
     if (!product) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
-    // const productDTO = new ProductDTO(product._id, product.id, product.title, product.description, product.price, product.thumbnail, product.code, product.stock, product.category, product.status)
     res.status(200).json(product);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -87,15 +83,29 @@ export const updateProductController = async (req, res) => {
   }
 };
 
+function checkOwnership(prodOwnerId, actualUserId) {
+  return prodOwnerId === actualUserId;
+}
+
 // Delete a product by ID
 export const deleteProductController = async (req, res) => {
   const productId = req.params.id;
+  const product = await productService.getProductById(productId);
+  let user = null;
+
+  if (product.owner !== "admin") {
+    user = await userService.getUserById(product.owner);
+  }
+
   try {
     const deletedProduct = await productService.deleteProduct(productId);
     if (!deletedProduct) {
       return res.status(404).json({ error: 'Producto no encontrado' });
     }
-    res.status(204).send(); // No content
+    if (user && user.rol === "premium") {
+      await sendMail(user.email, 'Eliminación de producto de UR-SHOP!', ` ${user.username}, El producto "${product.title}" de tu cuenta ha sido eliminado.`);
+    }
+    res.status(204).send();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
