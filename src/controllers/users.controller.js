@@ -1,5 +1,6 @@
 import { UserDTO } from "../services/dto/user.dto.js";
 import { userService } from "../services/repository/services.js";
+import { sendMail } from './nodemailer.controller.js';
 
 //Get user profile
 export const getUserProfileController = async (req, res) => {
@@ -64,22 +65,42 @@ export const updateUserRol = async (req, res) => {
 
 export const deleteInactiveUsers = async (req, res) => {
   try {
-    const twoDaysAgo = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000); 
-    const inactiveUsers = await userService.getUsersByLastConnection(twoDaysAgo);
-    // const inactiveUsers = await userModel.find({ last_connection: { $lt: twoDaysAgo } });
+    let cantDias;
+    if (req.query.dias) {
+      cantDias = new Date(Date.now() - req.query.dias * 24 * 60 * 60 * 1000);
+    } else {
+      cantDias = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000);
+    }
+    const inactiveUsers = await userService.getUsersByLastConnection(cantDias);
     if (inactiveUsers.length === 0) {
       return res.status(404).json({ error: 'No hay usuarios inactivos para eliminar' });
     }
-    // Envía un correo electrónico a cada usuario inactivo antes de eliminarlos
-    // inactiveUsers.forEach(async (user) => {
-    //   await sendEmail(user.email, 'Eliminación de cuenta por inactividad', 'Tu cuenta ha sido eliminada debido a inactividad.');
-    // });
+    inactiveUsers.forEach(async (user) => {
+      await sendMail(user.email, 'Eliminación de cuenta de UR-SHOP! por inactividad', ` ${user.username}, Tu cuenta ha sido eliminada debido a inactividad.`);
+    });
 
-    // Elimina los usuarios inactivos de la base de datos
-    await userService.deleteIdles(twoDaysAgo);
-
-    // res.status(200).json({ message: 'Usuarios inactivos eliminados exitosamente', inactiveUsers:inactiveUsers  });
+    await userService.deleteIdles(cantDias);
     res.status(200).json({ message: 'Usuarios inactivos eliminados exitosamente', inactiveUsers:inactiveUsers  });
+  } catch (error) {
+    console.error('Error al limpiar usuarios inactivos:', error);
+    res.status(500).json({ error: 'Error al limpiar usuarios inactivos' });
+  }
+}
+
+export const deleteInactiveUsersMocked = async (req, res) => {
+  try {
+    let cantDias;
+    if (req.query.dias) {
+      cantDias = new Date(Date.now() - req.query.dias * 24 * 60 * 60 * 1000);
+    } else {
+      cantDias = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000);
+    }
+    const inactiveUsers = await userService.getUsersByLastConnection(cantDias);
+    // const inactiveUsers = await userModel.find({ last_connection: { $lt: cantDias } });
+    if (inactiveUsers.length === 0) {
+      return res.status(404).json({ error: 'No hay usuarios inactivos para eliminar' });
+    }
+    return inactiveUsers;
   } catch (error) {
     console.error('Error al limpiar usuarios inactivos:', error);
     res.status(500).json({ error: 'Error al limpiar usuarios inactivos' });
