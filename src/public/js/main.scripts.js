@@ -338,7 +338,7 @@ registerButton.onclick = function (e) {
     if (result.status === 201) {
       alert("User registered successfully. Please login.");
       handleLogout();
-      window.location.replace('/');
+      location.reload();
     } else if (result.status === 400) {
       alert("Validation failed. Please check your inputs. username and email are uniques");
     } else if (result.status === 500) {
