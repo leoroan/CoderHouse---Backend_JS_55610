@@ -2,7 +2,7 @@ import CustomRouter from "./custom/custom.router.js";
 import CartDao from "../services/dao/mongo/cart.dao.js"
 import { generateJWToken } from "../utils/jwt.js";
 import passport from 'passport';
-import { updateUserRol, deleteInactiveUsers } from "../controllers/users.controller.js";
+import { updateUserRol, deleteInactiveUsers, deleteInactiveUsersMocked } from "../controllers/users.controller.js";
 import uploadDocumentMiddleware from "../middlewares/multer.middleware.js";
 import { userService } from "../services/repository/services.js";
 import { UserDTO } from "../services/dto/user.dto.js";
@@ -146,17 +146,35 @@ export default class UserExtendRouter extends CustomRouter {
         if (!users || users.length === 0) {
           return res.status(404).json({ error: 'Usuarios no encontrados' });
         }
-        const usersDTO = users.map(user => new UserDTO(user.username, user.email, user.type));
-        res.status(200).json({ users: usersDTO });
+        const usersDTO = users.map(user => new UserDTO(user.username, user.email, user.type, user.last_connection));
+
+        res.render('users', {
+          fileFavicon: "favicon.ico",
+          fileCss: "styles.css",
+          fileJs: "main.scripts.js",
+          title: "user profile",
+          user: req.user,
+          users: usersDTO, 
+        })
+        // res.status(200).json({ users: usersDTO });
       } catch (error) {
         console.error('Error al obtener usuarios:', error);
         res.status(500).send({ error: "Something went wrong, try again shortly!" });
       }
     });
 
-    this.get('/delete-all-inactive-users', ["ADMIN"], async (req, res) => {
+    this.delete('/delete-all-inactive-users', ["ADMIN"], async (req, res) => {
       try {
         await deleteInactiveUsers(req, res);
+      } catch (error) {
+        res.status(500).json({ error: 'Error al limpiar usuarios inactivos' });
+      }
+    });
+
+    this.delete('/delete-all-inactive-users-mocked', ["ADMIN"], async (req, res) => {
+      try {
+        const deleted = await deleteInactiveUsersMocked(req, res);
+        res.status(200).json({ message: 'Usuarios inactivos eliminados correctamente', deleted: deleted });
       } catch (error) {
         res.status(500).json({ error: 'Error al limpiar usuarios inactivos' });
       }
