@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="d-flex justify-content-center flex-column ">
+    <div class="d-flex justify-content-start">
+      <h4>usuarios en el sistema</h4>
+    </div>
+    <div class="d-flex justify-content-end mt-2">
+      <form class="row g-3">
+        <div class="col-auto">
+          <p>borrar usuarios a partir de "x" cantidad de días...</p>
+          <p> recomiendo empezar por 10 y asi hacia abajo, de lo contrario vas a borrar todos y no vas a  apreciar los cambios..</p>
+        </div>
+        <div class="col-auto">
+          <label for="inputqtty" class="visually-hidden">cantidad de días</label>
+          <input type="number" class="form-control" id="days" placeholder="cant. días">
+        </div>
+        <div class="col-auto">
+          <button onclick="eliminarPorDias()" class="btn btn-danger mb-3"> borrado fisico</button>
+          <button onclick="eliminarPorDiasLogico()" class="btn btn-warning mb-3"> borrado lógico</button>
+        </div>
+      </form>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">username</th>
+          <th scope="col">email</th>
+          <th scope="col">account type</th>
+          <th scope="col">last connection</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users}}
+        <tr>
+          <td>{{this.username}}</td>
+          <td>{{this.email}}</td>
+          <td>{{this.type}}</td>
+          <td>{{this.last_connection}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/{{fileJs}}"></script>
