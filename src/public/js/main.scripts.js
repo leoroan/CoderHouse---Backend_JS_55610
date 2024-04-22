@@ -546,5 +546,55 @@ async function eliminarPorDiasLogico() {
   }
 }
 
+async function eliminarUsuario(email) {
+  if (confirm(' ¿Está seguro?')) {
+    fetch(`/api/users/delete-user/${email}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al eliminar el usuario');
+        }
+        return response.json();
+      })
+      .then(data => {
+        alert('Usuario eliminado correctamente de la bdd', data);
+        location.reload();
+      })
+      .catch(error => {
+        alert('Error al eliminar el usuario:', error);
+      });
+  } else {
+    alert('La eliminación ha sido cancelada.');
+  }
+}
 
+async function modificarUsuario(email) {
+  if (confirm(' ¿Está seguro?')) {
+    fetch(`/api/users/hard-update/${email}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al actualizar el usuario');
+        }
+        return response.json();
+      })
+      .then(data => {
+        alert('Usuario actualizado correctamente', data);
+        location.reload();
+      })
+      .catch(error => {
+        alert('Error al actualizar el usuario:', error);
+      });
+  } else {
+    alert('La actualizacion ha sido cancelada.');
+  }
+}
 

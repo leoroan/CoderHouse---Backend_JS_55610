@@ -27,6 +27,10 @@ export default class UserRepository {
     return this.dao.deleteUser(id);
   }
 
+  deleteUserByEmail = (email) => {
+    return this.dao.deleteUserByEmail(email);
+  }
+
   deleteIdles = (date) => {
     return this.dao.deleteIdles(date);
   }

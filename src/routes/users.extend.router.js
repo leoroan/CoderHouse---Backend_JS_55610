@@ -2,7 +2,7 @@ import CustomRouter from "./custom/custom.router.js";
 import CartDao from "../services/dao/mongo/cart.dao.js"
 import { generateJWToken } from "../utils/jwt.js";
 import passport from 'passport';
-import { updateUserRol, deleteInactiveUsers, deleteInactiveUsersMocked } from "../controllers/users.controller.js";
+import { updateUserRol, deleteInactiveUsers, deleteInactiveUsersMocked, deleteUser, modifyUser } from "../controllers/users.controller.js";
 import uploadDocumentMiddleware from "../middlewares/multer.middleware.js";
 import { userService } from "../services/repository/services.js";
 import { UserDTO } from "../services/dto/user.dto.js";
@@ -146,7 +146,7 @@ export default class UserExtendRouter extends CustomRouter {
         if (!users || users.length === 0) {
           return res.status(404).json({ error: 'Usuarios no encontrados' });
         }
-        const usersDTO = users.map(user => new UserDTO(user.username, user.email, user.type, user.last_connection));
+        const usersDTO = users.map(user => new UserDTO(user.username, user.email, user.rol, user.last_connection));
 
         res.render('users', {
           fileFavicon: "favicon.ico",
@@ -154,7 +154,7 @@ export default class UserExtendRouter extends CustomRouter {
           fileJs: "main.scripts.js",
           title: "user profile",
           user: req.user,
-          users: usersDTO, 
+          users: usersDTO,
         })
         // res.status(200).json({ users: usersDTO });
       } catch (error) {
@@ -179,6 +179,17 @@ export default class UserExtendRouter extends CustomRouter {
         res.status(500).json({ error: 'Error al limpiar usuarios inactivos' });
       }
     });
+
+    this.delete('/delete-user/:em', ["ADMIN"], async (req, res) => {
+      const userEmail = req.params.em;
+      deleteUser(req, res, userEmail);
+    });
+
+    this.post('/hard-update/:em', ["ADMIN"], async (req, res) => {
+      const userEmail = req.params.em;
+      modifyUser(req, res, userEmail);
+    });
+
 
   }
 }

@@ -73,6 +73,14 @@ class UserDAO {
     }
   }
 
+  async deleteUserByEmail(userEmail) {
+    try {
+      return await userModel.findOneAndDelete({ email: userEmail });
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
 
 

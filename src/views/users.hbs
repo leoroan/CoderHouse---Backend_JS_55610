@@ -25,7 +25,7 @@
         <tr>
           <th scope="col">username</th>
           <th scope="col">email</th>
-          <th scope="col">account type</th>
+          <th scope="col">account roll</th>
           <th scope="col">last connection</th>
         </tr>
       </thead>
@@ -34,8 +34,10 @@
         <tr>
           <td>{{this.username}}</td>
           <td>{{this.email}}</td>
-          <td>{{this.type}}</td>
+          <td>{{this.rol}}</td>
           <td>{{this.last_connection}}</td>
+          <td><button type="button" class="btn btn-danger btn-sm" onclick="eliminarUsuario('{{this.email}}')">delete</button></td>
+          <td><button type="button" class="btn btn-warning btn-sm" onclick="modificarUsuario('{{this.email}}')">modify</button></td>
         </tr>
         {{/each}}
       </tbody>

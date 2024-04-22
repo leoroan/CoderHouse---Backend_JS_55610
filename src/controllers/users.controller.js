@@ -80,7 +80,7 @@ export const deleteInactiveUsers = async (req, res) => {
     });
 
     await userService.deleteIdles(cantDias);
-    res.status(200).json({ message: 'Usuarios inactivos eliminados exitosamente', inactiveUsers:inactiveUsers  });
+    res.status(200).json({ message: 'Usuarios inactivos eliminados exitosamente', inactiveUsers: inactiveUsers });
   } catch (error) {
     console.error('Error al limpiar usuarios inactivos:', error);
     res.status(500).json({ error: 'Error al limpiar usuarios inactivos' });
@@ -104,4 +104,30 @@ export const deleteInactiveUsersMocked = async (req, res) => {
   } catch (error) {
     console.error('Error al limpiar usuarios inactivos:', error);
   }
+}
+
+export const deleteUser = async (req, res, userEmail) => {
+  try {
+    const deletedUser = await userService.deleteUserByEmail(userEmail);
+    if (deletedUser) {
+      res.status(200).json({ message: 'Usuario eliminado correctamente', deletedUser });
+    } else {
+      res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar el usuario' });
+  }
+}
+
+export const modifyUser = async (req, res, userEmail) => {
+  const user = await userService.getUserByEmail(userEmail);
+  const userId = user._id;
+  let nuevoRol = user.rol;
+  if (user.rol == "premium") {
+    nuevoRol = "standar";
+  } else {
+    nuevoRol = "premium";
+  }
+  await userService.updateUser(userId, { rol: nuevoRol })
+  res.status(200).json({ message: 'Usuario eliminado correctamente', user });
 }
