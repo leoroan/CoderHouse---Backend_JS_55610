@@ -96,7 +96,6 @@ export const deleteInactiveUsersMocked = async (req, res) => {
       cantDias = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000);
     }
     const inactiveUsers = await userService.getUsersByLastConnection(cantDias);
-    // const inactiveUsers = await userModel.find({ last_connection: { $lt: cantDias } });
     if (inactiveUsers.length === 0) {
       return { error: 'No hay usuarios inactivos para eliminar' };
     }
