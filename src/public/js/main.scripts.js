@@ -409,7 +409,7 @@ function restablecerContrasenia(email) {
       }
     })
       .then(response => {
-          alert(`Se ha enviado un correo a '${email}', para proceder a restablecer la contraseña.`);
+        alert(`Se ha enviado un correo a '${email}', para proceder a restablecer la contraseña.`);
       })
       .catch(error => {
         // alert(`Ha ocurrido un error al intentar restablecer la contraseña o mail incorrecto.`);
@@ -462,10 +462,89 @@ function uploadImage(userId, folderName, formfileId) {
     });
 }
 
+function eliminarPorDias() {
+  const daysInput = document.getElementById('days');
+  const days = parseInt(daysInput.value);
+
+  if (isNaN(days)) {
+    alert('Por favor ingrese un número válido de días.');
+    return;
+  }
+
+  if ((days < 2)) {
+    alert('Minimo son 2 días..');
+    return;
+  }
+
+  const mensaje = `Se eliminarán usuarios inactivos en el sistema,  ${days} días atrás.`;
+
+  if (confirm(mensaje + ' ¿Está seguro?')) {
+    fetch(`/api/users/delete-all-inactive-users?dias=${days}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Hubo un problema al procesar la solicitud.');
+        }
+        return response.json();
+      })
+      .then(data => {
+        alert('Se eliminaron correctamente.');
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Se produjo un error:', error);
+      });
+  } else {
+    alert('La eliminación ha sido cancelada.');
+  }
+}
+
+async function eliminarPorDiasLogico() {
+  const daysInput = document.getElementById('days');
+  const days = parseInt(daysInput.value);
+
+  if (isNaN(days)) {
+    alert('Por favor ingrese un número válido de días.');
+    return;
+  }
+
+  if ((days < 2)) {
+    alert('Minimo son 2 días..');
+    return;
+  }
+
+  const mensaje = `Se "eliminarán" usuarios inactivos en el sistema,  ${days} días atrás.`;
+
+  if (confirm(mensaje + ' ¿Está seguro?')) {
+    await fetch(`/api/users/delete-all-inactive-users-mocked?dias=${days}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Hubo un problema al procesar la solicitud.');
+        }
+        return response.json();
+      })
+      .then(data => {
+        const nombres = data.deleted.map(objeto => objeto.username);
+        const mensaje = `Se podrian eliminar correctamente: ${nombres.join(', ')}.`;
+        alert(mensaje);
+
+      })
+      .catch(error => {
+        console.error('Se produjo un error:', error);
+      });
+  } else {
+    alert('La eliminación ha sido cancelada.');
+  }
+}
 
 
-
-// const socket = io();
-
-// socket.emit('message', "home conecction")
 
