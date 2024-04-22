@@ -39,7 +39,7 @@ dotenv.config({
 });
 
 export default {
-  port: process.env.PORT,
+  port: process.env.PORT || 3001,
   urlMongo: process.env.MONGO_URL,
   enviroment: enviroment
 }
