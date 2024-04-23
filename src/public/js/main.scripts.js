@@ -359,19 +359,25 @@ function handleProfile() {
 };
 
 async function handleLogout() {
-  fetch('/api/users/logout', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }).then(result => {
-    if (result.status === 200) {
+  try {
+    const response = await fetch('/api/users/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    
+    if (response.status === 200) {
       window.location.replace('/');
+    } else {
+      console.error('Error al hacer logout:', response.statusText);
+      location.reload();
     }
+  } catch (error) {
+    console.error('Error al hacer logout:', error);
     location.reload();
-  })
+  }
 }
-
 // buy func
 function buyCart(cartId) {
   const url = `/api/carts/${cartId}/purchase`;
