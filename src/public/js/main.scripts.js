@@ -334,11 +334,10 @@ registerButton.onclick = function (e) {
     headers: {
       'Content-Type': 'application/json'
     }
-  }).then(result => {
-    if (result.status === 201) {
+  }).then(async result => {
+    if (result.status === 201 || result.status === 200) {
       alert("User registered successfully. Please login.");
-      handleLogout();
-      location.reload();
+      await handleLogout();
     } else if (result.status === 400) {
       alert("Validation failed. Please check your inputs. username and email are uniques");
     } else if (result.status === 500) {
@@ -359,7 +358,7 @@ function handleProfile() {
   window.location.href = targetHref;
 };
 
-function handleLogout() {
+async function handleLogout() {
   fetch('/api/users/logout', {
     method: 'POST',
     headers: {
@@ -369,6 +368,7 @@ function handleLogout() {
     if (result.status === 200) {
       window.location.replace('/');
     }
+    location.reload();
   })
 }
 
