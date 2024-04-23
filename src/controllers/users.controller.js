@@ -106,6 +106,7 @@ export const deleteInactiveUsersMocked = async (req, res) => {
 
 export const deleteUser = async (req, res, userEmail) => {
   try {
+    console.log(userEmail);
     const deletedUser = await userService.deleteUserByEmail(userEmail);
     if (deletedUser) {
       res.status(200).json({ message: 'Usuario eliminado correctamente', deletedUser });
