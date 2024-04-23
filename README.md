@@ -20,6 +20,7 @@ como usuario premium, vas a poder crear productos, editarlos y borrarlos.
 
 Como usuario administrador vas a poder crear, modificar y eliminar productos sin importar de quien sean, salvo que a los usuarios premium se les va a avisar cuando su producto sea eliminado.
 además, vas a poder cambiar el rol de los usuarios sin validaciones previas, como así eliminarlos "con solo un click". Tambien contas con la capacidad de eliminar a los usuarios que se encuentren inactivos pasados cierta cantidad de días.
+
 ---
 
 ### Características del Proyecto
